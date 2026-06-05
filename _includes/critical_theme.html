@@ -66,20 +66,28 @@
         z-index: 2147483647;
         background: #0f0a1a;
         pointer-events: none;
-        opacity: 0;
-        transition: opacity 80ms ease-out;
+        opacity: 1;
     }
 
-    .zauberhaft-navigation-overlay.is-visible {
-        opacity: 1;
+    html.zauberhaft-navigation-aktiv,
+    body.zauberhaft-navigation-aktiv {
+        background-color: #0f0a1a !important;
     }
 </style>
 <script>
     (function () {
         const ueberblendungKennung = "zauberhaft-navigation-overlay";
+        let navigationsZeitgeber = 0;
 
         function entferneNavigationsUeberblendung() {
             const vorhandeneUeberblendung = document.getElementById(ueberblendungKennung);
+
+            window.clearTimeout(navigationsZeitgeber);
+            document.documentElement.classList.remove("zauberhaft-navigation-aktiv");
+
+            if (document.body) {
+                document.body.classList.remove("zauberhaft-navigation-aktiv");
+            }
 
             if (vorhandeneUeberblendung) {
                 vorhandeneUeberblendung.remove();
@@ -101,19 +109,25 @@
             navigationsUeberblendung.id = ueberblendungKennung;
             navigationsUeberblendung.className = "zauberhaft-navigation-overlay";
             navigationsUeberblendung.setAttribute("aria-hidden", "true");
-            document.documentElement.appendChild(navigationsUeberblendung);
 
-            window.requestAnimationFrame(function () {
-                navigationsUeberblendung.classList.add("is-visible");
-            });
+            document.documentElement.classList.add("zauberhaft-navigation-aktiv");
 
-            window.setTimeout(entferneNavigationsUeberblendung, 4000);
+            if (document.body) {
+                document.body.classList.add("zauberhaft-navigation-aktiv");
+                document.body.appendChild(navigationsUeberblendung);
+            } else {
+                document.documentElement.appendChild(navigationsUeberblendung);
+            }
+
+            navigationsZeitgeber = window.setTimeout(entferneNavigationsUeberblendung, 4000);
         }
 
         function istInternerSeitenwechsel(verweisElement, ereignis) {
+            const istTastaturEreignis = ereignis.type === "keydown";
+
             if (
                 ereignis.defaultPrevented ||
-                ereignis.button !== 0 ||
+                (!istTastaturEreignis && ereignis.button !== 0) ||
                 ereignis.metaKey ||
                 ereignis.ctrlKey ||
                 ereignis.shiftKey ||
@@ -143,6 +157,20 @@
         }
 
         document.addEventListener(
+            "pointerdown",
+            function (ereignis) {
+                const verweisElement = ereignis.target.closest
+                    ? ereignis.target.closest("a[href]")
+                    : null;
+
+                if (verweisElement && istInternerSeitenwechsel(verweisElement, ereignis)) {
+                    zeigeNavigationsUeberblendung();
+                }
+            },
+            true
+        );
+
+        document.addEventListener(
             "click",
             function (ereignis) {
                 const verweisElement = ereignis.target.closest
@@ -150,6 +178,24 @@
                     : null;
 
                 if (verweisElement && istInternerSeitenwechsel(verweisElement, ereignis)) {
+                    zeigeNavigationsUeberblendung();
+                }
+            },
+            true
+        );
+
+        document.addEventListener(
+            "keydown",
+            function (ereignis) {
+                const verweisElement = ereignis.target.closest
+                    ? ereignis.target.closest("a[href]")
+                    : null;
+
+                if (
+                    (ereignis.key === "Enter" || ereignis.key === " ") &&
+                    verweisElement &&
+                    istInternerSeitenwechsel(verweisElement, ereignis)
+                ) {
                     zeigeNavigationsUeberblendung();
                 }
             },
