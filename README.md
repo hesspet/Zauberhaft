@@ -6,6 +6,7 @@ Startseite, Projektverteiler und Blog von Peter Heß — statische Website mit *
 
 - **Landingpage:** `https://hesspet.github.io/Zauberhaft/`
 - **Blog:** `https://hesspet.github.io/Zauberhaft/blog/`
+- **Puppen & Charaktere:** `https://hesspet.github.io/Zauberhaft/puppen/`
 - **Navigation:** Hauptmenü auf allen Seiten, Blog mit stabiler Unternavigation
 - **Blog-Wechsel:** Blog-interne Links und Wechsel vom Blog zur Hauptseite laufen clientseitig ohne vollständigen Dokumentwechsel
 - **Cache-Busting:** CSS, Blog-JavaScript und Suchindex werden mit Build-Version geladen
@@ -26,6 +27,7 @@ Alle Einträge in den YAML-Daten — kein HTML nötig:
 
 - **Projekte:** `_data/projects.yml` (Name, Emoji, Beschreibung, Tags, URL)
 - **Downloads:** `_data/downloads.yml` (Kapitel, Unterkapitel, Einträge)
+- **Puppen & Charaktere:** `_puppen/` (Steckbriefe als Markdown-Dateien, Übersicht unter `/puppen/`)
 
 ## Artikel schreiben
 
@@ -36,22 +38,32 @@ Alle Einträge in den YAML-Daten — kein HTML nötig:
 
 Artikel in `_artikel/`, Bilder in `assets/blog/images/articles/<slug>/`. Nach Push automatischer Deploy.
 
+## Puppen-Steckbriefe pflegen
+
+Jede Figur bekommt eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (Name, Kurztext, Passbild, Reihenfolge) und einem ausführlichen Steckbrief als Markdown-Body. Die Übersichtsseite `/puppen/` zeigt alle Figuren in einem responsiven Grid mit kreisrunden Passbildern. Ein Klick öffnet den Steckbrief in einem Overlay.
+
+Details siehe `puppen/HowTo.md`.
+
 ## Projektstruktur
 
 ```
 Zauberhaft/
 ├── _config.yml              # Jekyll-Konfiguration
-├── _layouts/                # Layouts (Hauptseite + Blog)
+├── _layouts/                # Layouts (Hauptseite + Blog + Puppen)
 ├── _includes/               # HTML-Komponenten (nav, hero, downloads, …)
 ├── _data/                   # YAML-Daten (projects, downloads, blog-nav, topics)
 ├── _artikel/                # Blog-Artikel (Jekyll Collection)
-├── blog/               # Blog-Seiten (Archiv, Themen, Suche, …)
+├── _puppen/                 # Steckbriefe der Puppen und Charaktere (Jekyll Collection)
+├── blog/                    # Blog-Seiten (Archiv, Themen, Suche, …)
+├── puppen/                  # Puppen-Übersichtsseite und HowTo
 ├── assets/
 │   ├── css/main.scss        # Hauptseiten-CSS (Dark-Theme)
-│   └── blog/           # Blog-Assets (CSS, Suche, clientseitige Navigation, Bilder)
+│   ├── blog/                # Blog-Assets (CSS, Suche, Navigation, Bilder)
+│   └── puppen/              # Puppen-Assets (CSS, JS, Passbilder, Steckbrief-Bilder)
 ├── tools/                   # PowerShell-Skripte (New-Article, Validate, …)
 ├── .github/workflows/       # CI: Build + Deploy + Email
-└── HowTo.md                 # Anleitung: Artikel schreiben
+├── HowTo.md                 # Anleitung: Artikel schreiben
+└── puppen/HowTo.md          # Anleitung: Steckbriefe pflegen
 ```
 
 ## Navigation und Cache

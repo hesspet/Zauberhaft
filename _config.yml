@@ -21,6 +21,9 @@ collections:
   artikel:
     output: true
     permalink: /blog/artikel/:name.html
+  puppen:
+    output: true
+    permalink: /puppen/:name/
 
 # Sass
 sass:
@@ -49,6 +52,11 @@ defaults:
       type: "artikel"
     values:
       layout: "blog_artikel"
+  - scope:
+      path: ""
+      type: "puppen"
+    values:
+      layout: "puppen"
 
 # Plugins (GitHub Pages erlaubt nur bestimmte)
 plugins:

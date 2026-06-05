@@ -12,7 +12,11 @@
                 <span class="tag">{{ tag }}</span>
                 {% endfor %}
             </div>
+            {% if project.url contains '://' %}
             <a class="card-link" href="{{ project.url }}" target="_blank" rel="noopener">Zum Projekt →</a>
+            {% else %}
+            <a class="card-link" href="{{ project.url }}">Zur Seite →</a>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

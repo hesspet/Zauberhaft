@@ -1,0 +1,329 @@
+/* ══════════════════════════════════════════════
+   puppen.css — Styles für Puppen-Übersicht & Steckbrief
+   ══════════════════════════════════════════════ */
+
+/* ── Layout ── */
+.puppen-main {
+    padding-top: calc(var(--nav-height) + 2rem);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* ── Übersichtsseite ── */
+.puppen-uebersicht {
+    padding: 2rem 0 4rem;
+}
+
+.puppen-titel {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+}
+
+.puppen-leer {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 3rem 0;
+}
+
+/* ── Passbild-Grid ── */
+.puppen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+/* ── Einzelne Karte ── */
+.puppen-karte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    transition: background 0.3s, transform 0.3s;
+    text-align: center;
+    max-width: 240px;
+    outline: none;
+}
+
+.puppen-karte:hover,
+.puppen-karte:focus-visible {
+    background: var(--bg-card);
+    transform: translateY(-4px);
+}
+
+.puppen-karte:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* ── Passbild (Kreis) ── */
+.puppen-passbild-rahmen {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+    flex-shrink: 0;
+    background: var(--bg-card);
+}
+
+.puppen-karte:hover .puppen-passbild-rahmen,
+.puppen-karte:focus-visible .puppen-passbild-rahmen {
+    box-shadow: 0 0 32px var(--accent-glow);
+    transform: scale(1.04);
+}
+
+.puppen-passbild {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.puppen-passbild-platzhalter {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.puppen-passbild-platzhalter::after {
+    content: "?";
+    font-size: 3rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+/* ── Name & Kurztext ── */
+.puppen-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.puppen-kurztext {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ══════════════════════════════════════════════
+   Overlay / Modal
+   ══════════════════════════════════════════════ */
+
+.puppen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 10, 26, 0.88);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+}
+
+.puppen-overlay.puppen-overlay--offen {
+    opacity: 1;
+    visibility: visible;
+}
+
+.puppen-overlay-schliessen {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    z-index: 1010;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26, 18, 40, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.puppen-overlay-schliessen:hover,
+.puppen-overlay-schliessen:focus-visible {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+}
+
+/* ── Modal-Container ── */
+.puppen-modal {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 760px;
+    width: calc(100% - 2rem);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2.5rem 2rem;
+    position: relative;
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
+    transform: translateY(12px);
+    transition: transform 0.3s;
+}
+
+.puppen-overlay--offen .puppen-modal {
+    transform: translateY(0);
+}
+
+/* ── Steckbrief-Inhalt (Prose) ── */
+.puppen-steckbrief h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+}
+
+.puppen-steckbrief h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+}
+
+.puppen-steckbrief h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.puppen-steckbrief p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+}
+
+.puppen-steckbrief blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    margin: 1.25rem 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.puppen-steckbrief ul,
+.puppen-steckbrief ol {
+    margin: 0.75rem 0 1.25rem 1.5rem;
+}
+
+.puppen-steckbrief li {
+    margin-bottom: 0.35rem;
+}
+
+.puppen-steckbrief img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+}
+
+.puppen-steckbrief em {
+    color: var(--text);
+    font-style: italic;
+}
+
+.puppen-steckbrief strong {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* ── Kein Scrollen des Body bei offenem Overlay ── */
+body.puppen-overlay-aktiv {
+    overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+    .puppen-main {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .puppen-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .puppen-passbild-rahmen {
+        width: 120px;
+        height: 120px;
+    }
+
+    .puppen-name {
+        font-size: 1rem;
+    }
+
+    .puppen-kurztext {
+        font-size: 0.8rem;
+    }
+
+    .puppen-modal {
+        max-width: 100%;
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        padding: 2rem 1.25rem;
+    }
+
+    .puppen-overlay {
+        align-items: flex-end;
+    }
+
+    .puppen-modal {
+        border-radius: var(--radius) var(--radius) 0 0;
+        max-height: 92vh;
+        transform: translateY(100%);
+    }
+
+    .puppen-overlay--offen .puppen-modal {
+        transform: translateY(0);
+    }
+
+    .puppen-overlay-schliessen {
+        top: 0.75rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .puppen-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .puppen-passbild-rahmen {
+        width: 100px;
+        height: 100px;
+    }
+}

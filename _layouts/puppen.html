@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'de' }}" style="background-color:#0f0a1a;color-scheme:dark">
+<head>
+    {% assign asset_version = site.github.build_revision | default: site.time %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0f0a1a">
+    <meta name="view-transition" content="same-origin">
+    {% include critical_theme.html %}
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ asset_version | uri_escape }}">
+    <link rel="stylesheet" href="{{ '/assets/puppen/css/puppen.css' | relative_url }}?v={{ asset_version | uri_escape }}">
+    {% seo %}
+    {% feed_meta %}
+</head>
+<body style="background-color:#0f0a1a">
+
+{% include nav.html %}
+
+<main class="puppen-main">
+    {{ content }}
+</main>
+
+<footer>
+    &copy; {{ site.time | date: '%Y' }} {{ site.author }} &mdash; Gebaut mit ♠ ♥ ♣ ♦ ({{ site.time | date: "%d.%m.%Y %H:%M %Z" }})
+</footer>
+
+<script src="{{ '/assets/puppen/js/puppen.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>
+
+</body>
+</html>
