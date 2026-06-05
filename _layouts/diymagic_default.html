@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0f0a1a">
-    <meta name="view-transition" content="same-origin">
-    {% include critical_theme.html %}
+    {% include critical_theme.html navigation_transitions=false %}
     <link rel="stylesheet" href="{{ '/assets/diy-magic/css/site.css' | relative_url }}">
     {% seo %}
     {% feed_meta %}
   </head>
   <body style="background-color:#0f0a1a">
-    {% include nav.html %}
     {% include diymagic_header.html %}
     <main id="inhalt" class="site-main">
       {{ content }}
     </main>
     {% include diymagic_footer.html %}
-    <script src="{{ '/assets/diy-magic/js/site-version.js' | relative_url }}" data-version-url="{{ '/diy-magic/site-version.json' | relative_url }}" defer></script>
   </body>
 </html>

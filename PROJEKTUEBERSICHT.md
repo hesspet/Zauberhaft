@@ -32,7 +32,7 @@ Stand: 05.06.2026
 ```
 
 - Hauptnav-Links funktionieren von jeder Seite aus (absolute Pfade mit `relative_url`)
-- Blog-Unternav erscheint nur auf Blog-Seiten, zentriert, ohne Branding
+- Blog-Seiten nutzen einen stabilen gemeinsamen Blog-Header mit Hauptnavigation und Blog-Unternavigation
 - Footer einheitlich auf allen Seiten mit Build-Datum und Zeitzone
 
 ## Projektstruktur
@@ -55,7 +55,7 @@ Zauberhaft/
 │   ├── downloads.html           # Download-Kapitel (Accordion) aus _data/downloads.yml
 │   ├── impressum.html           # Impressum
 │   ├── footer.html              # Footer (Copyright + Build-Datum)
-│   ├── diymagic_header.html     # Blog-Unternavigation
+│   ├── diymagic_header.html     # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
 │   ├── diymagic_footer.html     # Blog-Footer (identisch zum Hauptfooter)
 │   ├── diymagic_navigation.html # Blog-Nav-Links (aus diymagic_site_navigation.yml)
 │   ├── diymagic_article-card.html # Artikelkarte für Listen
@@ -77,15 +77,13 @@ Zauberhaft/
 │   ├── suche.md                 # Suchseite
 │   ├── ueber.md                 # Über DiyMagic
 │   ├── impressum.md             # Blog-Impressum
-│   ├── search.json              # Suchindex (Liquid-generiert)
-│   └── site-version.json        # Build-Version (für Cache-Busting)
+│   └── search.json              # Suchindex (Liquid-generiert)
 ├── assets/
 │   ├── css/main.scss            # Hauptseiten-CSS (Dark-Theme)
 │   ├── diy-magic/
 │   │   ├── css/site.css         # Blog-CSS (Dark-Theme, Accordion)
 │   │   ├── js/
-│   │   │   ├── search.js        # Clientseitige Suche
-│   │   │   └── site-version.js  # Cache-Busting mit Reload
+│   │   │   └── search.js        # Clientseitige Suche
 │   │   └── images/              # Blog-Bilder
 │   └── peter-hess.jpg           # Profilbild
 ├── tools/                       # PowerShell-Hilfsskripte
@@ -148,7 +146,7 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 - **Eine gemeinsame Navigation** — kein isoliertes Blog-Menü
 - **Native HTML-Accordions** — kein JavaScript für Downloads
 - **Clientseitige Suche** — kein Server, kein externer Dienst
-- **View Transition API** — Crossfade ohne weißen Blitz (Chromium)
+- **Blog ohne View Transition API** — Blog-Navigation ist stabil aufgebaut und deaktiviert Browser-Übergänge gezielt
 - **Inline dark mode hints** — `color-scheme`, `theme-color`, Inline-Styles
 
 ## Projektregeln
