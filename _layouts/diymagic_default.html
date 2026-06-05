@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#0f0a1a">
     {% include critical_theme.html navigation_transitions=false %}
     <link rel="stylesheet" href="{{ '/assets/diy-magic/css/site.css' | relative_url }}?v={{ asset_version | uri_escape }}">
+    <script src="{{ '/assets/diy-magic/js/search.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>
+    <script src="{{ '/assets/diy-magic/js/blog-navigation.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>
     {% seo %}
     {% feed_meta %}
   </head>

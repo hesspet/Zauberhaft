@@ -1,0 +1,208 @@
+(function () {
+  const blogPfadMuster = /\/diy-magic(?:\/|$)/;
+  const geladeneDokumente = new Map();
+  let laufendeAnfrage = null;
+
+  function istBlogAdresse(adresse) {
+    return adresse.origin === window.location.origin && blogPfadMuster.test(adresse.pathname);
+  }
+
+  function istGleicheDokumentAdresse(adresse) {
+    return adresse.pathname === window.location.pathname && adresse.search === window.location.search;
+  }
+
+  function ermittleVerweisElement(ereignis) {
+    return ereignis.target && ereignis.target.closest
+      ? ereignis.target.closest("a[href]")
+      : null;
+  }
+
+  function istNavigierbarerBlogVerweis(verweisElement, ereignis) {
+    if (!verweisElement) {
+      return false;
+    }
+
+    if (
+      ereignis &&
+      (ereignis.defaultPrevented ||
+        ereignis.metaKey ||
+        ereignis.ctrlKey ||
+        ereignis.shiftKey ||
+        ereignis.altKey)
+    ) {
+      return false;
+    }
+
+    if (ereignis && "button" in ereignis && ereignis.button !== 0) {
+      return false;
+    }
+
+    if (verweisElement.hasAttribute("download")) {
+      return false;
+    }
+
+    const zielFenster = verweisElement.getAttribute("target");
+
+    if (zielFenster && zielFenster !== "_self") {
+      return false;
+    }
+
+    const zielAdresse = new URL(verweisElement.href, window.location.href);
+
+    if (!istBlogAdresse(zielAdresse)) {
+      return false;
+    }
+
+    return !istGleicheDokumentAdresse(zielAdresse);
+  }
+
+  function setzeLadezustand(istAktiv) {
+    document.documentElement.classList.toggle("diymagic-client-navigation-active", istAktiv);
+  }
+
+  async function ladeDokument(zielAdresse) {
+    const zwischenspeicherKennung = zielAdresse.href;
+
+    if (geladeneDokumente.has(zwischenspeicherKennung)) {
+      return geladeneDokumente.get(zwischenspeicherKennung).cloneNode(true);
+    }
+
+    if (laufendeAnfrage) {
+      laufendeAnfrage.abort();
+    }
+
+    laufendeAnfrage = new AbortController();
+
+    const antwort = await fetch(zielAdresse.href, {
+      cache: "no-cache",
+      credentials: "same-origin",
+      signal: laufendeAnfrage.signal,
+    });
+
+    if (!antwort.ok) {
+      throw new Error("Die Zielseite konnte nicht geladen werden.");
+    }
+
+    const quelltext = await antwort.text();
+    const parser = new DOMParser();
+    const zielDokument = parser.parseFromString(quelltext, "text/html");
+    geladeneDokumente.set(zwischenspeicherKennung, zielDokument);
+    return zielDokument.cloneNode(true);
+  }
+
+  function ersetzeDokumentteile(zielDokument, zielAdresse, sollVerlaufSchreiben) {
+    const aktuellerHauptinhalt = document.getElementById("inhalt");
+    const neuerHauptinhalt = zielDokument.getElementById("inhalt");
+    const aktuellerKopfbereich = document.querySelector(".diymagic-shell-header");
+    const neuerKopfbereich = zielDokument.querySelector(".diymagic-shell-header");
+
+    if (!aktuellerHauptinhalt || !neuerHauptinhalt || !aktuellerKopfbereich || !neuerKopfbereich) {
+      throw new Error("Die Zielseite hat nicht die erwartete Blog-Struktur.");
+    }
+
+    document.title = zielDokument.title;
+    aktuellerKopfbereich.replaceWith(neuerKopfbereich);
+    aktuellerHauptinhalt.replaceWith(neuerHauptinhalt);
+
+    if (sollVerlaufSchreiben) {
+      window.history.pushState({ diymagicNavigation: true }, "", zielAdresse.href);
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    if (window.zauberhaftInitialisiereSuche) {
+      window.zauberhaftInitialisiereSuche();
+    }
+
+    document.dispatchEvent(
+      new CustomEvent("diymagic:navigation", {
+        detail: { url: zielAdresse.href },
+      })
+    );
+  }
+
+  async function navigiereZu(verweisElement) {
+    const zielAdresse = new URL(verweisElement.href, window.location.href);
+
+    try {
+      setzeLadezustand(true);
+      const zielDokument = await ladeDokument(zielAdresse);
+      ersetzeDokumentteile(zielDokument, zielAdresse, true);
+    } catch (fehler) {
+      if (fehler.name === "AbortError") {
+        return;
+      }
+
+      window.location.href = zielAdresse.href;
+    } finally {
+      setzeLadezustand(false);
+    }
+  }
+
+  function ladeImHintergrund(verweisElement) {
+    if (!istNavigierbarerBlogVerweis(verweisElement)) {
+      return;
+    }
+
+    const zielAdresse = new URL(verweisElement.href, window.location.href);
+
+    if (geladeneDokumente.has(zielAdresse.href)) {
+      return;
+    }
+
+    fetch(zielAdresse.href, { cache: "no-cache", credentials: "same-origin" })
+      .then((antwort) => (antwort.ok ? antwort.text() : ""))
+      .then((quelltext) => {
+        if (!quelltext) {
+          return;
+        }
+
+        const parser = new DOMParser();
+        geladeneDokumente.set(zielAdresse.href, parser.parseFromString(quelltext, "text/html"));
+      })
+      .catch(() => {});
+  }
+
+  document.addEventListener("click", function (ereignis) {
+    const verweisElement = ermittleVerweisElement(ereignis);
+
+    if (!istNavigierbarerBlogVerweis(verweisElement, ereignis)) {
+      return;
+    }
+
+    ereignis.preventDefault();
+    navigiereZu(verweisElement);
+  });
+
+  document.addEventListener(
+    "pointerenter",
+    function (ereignis) {
+      ladeImHintergrund(ermittleVerweisElement(ereignis));
+    },
+    true
+  );
+
+  document.addEventListener(
+    "focusin",
+    function (ereignis) {
+      ladeImHintergrund(ermittleVerweisElement(ereignis));
+    },
+    true
+  );
+
+  window.addEventListener("popstate", function () {
+    if (!istBlogAdresse(new URL(window.location.href))) {
+      window.location.reload();
+      return;
+    }
+
+    ladeDokument(new URL(window.location.href))
+      .then((zielDokument) => {
+        const aktuelleAdresse = new URL(window.location.href);
+        ersetzeDokumentteile(zielDokument, aktuelleAdresse, false);
+      })
+      .catch(() => {
+        window.location.reload();
+      });
+  });
+})();

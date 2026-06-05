@@ -31,5 +31,3 @@ permalink: /diy-magic/suche/
 <noscript>
   <p class="empty-state">Die Suche benötigt JavaScript. Archiv und Themenübersicht funktionieren ohne JavaScript.</p>
 </noscript>
-
-<script src="{{ '/assets/diy-magic/js/search.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>

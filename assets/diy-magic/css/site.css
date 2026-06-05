@@ -39,6 +39,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+html.diymagic-client-navigation-active,
+html.diymagic-client-navigation-active body {
+    cursor: progress;
+}
+
 a {
     color: var(--accent);
     text-decoration: none;

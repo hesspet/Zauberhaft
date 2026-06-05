@@ -1,4 +1,5 @@
 (function () {
+  function initializeSearch() {
   const config = document.getElementById("search-config");
   const searchInput = document.getElementById("search-input");
   const typeFilter = document.getElementById("type-filter");
@@ -8,6 +9,12 @@
   if (!config || !searchInput || !typeFilter || !yearFilter || !resultsElement) {
     return;
   }
+
+  if (config.dataset.searchInitialized === "true") {
+    return;
+  }
+
+  config.dataset.searchInitialized = "true";
 
   const searchUrl = config.dataset.searchUrl;
   let articles = [];
@@ -142,4 +149,8 @@
   searchInput.addEventListener("input", updateResults);
   typeFilter.addEventListener("change", updateResults);
   yearFilter.addEventListener("change", updateResults);
+  }
+
+  window.zauberhaftInitialisiereSuche = initializeSearch;
+  initializeSearch();
 })();
