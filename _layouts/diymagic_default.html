@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'de-DE' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ '/assets/diy-magic/css/site.css' | relative_url }}">
+    {% seo %}
+    {% feed_meta %}
+  </head>
+  <body>
+    {% include diymagic_header.html %}
+    <main id="inhalt" class="site-main">
+      {{ content }}
+    </main>
+    {% include diymagic_footer.html %}
+    <script src="{{ '/assets/diy-magic/js/site-version.js' | relative_url }}" data-version-url="{{ '/diy-magic/site-version.json' | relative_url }}" defer></script>
+  </body>
+</html>

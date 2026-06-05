@@ -13,6 +13,13 @@ url: "https://hesspet.github.io"
 # Build-Einstellungen
 markdown: kramdown
 highlighter: rouge
+future: true
+
+# Collections
+collections:
+  artikel:
+    output: true
+    permalink: /diy-magic/artikel/:name.html
 
 # Sass
 sass:
@@ -34,6 +41,11 @@ defaults:
       path: ""
     values:
       layout: default
+  - scope:
+      path: ""
+      type: "artikel"
+    values:
+      layout: "diymagic_artikel"
 
 # Plugins (GitHub Pages erlaubt nur bestimmte)
 plugins:
