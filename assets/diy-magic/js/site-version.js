@@ -32,7 +32,10 @@
     }
 
     window.sessionStorage.setItem(reloadKey, reloadMarker);
-    window.location.reload();
+    // Verzögerung, damit die Seite erst sichtbar wird
+    setTimeout(function () {
+      window.location.reload();
+    }, 800);
   }
 
   function checkVersion() {
