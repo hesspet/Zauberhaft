@@ -1,8 +1,8 @@
 ---
-layout: diymagic_page
+layout: blog_page
 title: "Impressum"
 summary: "Rechtliche Anbieterkennzeichnung für DiyMagic."
-permalink: /diy-magic/impressum/
+permalink: /blog/impressum/
 ---
 
 Verantwortlich für diese Seiten:

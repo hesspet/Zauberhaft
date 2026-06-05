@@ -3,8 +3,8 @@ $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $articleDirectory = Join-Path $projectRoot "_artikel"
 $dataDirectory = Join-Path $projectRoot "_data"
-$articleTypesPath = Join-Path $dataDirectory "diymagic_article_types.yml"
-$topicsPath = Join-Path $dataDirectory "diymagic_topics.yml"
+$articleTypesPath = Join-Path $dataDirectory "blog_article_types.yml"
+$topicsPath = Join-Path $dataDirectory "blog_topics.yml"
 $allowedStatuses = @("entwurf", "fertig", "überarbeitet", "archiviert")
 $requiredFields = @("title", "date", "type", "topics", "summary", "status")
 $errors = New-Object System.Collections.Generic.List[string]
@@ -181,8 +181,8 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
 
     if ($metadata.ContainsKey("permalink") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["permalink"])) {
       $permalink = [string]$metadata["permalink"]
-      if ($permalink -notmatch "^/diy-magic/artikel/.+\.html$") {
-        Add-Error "${relativeName}: permalink muss mit /diy-magic/artikel/ beginnen und mit .html enden."
+      if ($permalink -notmatch "^/blog/artikel/.+\.html$") {
+        Add-Error "${relativeName}: permalink muss mit /blog/artikel/ beginnen und mit .html enden."
       }
     }
 

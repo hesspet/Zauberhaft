@@ -16,7 +16,7 @@ Das erzeugt:
 
 ```text
 _artikel/YYYY-MM-DD-titel-des-artikels.md
-assets/diy-magic/images/articles/titel-des-artikels/
+assets/blog/images/articles/titel-des-artikels/
 ```
 
 ## 2. Metadaten prüfen
@@ -46,7 +46,7 @@ Artikel mit `status: "entwurf"` erscheinen nicht auf Startseite, Archiv, Themens
 Der Wert bei `type` muss in dieser Datei vorhanden sein:
 
 ```text
-_data/diymagic_article_types.yml
+_data/blog_article_types.yml
 ```
 
 Erlaubte Startwerte sind:
@@ -65,7 +65,7 @@ Erfahrungsbericht
 Jedes Thema aus dem Artikel muss in dieser Datei stehen:
 
 ```text
-_data/diymagic_topics.yml
+_data/blog_topics.yml
 ```
 
 Wenn du ein neues Thema verwenden willst, trage es dort zuerst ein, zum Beispiel:
@@ -86,16 +86,16 @@ topics:
 Bilder zum Artikel gehören hierhin:
 
 ```text
-assets/diy-magic/images/articles/<artikel-slug>/
+assets/blog/images/articles/<artikel-slug>/
 ```
 
 Im Artikel referenzierst du sie so:
 
 ```markdown
-![Beschreibung des Bildes](/assets/diy-magic/images/articles/artikel-slug/bild.webp)
+![Beschreibung des Bildes](/assets/blog/images/articles/artikel-slug/bild.webp)
 ```
 
-Diese Schreibweise ist für Typora gedacht. Sie funktioniert auch auf GitHub Pages, weil Artikel unter `/diy-magic/artikel/<slug>.html` veröffentlicht werden.
+Diese Schreibweise ist für Typora gedacht. Sie funktioniert auch auf GitHub Pages, weil Artikel unter `/blog/artikel/<slug>.html` veröffentlicht werden.
 
 ## 6. Artikel schreiben
 

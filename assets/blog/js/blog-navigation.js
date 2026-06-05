@@ -1,8 +1,8 @@
 (function () {
-  const blogPfadMuster = /\/diy-magic(?:\/|$)/;
-  const blogStartVerweis = document.querySelector("a[href*='/diy-magic/']");
+  const blogPfadMuster = /\/blog(?:\/|$)/;
+  const blogStartVerweis = document.querySelector("a[href*='/blog/']");
   const basisPfad = blogStartVerweis
-    ? new URL(blogStartVerweis.href, window.location.href).pathname.replace(/diy-magic\/.*$/, "")
+    ? new URL(blogStartVerweis.href, window.location.href).pathname.replace(/blog\/.*$/, "")
     : "/";
   const geladeneDokumente = new Map();
   let laufendeAnfrage = null;
@@ -14,7 +14,7 @@
   function istInterneSeitenAdresse(adresse) {
     return (
       adresse.origin === window.location.origin &&
-      (adresse.pathname === basisPfad || adresse.pathname.startsWith(`${basisPfad}diy-magic/`))
+      (adresse.pathname === basisPfad || adresse.pathname.startsWith(`${basisPfad}blog/`))
     );
   }
 
@@ -68,7 +68,7 @@
   }
 
   function setzeLadezustand(istAktiv) {
-    document.documentElement.classList.toggle("diymagic-client-navigation-active", istAktiv);
+    document.documentElement.classList.toggle("blog-client-navigation-active", istAktiv);
   }
 
   async function ladeDokument(zielAdresse) {
@@ -120,7 +120,7 @@
       const stylesheet = document.createElement("link");
       stylesheet.rel = "stylesheet";
       stylesheet.href = stylesheetAdresse;
-      stylesheet.dataset.diymagicClientNavigation = "true";
+      stylesheet.dataset.blogClientNavigation = "true";
       stylesheet.addEventListener("load", resolve, { once: true });
       stylesheet.addEventListener("error", resolve, { once: true });
       document.head.appendChild(stylesheet);
@@ -175,7 +175,7 @@
     entferneAlteStylesheets(aktiveStylesheetAdressen);
 
     if (sollVerlaufSchreiben) {
-      window.history.pushState({ diymagicNavigation: true }, "", zielAdresse.href);
+      window.history.pushState({ blogNavigation: true }, "", zielAdresse.href);
     }
 
     scrolleZumZiel(zielAdresse);
@@ -185,7 +185,7 @@
     }
 
     document.dispatchEvent(
-      new CustomEvent("diymagic:navigation", {
+      new CustomEvent("blog:navigation", {
         detail: { url: zielAdresse.href },
       })
     );

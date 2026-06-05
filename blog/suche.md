@@ -1,13 +1,13 @@
 ---
-layout: diymagic_page
+layout: blog_page
 title: "Suche"
 summary: "Lokale Suche im Artikelarchiv."
-permalink: /diy-magic/suche/
+permalink: /blog/suche/
 ---
 
 {% assign asset_version = site.github.build_revision | default: site.time %}
 
-<div id="search-config" data-search-url="{{ '/diy-magic/search.json' | relative_url }}?v={{ asset_version | uri_escape }}"></div>
+<div id="search-config" data-search-url="{{ '/blog/search.json' | relative_url }}?v={{ asset_version | uri_escape }}"></div>
 
 <form class="search-controls" role="search">
   <label for="search-input">Suchbegriff</label>

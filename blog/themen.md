@@ -1,21 +1,21 @@
 ---
-layout: diymagic_page
+layout: blog_page
 title: "Themen"
 summary: "Artikel nach kontrollierten Themen sortiert."
-permalink: /diy-magic/themen/
+permalink: /blog/themen/
 ---
 
 {% assign artikel_sortiert = site.artikel | where_exp: "item", "item.status != 'entwurf'" | sort: "date" | reverse %}
 
 <div class="topic-sections">
-  {% for topic in site.data.diymagic_topics %}
+  {% for topic in site.data.blog_topics %}
     {% assign passende_artikel = artikel_sortiert | where_exp: "item", "item.topics contains topic" %}
     {% if passende_artikel.size > 0 %}
       <section class="topic-section" id="{{ topic | slugify }}">
         <h2>{{ topic }}</h2>
         <div class="article-grid">
           {% for artikel in passende_artikel %}
-            {% include diymagic_article-card.html article=artikel %}
+            {% include blog_article-card.html article=artikel %}
           {% endfor %}
         </div>
       </section>

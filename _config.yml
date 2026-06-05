@@ -20,7 +20,7 @@ future: true
 collections:
   artikel:
     output: true
-    permalink: /diy-magic/artikel/:name.html
+    permalink: /blog/artikel/:name.html
 
 # Sass
 sass:
@@ -48,7 +48,7 @@ defaults:
       path: ""
       type: "artikel"
     values:
-      layout: "diymagic_artikel"
+      layout: "blog_artikel"
 
 # Plugins (GitHub Pages erlaubt nur bestimmte)
 plugins:

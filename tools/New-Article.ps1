@@ -40,7 +40,7 @@ if ([string]::IsNullOrWhiteSpace($slug)) {
 }
 
 $articleDirectory = Join-Path $projectRoot "_artikel"
-$imageDirectory = Join-Path (Join-Path (Join-Path (Join-Path (Join-Path $projectRoot "assets") "diy-magic") "images") "articles") $slug
+$imageDirectory = Join-Path (Join-Path (Join-Path (Join-Path (Join-Path $projectRoot "assets") "blog") "images") "articles") $slug
 $articlePath = Join-Path $articleDirectory "$dateText-$slug.md"
 
 if (Test-Path -LiteralPath $articlePath) {
@@ -62,7 +62,7 @@ $escapedSummary = Escape-YamlValue -Value $Summary
 
 $content = @"
 ---
-layout: diymagic_artikel
+layout: blog_artikel
 title: "$escapedTitle"
 date: $dateText
 updated:

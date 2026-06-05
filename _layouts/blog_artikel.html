@@ -1,5 +1,5 @@
 ---
-layout: diymagic_default
+layout: blog_default
 ---
 <article class="article-shell">
   <header class="article-header">
@@ -17,7 +17,7 @@ layout: diymagic_default
     {% if page.summary %}
       <p class="article-summary">{{ page.summary }}</p>
     {% endif %}
-    {% include diymagic_tag-list.html topics=page.topics %}
+    {% include blog_tag-list.html topics=page.topics %}
     {% if page.hero %}
       <img class="article-hero" src="{{ page.hero | relative_url }}" alt="">
     {% endif %}

@@ -1,8 +1,8 @@
 ---
-layout: diymagic_page
+layout: blog_page
 title: "Über"
 summary: "Worum es bei DiyMagic geht."
-permalink: /diy-magic/ueber/
+permalink: /blog/ueber/
 ---
 
 DiyMagic ist ein statisches Archiv für Anleitungen, Berichte, Projektnotizen und Referenzen. Die Inhalte liegen als Markdown-Dateien im Repository und bleiben dadurch langfristig lesbar.

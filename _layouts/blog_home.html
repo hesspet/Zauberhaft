@@ -1,5 +1,5 @@
 ---
-layout: diymagic_default
+layout: blog_default
 ---
 {% assign artikel_nach_aktualisierung = site.artikel | sort: "updated" | reverse %}
 {% assign artikel_nach_datum = site.artikel | sort: "date" | reverse %}
@@ -13,7 +13,7 @@ layout: diymagic_default
   <section class="latest-updates" aria-labelledby="latest-updates-title">
     <div class="section-heading">
       <h2 id="latest-updates-title">Zuletzt aktualisierte Artikel</h2>
-      <a href="{{ '/diy-magic/archiv/' | relative_url }}">Archiv anzeigen</a>
+      <a href="{{ '/blog/archiv/' | relative_url }}">Archiv anzeigen</a>
     </div>
 
     {% assign artikel_zaehler = 0 %}

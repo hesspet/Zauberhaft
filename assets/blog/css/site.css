@@ -39,8 +39,8 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-html.diymagic-client-navigation-active,
-html.diymagic-client-navigation-active body {
+html.blog-client-navigation-active,
+html.blog-client-navigation-active body {
     cursor: progress;
 }
 
@@ -58,12 +58,12 @@ img {
 }
 
 /* ── Main Navigation (Zauberhaft) ── */
-.diymagic-shell-header {
+.blog-shell-header {
     background: #0f0a1a;
     border-bottom: 1px solid var(--border);
 }
 
-.diymagic-shell-header__inner {
+.blog-shell-header__inner {
     display: grid;
     gap: 0.65rem;
     max-width: var(--max-width);
@@ -99,7 +99,7 @@ img {
 }
 
 /* ── DiyMagic Sub-Navigation ── */
-.diymagic-blog-navigation {
+.blog-sub-navigation {
     display: flex;
     justify-content: center;
     padding-top: 0.65rem;
@@ -715,7 +715,7 @@ img {
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
-    .diymagic-shell-header__inner {
+    .blog-shell-header__inner {
         gap: 0.55rem;
         padding: 0.75rem 1.25rem 0.85rem;
     }

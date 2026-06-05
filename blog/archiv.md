@@ -1,8 +1,8 @@
 ---
-layout: diymagic_page
+layout: blog_page
 title: "Archiv"
 summary: "Alle veröffentlichten Artikel nach Jahr sortiert."
-permalink: /diy-magic/archiv/
+permalink: /blog/archiv/
 ---
 
 {% assign artikel_sortiert = site.artikel | where_exp: "item", "item.status != 'entwurf'" | sort: "date" | reverse %}
@@ -18,7 +18,7 @@ permalink: /diy-magic/archiv/
           <h2>{{ jahr }}</h2>
         {% assign aktuelles_jahr = jahr %}
       {% endif %}
-      {% include diymagic_article-card.html article=artikel %}
+      {% include blog_article-card.html article=artikel %}
       {% if forloop.last %}</section>{% endif %}
     {% endfor %}
   </div>

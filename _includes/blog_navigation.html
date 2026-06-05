@@ -1,6 +1,6 @@
 <nav class="site-navigation" aria-label="Blog-Navigation">
   <ul>
-    {% for item in site.data.diymagic_site_navigation %}
+    {% for item in site.data.blog_site_navigation %}
       <li>
         <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
       </li>

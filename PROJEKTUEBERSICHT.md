@@ -15,7 +15,7 @@ Stand: 05.06.2026
 - **Templates:** Liquid — Layouts und Includes, gemeinsame Navigation
 - **Daten:** YAML-Dateien für Projekte, Downloads, Blog-Navigation, Artikeltypen, Themen
 - **Sprache:** Deutsch (`lang: de`, `timezone: Europe/Berlin`)
-- **Blog:** Jekyll Collection `artikel` mit eigenem Layout-Set (`diymagic_*`)
+- **Blog:** Jekyll Collection `artikel` mit eigenem Layout-Set (`blog_*`)
 - **Suche:** Clientseitig via `search.json` + `search.js`
 - **Clientseitige Navigation:** `blog-navigation.js` fängt Blog-interne Links und Hauptmenü-Links aus dem Blog heraus ab, lädt Zielseiten per `fetch`, lädt Ziel-CSS vor und ersetzt den Dokumentkörper per History API
 - **Cache-Busting:** CSS, Blog-JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
@@ -28,7 +28,7 @@ Stand: 05.06.2026
 ┌─ Hauptnavigation (alle Seiten) ────────────────────┐
 │  Start  │  Projekte  │  Downloads  │  Blog  │  Impressum  │
 └────────────────────────────────────────────────────┘
-┌─ Blog-Unternavigation (nur /diy-magic/) ───────────┐
+┌─ Blog-Unternavigation (nur /blog/) ───────────┐
 │        Archiv  │  Themen  │  Suche  │  Über         │
 └────────────────────────────────────────────────────┘
 ```
@@ -46,10 +46,10 @@ Zauberhaft/
 ├── index.html                   # Haupt-Landingpage (layout: default)
 ├── _layouts/
 │   ├── default.html             # Hauptlayout — Landingpage
-│   ├── diymagic_default.html    # Blog-Basislayout — mit stabilem Header und versionierten Blog-Assets
-│   ├── diymagic_home.html       # Blog-Startseite
-│   ├── diymagic_artikel.html    # Einzelartikel
-│   └── diymagic_page.html       # Blog-Standardseiten (Archiv, Themen, …)
+│   ├── blog_default.html    # Blog-Basislayout — mit stabilem Header und versionierten Blog-Assets
+│   ├── blog_home.html       # Blog-Startseite
+│   ├── blog_artikel.html    # Einzelartikel
+│   └── blog_page.html       # Blog-Standardseiten (Archiv, Themen, …)
 ├── _includes/
 │   ├── head.html                # <head> für Hauptseite (Meta, CSS, View-Transition)
 │   ├── nav.html                 # Hauptnavigation (alle Seiten)
@@ -58,22 +58,22 @@ Zauberhaft/
 │   ├── downloads.html           # Download-Kapitel (Accordion) aus _data/downloads.yml
 │   ├── impressum.html           # Impressum
 │   ├── footer.html              # Footer (Copyright + Build-Datum)
-│   ├── diymagic_header.html     # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
-│   ├── diymagic_footer.html     # Blog-Footer (identisch zum Hauptfooter)
-│   ├── diymagic_navigation.html # Blog-Nav-Links (aus diymagic_site_navigation.yml)
-│   ├── diymagic_article-card.html # Artikelkarte für Listen
-│   └── diymagic_tag-list.html   # Themen-Tags
+│   ├── blog_header.html     # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
+│   ├── blog_footer.html     # Blog-Footer (identisch zum Hauptfooter)
+│   ├── blog_navigation.html # Blog-Nav-Links (aus blog_site_navigation.yml)
+│   ├── blog_article-card.html # Artikelkarte für Listen
+│   └── blog_tag-list.html   # Themen-Tags
 ├── _data/
 │   ├── projects.yml             # Projektliste
 │   ├── downloads.yml            # Download-Kapitel mit Unterkapiteln
-│   ├── diymagic_site_navigation.yml # Blog-Navigation (Archiv, Themen, Suche, Über)
-│   ├── diymagic_article_types.yml   # Erlaubte Artikeltypen
-│   └── diymagic_topics.yml      # Kontrollierte Themenliste
+│   ├── blog_site_navigation.yml # Blog-Navigation (Archiv, Themen, Suche, Über)
+│   ├── blog_article_types.yml   # Erlaubte Artikeltypen
+│   └── blog_topics.yml      # Kontrollierte Themenliste
 ├── _artikel/                    # Blog-Artikel (Jekyll Collection)
 │   ├── 2026-05-16-esp32-c3-trinket.md
 │   ├── 2026-05-26-ds-prompter.md
 │   └── 2026-05-26-…-bleprompter-….md
-├── diy-magic/                   # Blog-Seiten
+├── blog/                   # Blog-Seiten
 │   ├── index.md                 # Blog-Start
 │   ├── archiv.md                # Artikel-Archiv (nach Jahren)
 │   ├── themen.md                # Themen-Übersicht
@@ -83,7 +83,7 @@ Zauberhaft/
 │   └── search.json              # Suchindex (Liquid-generiert)
 ├── assets/
 │   ├── css/main.scss            # Hauptseiten-CSS (Dark-Theme)
-│   ├── diy-magic/
+│   ├── blog/
 │   │   ├── css/site.css         # Blog-CSS (Dark-Theme, Accordion, View-Transition deaktiviert)
 │   │   ├── js/
 │   │   │   ├── blog-navigation.js # Clientseitige Navigation Blog-intern und Blog → Hauptseite
@@ -121,7 +121,7 @@ Alle Daten in `_data/downloads.yml` — neue Kapitel/Einträge nur dort anlegen.
 1. Push nach `main` triggert GitHub Actions Workflow
 2. Workflow: `Validate-Articles.ps1` → Jekyll-Build → Deploy → Email
 3. Seite unter `https://hesspet.github.io/Zauberhaft/`
-4. Blog unter `https://hesspet.github.io/Zauberhaft/diy-magic/`
+4. Blog unter `https://hesspet.github.io/Zauberhaft/blog/`
 
 ## Email-Benachrichtigung
 
@@ -140,7 +140,7 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 ## Artikel-Workflow
 
 1. `.\tools\New-Article.ps1 -Title "…" -Type "…" -Topics "…" -Summary "…"`
-2. Artikel in `_artikel/` schreiben, Bilder nach `assets/diy-magic/images/articles/<slug>/`
+2. Artikel in `_artikel/` schreiben, Bilder nach `assets/blog/images/articles/<slug>/`
 3. `.\tools\Validate-Articles.ps1` vor dem Commit
 4. Push → automatischer Build + Deploy
 
@@ -157,9 +157,9 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 
 ## Clientseitige Navigation und Cache
 
-`assets/diy-magic/js/blog-navigation.js` ist eine progressive Verbesserung für den Blog:
+`assets/blog/js/blog-navigation.js` ist eine progressive Verbesserung für den Blog:
 
-- Blog-interne Links (`/diy-magic/...`) werden per `fetch` geladen.
+- Blog-interne Links (`/blog/...`) werden per `fetch` geladen.
 - Hauptmenü-Links vom Blog zur Hauptseite (`Start`, `Projekte`, `Downloads`, `Impressum`) werden ebenfalls clientseitig geladen.
 - Vor dem Austausch wird das Ziel-Stylesheet geladen; danach wird der `<body>` ersetzt und die URL per History API aktualisiert.
 - Bei Fehlern fällt die Navigation automatisch auf den normalen Seitenaufruf zurück.
@@ -177,4 +177,4 @@ Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, 
 - Zeilenumbruch: CR/LF (Windows)
 - Texte in UTF-8 ohne BOM
 - Projekte und Downloads ausschließlich über YAML-Daten verwalten
-- Artikel-Bildpfade relativ (`../../assets/diy-magic/images/…`)
+- Artikel-Bildpfade relativ (`../../assets/blog/images/…`)

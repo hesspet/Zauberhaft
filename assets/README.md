@@ -11,7 +11,7 @@ Solange kein Bild hinterlegt ist, wird der Platzhalter ausgeblendet und die Seit
 
 ## Blog-Assets
 
-Blog-spezifische Dateien liegen unter `assets/diy-magic/`:
+Blog-spezifische Dateien liegen unter `assets/blog/`:
 
 - `css/site.css`: Dark-Theme und Blog-Layout; View Transitions sind für den Blog deaktiviert.
 - `js/blog-navigation.js`: clientseitige Navigation für Blog-interne Links und Wechsel vom Blog zur Hauptseite.
