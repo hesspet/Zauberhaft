@@ -1,0 +1,75 @@
+# Zauberhaft — Projekt-Daten
+# Neue Projekte hier als weitere Einträge hinzufügen.
+# Die Reihenfolge bestimmt die Anzeige auf der Seite.
+
+- name: "Nasreddin's Secret Listener"
+  emoji: "🪄"
+  description: >
+    Der „Which Hand“-Trick elektronisch umgesetzt. Ein
+    ESP32-basierter Detektor mit Magnetometer — unter 50&nbsp;€
+    Materialkosten, benachrichtigt auf die Smartwatch.
+  tags:
+    - ESP32
+    - BLE
+    - Android
+    - Magnetometer
+  url: https://github.com/hesspet/Nasreddins-Secret-Listener
+
+- name: "Nasreddin's Camera Arcanum"
+  emoji: "📸"
+  description: >
+    Progressive Web App für magische Foto-Effekte. Person per
+    Body-Segmentation freistellen und Flügel, Geister oder
+    Skelette als Zwischenschicht einfügen.
+  tags:
+    - Blazor
+    - ".NET 9"
+    - TensorFlow.js
+    - PWA
+  url: https://github.com/hesspet/Nasreddins-Camera-Arcanum
+
+- name: "Nasreddin's Simple Peek Client&nbsp;2"
+  emoji: "📱"
+  description: >
+    Android-App zur Steuerung eines BLE-Prompters. Live-Video,
+    Karten-, Symbol- und ESP-Ansichten für die diskrete
+    Übermittlung von Informationen während der Vorführung.
+  tags:
+    - React Native
+    - Expo
+    - BLE
+    - Android
+  url: https://github.com/hesspet/Nasreddins-Simple-Peek-Client2
+
+- name: "Nasreddin's Magic Toolbox"
+  emoji: "🧰"
+  description: >
+    Kleine Helfer-App für einfache Zaubertricks mit dem
+    Smartphone. Unauffällig, schnell und immer dabei.
+  tags:
+    - Smartphone
+    - Helfer
+  url: https://github.com/hesspet/Nasreddins-Magic-Toolbox
+
+- name: "Nasreddin's Magic Card Identifier"
+  emoji: "🃏"
+  description: >
+    Spielkarten-Erkennung mit dem Smartphone. Die App
+    identifiziert Karten aus einem Kartenspiel und meldet
+    das Ergebnis diskret zurück.
+  tags:
+    - Bilderkennung
+    - Android
+  url: https://github.com/hesspet/Nasreddins-Magic-Card-Identifier
+
+- name: DiyMagic
+  emoji: "📝"
+  description: >
+    Mein statisches Artikelarchiv für Anleitungen, Berichte,
+    Projektnotizen und Referenzen zu Zauberei, Requisitenbau,
+    Holzarbeiten und Elektronik.
+  tags:
+    - Jekyll
+    - Markdown
+    - Archiv
+  url: https://github.com/hesspet/DiyMagic

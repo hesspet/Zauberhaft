@@ -1,0 +1,41 @@
+# Zauberhaft — Jekyll-Konfiguration für GitHub Pages
+title: Zauberhaft
+description: Peters verrückte Ideen — Startseite und Verteiler für DIY-Projekte rund um das Zaubern
+author: Peter Heß
+lang: de
+
+# URL-Einstellungen
+# Bei einem Projekt-Repository: baseurl = "/RepositoryName"
+# Bei einem User/Org-Repository (hesspet.github.io): baseurl = ""
+baseurl: "/Zauberhaft"
+url: "https://hesspet.github.io"
+
+# Build-Einstellungen
+markdown: kramdown
+highlighter: rouge
+
+# Sass
+sass:
+  style: compressed
+
+# Von der Ausgabe ausschließen
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - PROJEKTUEBERSICHT.md
+  - LaunchCodeWhaleHere.cmd
+  - vendor/
+
+# Defaults für Layouts
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Plugins (GitHub Pages erlaubt nur bestimmte)
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed

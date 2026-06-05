@@ -1,0 +1,22 @@
+# Zauberhaft — Download-Daten
+# Neue Download-Links hier hinzufügen.
+
+- name: "NSL Firmware & App"
+  emoji: "📦"
+  description: "ESP32-Firmware und Android Companion"
+  url: https://github.com/hesspet/Nasreddins-Secret-Listener/releases
+
+- name: "Peek Client APK"
+  emoji: "📱"
+  description: "Android-App für BLE Prompter"
+  url: https://github.com/hesspet/Nasreddins-Simple-Peek-Client2/releases
+
+- name: "Camera Arcanum (PWA)"
+  emoji: "🌐"
+  description: "Direkt im Browser nutzbar"
+  url: https://github.com/hesspet/Nasreddins-Camera-Arcanum
+
+- name: "DiyMagic Archiv"
+  emoji: "📚"
+  description: "Anleitungen & Artikel durchsuchen"
+  url: https://github.com/hesspet/DiyMagic
