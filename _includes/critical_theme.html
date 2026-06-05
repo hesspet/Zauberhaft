@@ -59,4 +59,104 @@
             animation: none;
         }
     }
+
+    .zauberhaft-navigation-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        background: #0f0a1a;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 80ms ease-out;
+    }
+
+    .zauberhaft-navigation-overlay.is-visible {
+        opacity: 1;
+    }
 </style>
+<script>
+    (function () {
+        const ueberblendungKennung = "zauberhaft-navigation-overlay";
+
+        function entferneNavigationsUeberblendung() {
+            const vorhandeneUeberblendung = document.getElementById(ueberblendungKennung);
+
+            if (vorhandeneUeberblendung) {
+                vorhandeneUeberblendung.remove();
+            }
+        }
+
+        function zeigeNavigationsUeberblendung() {
+            if (document.getElementById(ueberblendungKennung)) {
+                return;
+            }
+
+            document.documentElement.style.backgroundColor = "#0f0a1a";
+
+            if (document.body) {
+                document.body.style.backgroundColor = "#0f0a1a";
+            }
+
+            const navigationsUeberblendung = document.createElement("div");
+            navigationsUeberblendung.id = ueberblendungKennung;
+            navigationsUeberblendung.className = "zauberhaft-navigation-overlay";
+            navigationsUeberblendung.setAttribute("aria-hidden", "true");
+            document.documentElement.appendChild(navigationsUeberblendung);
+
+            window.requestAnimationFrame(function () {
+                navigationsUeberblendung.classList.add("is-visible");
+            });
+
+            window.setTimeout(entferneNavigationsUeberblendung, 4000);
+        }
+
+        function istInternerSeitenwechsel(verweisElement, ereignis) {
+            if (
+                ereignis.defaultPrevented ||
+                ereignis.button !== 0 ||
+                ereignis.metaKey ||
+                ereignis.ctrlKey ||
+                ereignis.shiftKey ||
+                ereignis.altKey ||
+                verweisElement.hasAttribute("download")
+            ) {
+                return false;
+            }
+
+            const zielFenster = verweisElement.getAttribute("target");
+
+            if (zielFenster && zielFenster !== "_self") {
+                return false;
+            }
+
+            const zielAdresse = new URL(verweisElement.href, window.location.href);
+
+            if (zielAdresse.origin !== window.location.origin) {
+                return false;
+            }
+
+            const istGleicheSeite =
+                zielAdresse.pathname === window.location.pathname &&
+                zielAdresse.search === window.location.search;
+
+            return !istGleicheSeite;
+        }
+
+        document.addEventListener(
+            "click",
+            function (ereignis) {
+                const verweisElement = ereignis.target.closest
+                    ? ereignis.target.closest("a[href]")
+                    : null;
+
+                if (verweisElement && istInternerSeitenwechsel(verweisElement, ereignis)) {
+                    zeigeNavigationsUeberblendung();
+                }
+            },
+            true
+        );
+
+        window.addEventListener("beforeunload", zeigeNavigationsUeberblendung);
+        window.addEventListener("pageshow", entferneNavigationsUeberblendung);
+    })();
+</script>
