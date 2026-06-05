@@ -146,6 +146,7 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 - **Eine gemeinsame Navigation** — kein isoliertes Blog-Menü
 - **Native HTML-Accordions** — kein JavaScript für Downloads
 - **Clientseitige Suche** — kein Server, kein externer Dienst
+- **Cache-Busting über Asset-URLs** — CSS, Such-JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **Blog ohne View Transition API** — Blog-Navigation ist stabil aufgebaut und deaktiviert Browser-Übergänge gezielt
 - **Inline dark mode hints** — `color-scheme`, `theme-color`, Inline-Styles
 

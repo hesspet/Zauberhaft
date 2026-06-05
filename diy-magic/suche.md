@@ -5,7 +5,9 @@ summary: "Lokale Suche im Artikelarchiv."
 permalink: /diy-magic/suche/
 ---
 
-<div id="search-config" data-search-url="{{ '/diy-magic/search.json' | relative_url }}"></div>
+{% assign asset_version = site.github.build_revision | default: site.time %}
+
+<div id="search-config" data-search-url="{{ '/diy-magic/search.json' | relative_url }}?v={{ asset_version | uri_escape }}"></div>
 
 <form class="search-controls" role="search">
   <label for="search-input">Suchbegriff</label>
@@ -30,4 +32,4 @@ permalink: /diy-magic/suche/
   <p class="empty-state">Die Suche benötigt JavaScript. Archiv und Themenübersicht funktionieren ohne JavaScript.</p>
 </noscript>
 
-<script src="{{ '/assets/diy-magic/js/search.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/diy-magic/js/search.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>

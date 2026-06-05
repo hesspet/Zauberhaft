@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="{{ site.lang | default: 'de-DE' }}" style="background-color:#0f0a1a;color-scheme:dark">
   <head>
+    {% assign asset_version = site.github.build_revision | default: site.time %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0f0a1a">
     {% include critical_theme.html navigation_transitions=false %}
-    <link rel="stylesheet" href="{{ '/assets/diy-magic/css/site.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/diy-magic/css/site.css' | relative_url }}?v={{ asset_version | uri_escape }}">
     {% seo %}
     {% feed_meta %}
   </head>
