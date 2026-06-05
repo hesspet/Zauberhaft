@@ -1,4 +1,4 @@
-﻿---
+---
 layout: diymagic_artikel
 title: "2026-05-26 BlePrompter Smartphone Client - Ein paar Screenshots"
 date: 2026-05-26
@@ -14,7 +14,6 @@ summary: "Eine erste Vorstellung der Bedienung des BlePrompter Smartphone Client
 hero:
 status: "fertig"
 difficulty:
-
 ---
 
 # BlePrompter Smartphone Client - Ein paar Screenshots

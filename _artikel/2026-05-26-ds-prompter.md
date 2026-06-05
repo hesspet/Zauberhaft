@@ -1,4 +1,4 @@
-﻿---
+---
 layout: diymagic_artikel
 title: "DS Prompter"
 date: 2026-05-26
@@ -15,7 +15,6 @@ summary: "Das Eckige muss ins Runde. Weitere Prompter Variante!"
 hero:
 status: "fertig"
 difficulty:
-
 ---
 
 # 2026-04-24 Das Eckige muss ins Runde. Weitere Prompter Variante!

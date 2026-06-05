@@ -32,7 +32,9 @@ exclude:
   - LICENSE
   - README.md
   - PROJEKTUEBERSICHT.md
+  - HowTo.md
   - LaunchCodeWhaleHere.cmd
+  - tools/
   - vendor/
 
 # Defaults für Layouts
