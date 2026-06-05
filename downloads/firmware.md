@@ -17,6 +17,12 @@ permalink: /downloads/firmware/
             &bdquo;Installieren&ldquo; &ouml;ffnet den ESP Web Tools-Dialog, der
             die Firmware direkt auf deinen Controller schreibt.
         </p>
+        <p>
+            <strong>Hinweis:</strong> Diese Funktion nutzt die Web Serial API und
+            steht nur auf Desktop-Rechnern mit Windows, macOS oder Linux zur
+            Verf&uuml;gung. Mobile Ger&auml;te (Android, iOS) werden nicht
+            unterst&uuml;tzt.
+        </p>
     </div>
 
     {% if site.data.firmware and site.data.firmware.projects %}
