@@ -8,19 +8,6 @@
       description: "Direkt im Browser nutzbar"
       url: https://github.com/hesspet/Nasreddins-Camera-Arcanum
 
-- chapter: Firmware zur direkten Installation
-  subchapters:
-    - name: BlePrompter
-      items:
-        - name: "NSL Firmware & App"
-          emoji: "📦"
-          description: "ESP32-Firmware und Android Companion"
-          url: https://github.com/hesspet/Nasreddins-Secret-Listener/releases
-        - name: "Peek Client APK"
-          emoji: "📱"
-          description: "Android-App für BLE Prompter"
-          url: https://github.com/hesspet/Nasreddins-Simple-Peek-Client2/releases
-
 - chapter: Texte
   items:
     - name: "DiyMagic Archiv"

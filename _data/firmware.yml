@@ -1,0 +1,20 @@
+# Zauberhaft — Firmware-Daten
+# Jedes Projekt kann mehrere Firmware-Varianten anbieten.
+# Firmware-Dateien (.bin) liegen unter assets/firmware/<projekt-slug>/<variant-slug>/
+# Zu jeder Variante gehört eine README.md mit Release-Informationen.
+
+projects:
+  - name: BlePrompter
+    slug: bleprompter
+    description: BLE Prompter Firmware f&uuml;r ESP32-C3
+    chip_family: ESP32-C3
+    variants:
+      - name: Release 1
+        slug: release-1
+        description: Stabile Version f&uuml;r den produktiven Einsatz
+      - name: Debug
+        slug: debug
+        description: Debug-Version mit serieller Log-Ausgabe
+      - name: Test
+        slug: test
+        description: Experimentelle Features zum Ausprobieren

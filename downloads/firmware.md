@@ -1,8 +1,7 @@
 ---
-layout: downloads
-title: Firmware &amp; Apps
+layout: esp32_firmware
+title: ESP32 Firmware
 permalink: /downloads/firmware/
-chapter: Firmware zur direkten Installation
 ---
 
 <div class="downloads-detail">
@@ -10,35 +9,56 @@ chapter: Firmware zur direkten Installation
 
     <div class="downloads-beschreibung">
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Hier findest du Firmware f&uuml;r ESP32-Mikrocontroller zum direkten
+            Flashen &uuml;ber den Browser &mdash; kein zus&auml;tzliches Tool n&ouml;tig.
         </p>
         <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-            qui officia deserunt mollit anim id est laborum.
+            W&auml;hle ein Projekt und eine Variante aus. Ein Klick auf
+            &bdquo;Installieren&ldquo; &ouml;ffnet den ESP Web Tools-Dialog, der
+            die Firmware direkt auf deinen Controller schreibt.
         </p>
     </div>
 
-    {% for chapter in site.data.downloads %}
-        {% if chapter.chapter == page.chapter %}
-            {% for sub in chapter.subchapters %}
-            <h2 class="downloads-subtitel">{{ sub.name }}</h2>
-            <div class="dl-grid">
-                {% for dl in sub.items %}
-                <a class="dl-item" href="{{ dl.url }}" target="_blank" rel="noopener">
-                    <span class="dl-icon">{{ dl.emoji }}</span>
-                    <span class="dl-info">
-                        <span class="dl-name">{{ dl.name }}</span>
-                        <span class="dl-desc">{{ dl.description }}</span>
-                    </span>
-                </a>
-                {% endfor %}
+    {% if site.data.firmware and site.data.firmware.projects %}
+        {% for project in site.data.firmware.projects %}
+        <div class="firmware-project">
+            <h2 class="firmware-project-name">{{ project.name }}</h2>
+            <p class="firmware-project-desc">{{ project.description }}</p>
+
+            {% for variant in project.variants %}
+            <div class="firmware-variant">
+                <div class="firmware-variant-info">
+                    <div class="firmware-variant-name">{{ variant.name }}</div>
+                    <div class="firmware-variant-desc">{{ variant.description }}</div>
+                </div>
+                <div class="firmware-variant-actions">
+                    <a class="firmware-readme-link"
+                       href="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/README.md' | relative_url }}"
+                       target="_blank"
+                       title="Versionsinformationen zu {{ variant.name }}">
+                        &#x2139;&#xfe0f; Info
+                    </a>
+                    <esp-web-install-button
+                        manifest="{{ '/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}">
+                        <button slot="activate" class="firmware-install-button">
+                            &#x1F4E5; Installieren
+                        </button>
+                        <span slot="unsupported">
+                            Dein Browser unterst&uuml;tzt Web Serial nicht.
+                            Bitte Chrome oder Edge verwenden.
+                        </span>
+                        <span slot="not-allowed">
+                            Bitte diese Seite &uuml;ber HTTPS &ouml;ffnen.
+                        </span>
+                    </esp-web-install-button>
+                </div>
             </div>
             {% endfor %}
-        {% endif %}
-    {% endfor %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="dl-empty">Noch keine Firmware hinterlegt. Schau sp&auml;ter wieder vorbei.</p>
+    {% endif %}
 
     <p class="downloads-zurueck">
         <a href="{{ '/downloads/' | relative_url }}">&larr; Zur&uuml;ck zur &Uuml;bersicht</a>

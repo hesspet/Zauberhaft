@@ -21,8 +21,8 @@ permalink: /downloads/
 
         <div class="card">
             <div class="card-icon">📦</div>
-            <h3>Firmware &amp; Apps</h3>
-            <p>Firmware f&uuml;r ESP32-Mikrocontroller und Companion-Apps f&uuml;r Android. Alles zum direkten Flashen und Installieren.</p>
+            <h3>ESP32 Firmware</h3>
+            <p>Firmware f&uuml;r ESP32-Mikrocontroller direkt &uuml;ber den Browser flashen &mdash; mit ESP Web Tools, ohne zus&auml;tzliche Software.</p>
             <a class="card-link" href="{{ '/downloads/firmware/' | relative_url }}">Zur &Uuml;bersicht &rarr;</a>
         </div>
 
