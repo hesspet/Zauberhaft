@@ -17,6 +17,8 @@ Stand: 05.06.2026
 - **Sprache:** Deutsch (`lang: de`, `timezone: Europe/Berlin`)
 - **Blog:** Jekyll Collection `artikel` mit eigenem Layout-Set (`diymagic_*`)
 - **Suche:** Clientseitig via `search.json` + `search.js`
+- **Clientseitige Navigation:** `blog-navigation.js` fängt Blog-interne Links und Hauptmenü-Links aus dem Blog heraus ab, lädt Zielseiten per `fetch`, lädt Ziel-CSS vor und ersetzt den Dokumentkörper per History API
+- **Cache-Busting:** CSS, Blog-JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **CI:** GitHub Actions mit Artikelvalidierung, Jekyll-Build und Email-Benachrichtigung
 - **Abhängigkeiten:** `Gemfile` mit `github-pages`-Gem (nur für lokale Entwicklung)
 
@@ -33,6 +35,7 @@ Stand: 05.06.2026
 
 - Hauptnav-Links funktionieren von jeder Seite aus (absolute Pfade mit `relative_url`)
 - Blog-Seiten nutzen einen stabilen gemeinsamen Blog-Header mit Hauptnavigation und Blog-Unternavigation
+- Im Blog werden interne Blog-Links und Hauptmenü-Wechsel zur Hauptseite clientseitig geladen; ohne JavaScript bleiben es normale Links
 - Footer einheitlich auf allen Seiten mit Build-Datum und Zeitzone
 
 ## Projektstruktur
@@ -43,7 +46,7 @@ Zauberhaft/
 ├── index.html                   # Haupt-Landingpage (layout: default)
 ├── _layouts/
 │   ├── default.html             # Hauptlayout — Landingpage
-│   ├── diymagic_default.html    # Blog-Basislayout — mit Hauptnav + Unternav
+│   ├── diymagic_default.html    # Blog-Basislayout — mit stabilem Header und versionierten Blog-Assets
 │   ├── diymagic_home.html       # Blog-Startseite
 │   ├── diymagic_artikel.html    # Einzelartikel
 │   └── diymagic_page.html       # Blog-Standardseiten (Archiv, Themen, …)
@@ -81,7 +84,7 @@ Zauberhaft/
 ├── assets/
 │   ├── css/main.scss            # Hauptseiten-CSS (Dark-Theme)
 │   ├── diy-magic/
-│   │   ├── css/site.css         # Blog-CSS (Dark-Theme, Accordion)
+│   │   ├── css/site.css         # Blog-CSS (Dark-Theme, Accordion, View-Transition deaktiviert)
 │   │   ├── js/
 │   │   │   ├── blog-navigation.js # Clientseitige Navigation Blog-intern und Blog → Hauptseite
 │   │   │   └── search.js        # Clientseitige Suche
@@ -151,6 +154,20 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 - **Cache-Busting über Asset-URLs** — CSS, Such-JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **Blog ohne View Transition API** — Blog-Navigation ist stabil aufgebaut und deaktiviert Browser-Übergänge gezielt
 - **Inline dark mode hints** — `color-scheme`, `theme-color`, Inline-Styles
+
+## Clientseitige Navigation und Cache
+
+`assets/diy-magic/js/blog-navigation.js` ist eine progressive Verbesserung für den Blog:
+
+- Blog-interne Links (`/diy-magic/...`) werden per `fetch` geladen.
+- Hauptmenü-Links vom Blog zur Hauptseite (`Start`, `Projekte`, `Downloads`, `Impressum`) werden ebenfalls clientseitig geladen.
+- Vor dem Austausch wird das Ziel-Stylesheet geladen; danach wird der `<body>` ersetzt und die URL per History API aktualisiert.
+- Bei Fehlern fällt die Navigation automatisch auf den normalen Seitenaufruf zurück.
+- HTML-Zielseiten werden mit `cache: "no-cache"` revalidiert.
+
+`search.js` wird im Blog-Basislayout geladen und initialisiert sich nur, wenn die Suchseite im aktuellen Dokument vorhanden ist. Nach einem clientseitigen Wechsel auf die Suche wird `window.zauberhaftInitialisiereSuche()` erneut aufgerufen.
+
+Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, z. B. `main.css?v=...`, `site.css?v=...`, `search.js?v=...`, `blog-navigation.js?v=...` und `search.json?v=...`.
 
 ## Projektregeln
 

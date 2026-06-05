@@ -6,7 +6,9 @@ Startseite, Projektverteiler und Blog von Peter Heß — statische Website mit *
 
 - **Landingpage:** `https://hesspet.github.io/Zauberhaft/`
 - **Blog:** `https://hesspet.github.io/Zauberhaft/diy-magic/`
-- **Navigation:** Hauptmenü auf allen Seiten, Blog mit Unternavigation
+- **Navigation:** Hauptmenü auf allen Seiten, Blog mit stabiler Unternavigation
+- **Blog-Wechsel:** Blog-interne Links und Wechsel vom Blog zur Hauptseite laufen clientseitig ohne vollständigen Dokumentwechsel
+- **Cache-Busting:** CSS, Blog-JavaScript und Suchindex werden mit Build-Version geladen
 - **Downloads:** Kapitel-Struktur mit aufklappbaren Accordions
 - **CI:** GitHub Actions — Validierung → Build → Deploy → Email
 
@@ -46,8 +48,14 @@ Zauberhaft/
 ├── diy-magic/               # Blog-Seiten (Archiv, Themen, Suche, …)
 ├── assets/
 │   ├── css/main.scss        # Hauptseiten-CSS (Dark-Theme)
-│   └── diy-magic/           # Blog-Assets (CSS, JS, Bilder)
+│   └── diy-magic/           # Blog-Assets (CSS, Suche, clientseitige Navigation, Bilder)
 ├── tools/                   # PowerShell-Skripte (New-Article, Validate, …)
 ├── .github/workflows/       # CI: Build + Deploy + Email
 └── HowTo.md                 # Anleitung: Artikel schreiben
 ```
+
+## Navigation und Cache
+
+Der Blog bleibt als statische Jekyll-Seite ohne Serverlogik gebaut. Im Browser verbessert `assets/diy-magic/js/blog-navigation.js` aber die Bedienung: Blog-interne Links und Hauptmenü-Links vom Blog zur Startseite werden per `fetch`, Stylesheet-Vorladung und History API geladen. Ohne JavaScript funktionieren alle Links normal als klassische Seitenaufrufe.
+
+Asset-URLs enthalten eine Build-Version, damit Browser nach einem Deploy nicht versehentlich alte CSS-, JavaScript- oder Suchindex-Dateien weiterverwenden.

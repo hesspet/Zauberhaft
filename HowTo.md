@@ -16,7 +16,7 @@ Das erzeugt:
 
 ```text
 _artikel/YYYY-MM-DD-titel-des-artikels.md
-assets/images/articles/titel-des-artikels/
+assets/diy-magic/images/articles/titel-des-artikels/
 ```
 
 ## 2. Metadaten prüfen
@@ -46,7 +46,7 @@ Artikel mit `status: "entwurf"` erscheinen nicht auf Startseite, Archiv, Themens
 Der Wert bei `type` muss in dieser Datei vorhanden sein:
 
 ```text
-_data/article_types.yml
+_data/diymagic_article_types.yml
 ```
 
 Erlaubte Startwerte sind:
@@ -65,7 +65,7 @@ Erfahrungsbericht
 Jedes Thema aus dem Artikel muss in dieser Datei stehen:
 
 ```text
-_data/topics.yml
+_data/diymagic_topics.yml
 ```
 
 Wenn du ein neues Thema verwenden willst, trage es dort zuerst ein, zum Beispiel:
@@ -136,3 +136,9 @@ Falls Jekyll installiert ist:
 ```
 
 Ohne Jekyll reicht für den Start die Validierung; der eigentliche Build läuft später über GitHub Actions.
+
+## 9. Navigation und Cache nach Änderungen
+
+CSS, Blog-JavaScript und der Suchindex werden mit einer Build-Version geladen. Nach einem Push nach `main` erzeugt GitHub Pages neue Asset-URLs, damit Browser nicht versehentlich alte Dateien weiterverwenden.
+
+Die Blog-Navigation ist eine progressive Verbesserung: Mit JavaScript werden Blog-interne Links und Wechsel vom Blog zur Hauptseite clientseitig geladen. Ohne JavaScript bleiben alle Links normale statische Seitenlinks.
