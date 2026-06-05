@@ -478,6 +478,14 @@ footer {
     background: #e0c46d;
 }
 
+.firmware-mobile-hinweis {
+    display: none;
+}
+
+.firmware-mobile-text {
+    color: var(--text-muted);
+}
+
 /* ── Responsive ── */
 @media (max-width: 720px) {
     .hero-grid {
@@ -497,6 +505,8 @@ footer {
     .dl-grid { grid-template-columns: 1fr; }
     section { padding: 3.5rem 1.25rem; }
     .downloads-main { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .firmware-desktop-only { display: none; }
+    .firmware-mobile-hinweis { display: block; }
 }
 
 @media (max-width: 400px) {

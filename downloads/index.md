@@ -19,11 +19,17 @@ permalink: /downloads/
             <a class="card-link" href="{{ '/downloads/webapps/' | relative_url }}">Zur &Uuml;bersicht &rarr;</a>
         </div>
 
-        <div class="card">
+        <div class="card firmware-desktop-only">
             <div class="card-icon">📦</div>
             <h3>ESP32 Firmware</h3>
             <p>Firmware f&uuml;r ESP32-Mikrocontroller direkt &uuml;ber den Browser flashen &mdash; mit ESP Web Tools, ohne zus&auml;tzliche Software.</p>
             <a class="card-link" href="{{ '/downloads/firmware/' | relative_url }}">Zur &Uuml;bersicht &rarr;</a>
+        </div>
+
+        <div class="card firmware-mobile-hinweis" aria-hidden="true">
+            <div class="card-icon">📦</div>
+            <h3>ESP32 Firmware</h3>
+            <p class="firmware-mobile-text">Nur f&uuml;r Desktop (Windows, macOS, Linux)</p>
         </div>
 
         <div class="card">
