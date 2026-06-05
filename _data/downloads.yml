@@ -1,22 +1,29 @@
 # Zauberhaft — Download-Daten
-# Neue Download-Links hier hinzufügen.
+# Kapitel mit optionalen Unterkapiteln und Einträgen.
 
-- name: "NSL Firmware & App"
-  emoji: "📦"
-  description: "ESP32-Firmware und Android Companion"
-  url: https://github.com/hesspet/Nasreddins-Secret-Listener/releases
+- chapter: Magische Webanwendungen
+  items:
+    - name: "Camera Arcanum (PWA)"
+      emoji: "🌐"
+      description: "Direkt im Browser nutzbar"
+      url: https://github.com/hesspet/Nasreddins-Camera-Arcanum
 
-- name: "Peek Client APK"
-  emoji: "📱"
-  description: "Android-App für BLE Prompter"
-  url: https://github.com/hesspet/Nasreddins-Simple-Peek-Client2/releases
+- chapter: Firmware zur direkten Installation
+  subchapters:
+    - name: BlePrompter
+      items:
+        - name: "NSL Firmware & App"
+          emoji: "📦"
+          description: "ESP32-Firmware und Android Companion"
+          url: https://github.com/hesspet/Nasreddins-Secret-Listener/releases
+        - name: "Peek Client APK"
+          emoji: "📱"
+          description: "Android-App für BLE Prompter"
+          url: https://github.com/hesspet/Nasreddins-Simple-Peek-Client2/releases
 
-- name: "Camera Arcanum (PWA)"
-  emoji: "🌐"
-  description: "Direkt im Browser nutzbar"
-  url: https://github.com/hesspet/Nasreddins-Camera-Arcanum
-
-- name: "DiyMagic Archiv"
-  emoji: "📚"
-  description: "Anleitungen & Artikel durchsuchen"
-  url: /diy-magic/
+- chapter: Texte
+  items:
+    - name: "DiyMagic Archiv"
+      emoji: "📚"
+      description: "Anleitungen & Artikel durchsuchen"
+      url: /diy-magic/

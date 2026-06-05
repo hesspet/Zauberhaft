@@ -189,11 +189,83 @@ section {
     margin: 2rem auto;
     max-width: var(--max-width);
 }
+
+/* Chapter accordion */
+.dl-chapter {
+    border-bottom: 1px solid var(--border);
+}
+.dl-chapter:last-child {
+    border-bottom: none;
+}
+.dl-chapter__title {
+    display: flex; align-items: center;
+    padding: 1.1rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+.dl-chapter__title:hover { color: var(--accent); }
+.dl-chapter__title::before {
+    content: "▸";
+    display: inline-block;
+    width: 1.2rem;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+}
+.dl-chapter[open] .dl-chapter__title::before {
+    transform: rotate(90deg);
+}
+.dl-chapter__body {
+    padding: 0 1.5rem 1.25rem;
+}
+
+/* Subchapter accordion */
+.dl-subchapter {
+    margin-top: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.dl-subchapter__title {
+    display: flex; align-items: center;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+.dl-subchapter__title:hover { color: var(--accent); }
+.dl-subchapter__title::before {
+    content: "▸";
+    display: inline-block;
+    width: 1rem;
+    font-size: 0.75rem;
+    margin-right: 0.4rem;
+    transition: transform 0.2s;
+}
+.dl-subchapter[open] .dl-subchapter__title::before {
+    transform: rotate(90deg);
+}
+.dl-subchapter .dl-grid {
+    padding: 0 1.1rem 1rem;
+}
+
+/* Empty placeholder */
+.dl-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
 .dl-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.25rem;
-    margin-top: 1.5rem;
+    margin-top: 0.75rem;
 }
 .dl-item {
     display: flex; align-items: center; gap: 1rem;
@@ -211,6 +283,12 @@ section {
 .dl-info { min-width: 0; }
 .dl-info .dl-name { font-weight: 600; font-size: 0.95rem; }
 .dl-info .dl-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+/* summary reset */
+.dl-chapter summary::-webkit-details-marker,
+.dl-subchapter summary::-webkit-details-marker { display: none; }
+.dl-chapter summary,
+.dl-subchapter summary { list-style: none; }
 
 /* ── Impressum ── */
 #impressum {
