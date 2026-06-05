@@ -3,28 +3,29 @@
 # Die Reihenfolge bestimmt die Anzeige auf der Seite.
 
 
-- name: DiyMagic
+- name: Blog
   emoji: "📝"
   description: >
-    Mein statisches Artikelarchiv für Anleitungen, Berichte,
+    Mein Artikelarchiv für Anleitungen, Berichte,
     Projektnotizen und Referenzen zu Zauberei, Requisitenbau,
     Holzarbeiten und Elektronik.
   tags:
     - Archiv
   url: /blog/
 
-# - name: "Nasreddin's Secret Listener"
-#   emoji: "🪄"
-#   description: >
-#     Der „Which Hand“-Trick elektronisch umgesetzt. Ein
-#     ESP32-basierter Detektor mit Magnetometer — unter 50&nbsp;€
-#     Materialkosten, benachrichtigt auf die Smartwatch.
-#   tags:
-#     - ESP32
-#     - BLE
-#     - Android
-#     - Magnetometer
-#   url: https://github.com/hesspet/Nasreddins-Secret-Listener
+- name: "Puppen, Baureden und andere Charaktere"
+  emoji: "🪄"
+  description: >
+    Meine "Freunde" Puppen und ihre kleine Welt.
+    Oder anders: Ein alter Esel spielt noch mit Puppen. Ist der nicht viel zu alt dafür?
+  tags:
+    - Puppen
+    - Baureden
+    - Nasreddin
+    - Alrich
+    - Emse Wetterwachs
+    - Wollebert
+  url: XXX
 
 # - name: "Nasreddin's Camera Arcanum"
 #   emoji: "📸"
