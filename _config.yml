@@ -3,6 +3,7 @@ title: Zauberhaft
 description: Peters verrückte Ideen — Startseite und Verteiler für DIY-Projekte rund um das Zaubern
 author: Peter Heß
 lang: de
+timezone: Europe/Berlin
 
 # URL-Einstellungen
 # Bei einem Projekt-Repository: baseurl = "/RepositoryName"
