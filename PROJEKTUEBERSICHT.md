@@ -83,7 +83,7 @@ Zauberhaft/
 │   ├── diy-magic/
 │   │   ├── css/site.css         # Blog-CSS (Dark-Theme, Accordion)
 │   │   ├── js/
-│   │   │   ├── blog-navigation.js # Clientseitige Blog-Navigation ohne harten Dokumentwechsel
+│   │   │   ├── blog-navigation.js # Clientseitige Navigation Blog-intern und Blog → Hauptseite
 │   │   │   └── search.js        # Clientseitige Suche
 │   │   └── images/              # Blog-Bilder
 │   └── peter-hess.jpg           # Profilbild
@@ -147,7 +147,7 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 - **Eine gemeinsame Navigation** — kein isoliertes Blog-Menü
 - **Native HTML-Accordions** — kein JavaScript für Downloads
 - **Clientseitige Suche** — kein Server, kein externer Dienst
-- **Clientseitige Blog-Navigation** — interne Blog-Links ersetzen Header/Main per History API ohne vollständigen Dokumentwechsel
+- **Clientseitige Blog-Navigation** — Blog-interne Links und Wechsel vom Blog zur Hauptseite laufen per History API ohne vollständigen Dokumentwechsel
 - **Cache-Busting über Asset-URLs** — CSS, Such-JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **Blog ohne View Transition API** — Blog-Navigation ist stabil aufgebaut und deaktiviert Browser-Übergänge gezielt
 - **Inline dark mode hints** — `color-scheme`, `theme-color`, Inline-Styles

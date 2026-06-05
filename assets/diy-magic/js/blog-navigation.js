@@ -1,10 +1,21 @@
 (function () {
   const blogPfadMuster = /\/diy-magic(?:\/|$)/;
+  const blogStartVerweis = document.querySelector("a[href*='/diy-magic/']");
+  const basisPfad = blogStartVerweis
+    ? new URL(blogStartVerweis.href, window.location.href).pathname.replace(/diy-magic\/.*$/, "")
+    : "/";
   const geladeneDokumente = new Map();
   let laufendeAnfrage = null;
 
   function istBlogAdresse(adresse) {
     return adresse.origin === window.location.origin && blogPfadMuster.test(adresse.pathname);
+  }
+
+  function istInterneSeitenAdresse(adresse) {
+    return (
+      adresse.origin === window.location.origin &&
+      (adresse.pathname === basisPfad || adresse.pathname.startsWith(`${basisPfad}diy-magic/`))
+    );
   }
 
   function istGleicheDokumentAdresse(adresse) {
@@ -49,7 +60,7 @@
 
     const zielAdresse = new URL(verweisElement.href, window.location.href);
 
-    if (!istBlogAdresse(zielAdresse)) {
+    if (!istInterneSeitenAdresse(zielAdresse)) {
       return false;
     }
 
@@ -90,25 +101,84 @@
     return zielDokument.cloneNode(true);
   }
 
-  function ersetzeDokumentteile(zielDokument, zielAdresse, sollVerlaufSchreiben) {
-    const aktuellerHauptinhalt = document.getElementById("inhalt");
-    const neuerHauptinhalt = zielDokument.getElementById("inhalt");
-    const aktuellerKopfbereich = document.querySelector(".diymagic-shell-header");
-    const neuerKopfbereich = zielDokument.querySelector(".diymagic-shell-header");
+  function ermittleStylesheetAdressen(dokument, dokumentAdresse) {
+    return Array.from(dokument.querySelectorAll('link[rel="stylesheet"][href]')).map((stylesheet) =>
+      new URL(stylesheet.getAttribute("href"), dokumentAdresse.href).href
+    );
+  }
 
-    if (!aktuellerHauptinhalt || !neuerHauptinhalt || !aktuellerKopfbereich || !neuerKopfbereich) {
-      throw new Error("Die Zielseite hat nicht die erwartete Blog-Struktur.");
+  function ladeStylesheet(stylesheetAdresse) {
+    const vorhandenesStylesheet = Array.from(document.querySelectorAll('link[rel="stylesheet"][href]')).find(
+      (stylesheet) => new URL(stylesheet.getAttribute("href"), window.location.href).href === stylesheetAdresse
+    );
+
+    if (vorhandenesStylesheet) {
+      return Promise.resolve();
     }
 
+    return new Promise((resolve) => {
+      const stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href = stylesheetAdresse;
+      stylesheet.dataset.diymagicClientNavigation = "true";
+      stylesheet.addEventListener("load", resolve, { once: true });
+      stylesheet.addEventListener("error", resolve, { once: true });
+      document.head.appendChild(stylesheet);
+      window.setTimeout(resolve, 1500);
+    });
+  }
+
+  async function bereiteStylesheetsVor(zielDokument, zielAdresse) {
+    const stylesheetAdressen = ermittleStylesheetAdressen(zielDokument, zielAdresse);
+    await Promise.all(stylesheetAdressen.map(ladeStylesheet));
+    return stylesheetAdressen;
+  }
+
+  function entferneAlteStylesheets(aktiveStylesheetAdressen) {
+    const aktiveAdressen = new Set(aktiveStylesheetAdressen);
+
+    for (const stylesheet of document.querySelectorAll('link[rel="stylesheet"][href]')) {
+      const stylesheetAdresse = new URL(stylesheet.getAttribute("href"), window.location.href).href;
+
+      if (!aktiveAdressen.has(stylesheetAdresse)) {
+        stylesheet.remove();
+      }
+    }
+  }
+
+  function scrolleZumZiel(zielAdresse) {
+    if (!zielAdresse.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      return;
+    }
+
+    const zielKennung = decodeURIComponent(zielAdresse.hash.slice(1));
+    const zielElement = document.getElementById(zielKennung);
+
+    if (zielElement) {
+      zielElement.scrollIntoView({ block: "start", behavior: "auto" });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }
+
+  async function ersetzeDokumentteile(zielDokument, zielAdresse, sollVerlaufSchreiben) {
+    if (!zielDokument.body) {
+      throw new Error("Die Zielseite hat keine verwendbare Dokumentstruktur.");
+    }
+
+    const aktiveStylesheetAdressen = await bereiteStylesheetsVor(zielDokument, zielAdresse);
+    const neuerDokumentkoerper = zielDokument.body.cloneNode(true);
+
     document.title = zielDokument.title;
-    aktuellerKopfbereich.replaceWith(neuerKopfbereich);
-    aktuellerHauptinhalt.replaceWith(neuerHauptinhalt);
+    document.body.replaceWith(neuerDokumentkoerper);
+    entferneAlteStylesheets(aktiveStylesheetAdressen);
 
     if (sollVerlaufSchreiben) {
       window.history.pushState({ diymagicNavigation: true }, "", zielAdresse.href);
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    scrolleZumZiel(zielAdresse);
 
     if (window.zauberhaftInitialisiereSuche) {
       window.zauberhaftInitialisiereSuche();
@@ -191,7 +261,7 @@
   );
 
   window.addEventListener("popstate", function () {
-    if (!istBlogAdresse(new URL(window.location.href))) {
+    if (!istInterneSeitenAdresse(new URL(window.location.href))) {
       window.location.reload();
       return;
     }
