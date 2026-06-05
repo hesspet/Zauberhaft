@@ -101,5 +101,5 @@ Das Ganze hat aber eine Nachteil. Zwei der LÃ¶taugen werden eigentlich gebrauc
 
 > Ja -  die Daumenspitzenidee ist ein Ã¼bler Hack :-) 
 
-![](/assets/diy-magic/images/articles/ds-prompter/AngeknabbertRÃ¼ckseite.jpg)
+![](/assets/diy-magic/images/articles/ds-prompter/AngeknabbertRueckseite.jpg)
 
