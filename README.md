@@ -1,18 +1,16 @@
 # Zauberhaft
 
-Startseite und Verteiler für Peters verrückte Ideen — eine statische Single-Page-Website mit **Jekyll**, publiziert über **GitHub Pages**.
+Startseite, Projektverteiler und Blog von Peter Heß — statische Website mit **Jekyll**, publiziert über **GitHub Pages**.
+
+## Auf einen Blick
+
+- **Landingpage:** `https://hesspet.github.io/Zauberhaft/`
+- **Blog:** `https://hesspet.github.io/Zauberhaft/diy-magic/`
+- **Navigation:** Hauptmenü auf allen Seiten, Blog mit Unternavigation
+- **Downloads:** Kapitel-Struktur mit aufklappbaren Accordions
+- **CI:** GitHub Actions — Validierung → Build → Deploy → Email
 
 ## Lokale Vorschau
-
-### Ohne Jekyll (schnellster Weg)
-
-```powershell
-start index.html
-```
-
-Ohne Jekyll wird nur das rohe HTML ohne Layouts/Includes angezeigt. Besser:
-
-### Mit Jekyll (volle Vorschau)
 
 ```bash
 bundle exec jekyll serve --livereload
@@ -20,35 +18,36 @@ bundle exec jekyll serve --livereload
 
 Öffnet `http://localhost:4000/Zauberhaft/`.
 
-## Veröffentlichung
-
-1. Repository auf GitHub anlegen: `hesspet/Zauberhaft`
-2. GitHub Pages baut beim Push **automatisch** mit Jekyll
-3. In den Repository-Settings unter **Pages** den `main`-Branch als Source bestätigen
-4. Die Seite ist unter `https://hesspet.github.io/Zauberhaft/` erreichbar
-5. Optional: Custom Domain in den Pages-Settings konfigurieren
-
 ## Projekte und Downloads verwalten
 
-Neue Einträge werden **ausschließlich** in den YAML-Daten angelegt — kein HTML editieren nötig:
+Alle Einträge in den YAML-Daten — kein HTML nötig:
 
 - **Projekte:** `_data/projects.yml` (Name, Emoji, Beschreibung, Tags, URL)
-- **Downloads:** `_data/downloads.yml` (Name, Emoji, Beschreibung, URL)
+- **Downloads:** `_data/downloads.yml` (Kapitel, Unterkapitel, Einträge)
 
-Nach dem Push werden Projektkarten und Download-Links automatisch aktualisiert.
+## Artikel schreiben
+
+```powershell
+.\tools\New-Article.ps1 -Title "…" -Type "Anleitung" -Topics "ESP32, Zauberei" -Summary "…"
+.\tools\Validate-Articles.ps1
+```
+
+Artikel in `_artikel/`, Bilder in `assets/diy-magic/images/articles/<slug>/`. Nach Push automatischer Deploy.
 
 ## Projektstruktur
 
 ```
 Zauberhaft/
 ├── _config.yml              # Jekyll-Konfiguration
-├── _layouts/default.html    # Hauptlayout
-├── _includes/               # HTML-Komponenten (nav, hero, projects, …)
-├── _data/                   # YAML-Daten (projects.yml, downloads.yml)
+├── _layouts/                # Layouts (Hauptseite + Blog)
+├── _includes/               # HTML-Komponenten (nav, hero, downloads, …)
+├── _data/                   # YAML-Daten (projects, downloads, blog-nav, topics)
+├── _artikel/                # Blog-Artikel (Jekyll Collection)
+├── diy-magic/               # Blog-Seiten (Archiv, Themen, Suche, …)
 ├── assets/
-│   ├── css/main.scss        # Sass-Stylesheet (Dark-Theme)
-│   └── peter-hess.jpg       # Profilbild (selbst bereitstellen)
-├── index.html               # Startseite (Frontmatter)
-├── Gemfile                  # Ruby-Abhängigkeiten
-└── LICENSE                  # Public Domain (Unlicense)
+│   ├── css/main.scss        # Hauptseiten-CSS (Dark-Theme)
+│   └── diy-magic/           # Blog-Assets (CSS, JS, Bilder)
+├── tools/                   # PowerShell-Skripte (New-Article, Validate, …)
+├── .github/workflows/       # CI: Build + Deploy + Email
+└── HowTo.md                 # Anleitung: Artikel schreiben
 ```
