@@ -18,11 +18,29 @@ permalink: /downloads/firmware/
             die Firmware direkt auf deinen Controller schreibt.
         </p>
         <p>
-            <strong>Hinweis:</strong> Diese Funktion nutzt die Web Serial API und
+            <strong>Hinweis 1:</strong> Diese Funktion nutzt die Web Serial API und
             steht nur auf Desktop-Rechnern mit Windows, macOS oder Linux zur
             Verf&uuml;gung. Mobile Ger&auml;te (Android, iOS) werden nicht
             unterst&uuml;tzt.
         </p>
+		<p>
+            <strong>Hinweis 2:</strong> Ein typisches Problem, dass beim Flashen auftritt, 
+			ist, dass die Anwendung das Board nicht findet. Wenn bereits auf dem Board eine 
+			Anwendung installiert ist, so kann es sein, dass diese das Board in einen
+			Schlafzustand versetzt (BlePrompter macht dies) und somit ist es auch vom Desktop-Rechnern
+			nicht erreichbar. Vor dem Flashen muss also das Board in den Empfangszustand versetzt werden.
+			In der Regel erfolgt dies bei ESP32 Boards durch das Drücken der Resettaste und der Taste IO9, oft aber auch als BOOT Taste beschriftet
+        </p>
+		<p>
+			<ol>
+			  <li>Drücke die Taste "RESET" und halte sie gedrückt.</li>
+			  <li>Drücke dann die Taste "BOOT" und halte sie gedrückt.</li>
+			  <li>Lasse nun die Taste "RESET" los, halte dabei aber weiterhin die Taste "BOOT" gedrückt.</li>
+			  <li>Lasse nun die Taste "BOOT" los.</li>
+			  <li>Jetzt ist das Board in einem Haltezustand und kann vom Desktop-Rechner erkannt werden.</li>
+			  <li>Flashe nun die gewünschte Firmware.</li>
+			</ol>
+		</p>
     </div>
 
     {% if site.data.firmware and site.data.firmware.projects %}
