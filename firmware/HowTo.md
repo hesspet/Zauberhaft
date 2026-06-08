@@ -5,11 +5,11 @@
 ```
 Zauberhaft/
 ├── _data/firmware.yml                ← Firmware-Katalog (Projekte + Varianten)
-├── assets/firmware/                   ← Firmware-Dateien (.bin) + Sidecar-READMEs
+├── assets/firmware/                   ← Firmware-Dateien (.bin) + Info-Dateien
 │   └── <projekt-slug>/
 │       └── <variant-slug>/
-│           ├── firmware.bin           ← Die eigentliche Firmware
-│           └── README.md              ← Versionsinformationen
+│           ├── <firmware-datei>.bin   ← Die eigentliche Firmware
+│           └── <info-datei>.md        ← Versionsinformationen
 └── firmware/                          ← Manifest-Generator (eine .md pro Variante)
     └── <projekt-slug>/
         └── <variant-slug>.md         ← Erzeugt manifest.json-Endpunkt
@@ -20,21 +20,21 @@ Zauberhaft/
 Die kompilierte `.bin`-Datei in das entsprechende Verzeichnis legen:
 
 ```
-assets/firmware/<projekt-slug>/<variant-slug>/firmware.bin
+assets/firmware/<projekt-slug>/<variant-slug>/<firmware-datei>.bin
 ```
 
 **Wichtig:**
 
-- Der Dateiname **muss** `firmware.bin` lauten (wird vom Manifest so referenziert)
+- Der Dateiname muss im Manifest exakt referenziert werden
 - Die Datei muss f&uuml;r den passenden Chip kompiliert sein (z.&nbsp;B. ESP32-C3, ESP32-S3)
 - Der Pfad ab `assets/` wird &uuml;ber GitHub Pages als statische Datei ausgeliefert
 
-## 3. Sidecar-README anlegen
+## 3. Info-Datei anlegen
 
-Zu jeder Firmware-Variante geh&ouml;rt eine `README.md` mit Release-Informationen:
+Zu jeder Firmware-Variante gehört eine Info-Datei mit Release-Informationen:
 
 ```
-assets/firmware/<projekt-slug>/<variant-slug>/README.md
+assets/firmware/<projekt-slug>/<variant-slug>/<info-datei>.md
 ```
 
 **Empfohlener Inhalt:**
@@ -74,12 +74,11 @@ projects:
     description: Kurzbeschreibung des Projekts
     chip_family: ESP32-C3       # G&uuml;ltige Werte: ESP32, ESP32-C3, ESP32-S2, ESP32-S3
     variants:
-      - name: Release 1         # Anzeigename der Variante
-        slug: release-1         # URL-Komponente (muss mit Verzeichnisnamen &uuml;bereinstimmen)
-        description: Kurzbeschreibung der Variante
-      - name: Debug
-        slug: debug
-        description: Debug-Version mit Log-Ausgabe
+      - name: ESP32-C3 OLED 1.7.0
+        slug: esp32c3
+        description: Stabile Download-Firmware vom 08.06.2026 für das ESP32-C3-OLED-Board
+        firmware_file: BlePrompter-esp32c3-v1.7.0-20260608-101858-download.bin
+        info_file: BlePrompter-esp32c3-v1.7.0-20260608-101858-download.md
 ```
 
 **Regeln f&uuml;r `slug`:**
@@ -109,7 +108,7 @@ permalink: /firmware/projekt-slug/variant-slug/manifest.json
     {
       "chipFamily": "ESP32-C3",
       "parts": [
-        { "path": "{{ '/assets/firmware/projekt-slug/variant-slug/firmware.bin' | relative_url }}", "offset": 0 }
+        { "path": "{{ '/assets/firmware/projekt-slug/variant-slug/<firmware-datei>.bin' | relative_url }}", "offset": 0 }
       ]
     }
   ]
@@ -140,8 +139,8 @@ bundle exec jekyll serve --livereload
    `http://localhost:4000/Zauberhaft/downloads/firmware/`
    → Die neue Variante erscheint unter dem Projekt
 
-3. Sidecar-README pr&uuml;fen:
-   `http://localhost:4000/Zauberhaft/assets/firmware/projekt-slug/variant-slug/README.md`
+3. Info-Datei prüfen:
+   `http://localhost:4000/Zauberhaft/assets/firmware/projekt-slug/variant-slug/<info-datei>.md`
    → Wird als Markdown gerendert (GitHub Pages Styles) oder als Rohdaten angezeigt
 
 4. ESP Web Tools testen (nur mit angeschlossenem ESP32):
@@ -177,5 +176,5 @@ Die Struktur ist f&uuml;r beliebig viele Projekte ausgelegt. Neues Projekt anleg
 
 1. Neuen Eintrag in `_data/firmware.yml` (unter `projects:`)
 2. Verzeichnis `assets/firmware/<neuer-slug>/` anlegen
-3. Pro Variante: `firmware.bin` + `README.md` + Manifest-`.md`
+3. Pro Variante: Firmware-`.bin` + Info-`.md` + Manifest-`.md`
 4. Fertig — die Firmware-Seite iteriert automatisch &uuml;ber alle Projekte

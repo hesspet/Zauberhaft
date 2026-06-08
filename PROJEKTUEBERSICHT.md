@@ -132,6 +132,24 @@ Der Download-Bereich verwendet native HTML `<details>`-Accordions mit Kapiteln u
 
 Alle Daten in `_data/downloads.yml` — neue Kapitel/Einträge nur dort anlegen.
 
+## Firmware-Download-Technologie
+
+Die Firmware-Installation läuft als Browser-basierter Firmware-Download auf den Mikrocontroller. Die Website verwendet dafür **ESP Web Tools**: Auf der Firmware-Seite wird ein `<esp-web-install-button>` eingebunden, der über die Web-Serial-Schnittstelle des Browsers mit dem angeschlossenen ESP32 spricht. Der Nutzer wählt im Browser den seriellen USB-Port aus; anschließend schreibt ESP Web Tools die vorkompilierte `.bin`-Firmware direkt in den Flash-Speicher des Controllers.
+
+Die Firmware-Dateien liegen statisch unter `assets/firmware/<projekt-slug>/<varianten-slug>/`. Für jede Variante erzeugt eine kleine Markdown-Datei unter `firmware/<projekt-slug>/<varianten-slug>.md` ein JSON-Manifest mit `name`, `version`, `chipFamily` und den zu flashenden `parts`. Dieses Manifest ist die Schnittstelle zwischen Website und ESP Web Tools: Es beschreibt, für welche ESP-Chipfamilie die Firmware gedacht ist, welche Binärdateien geladen werden und an welchen Flash-Offset sie geschrieben werden.
+
+Wichtige Dateien:
+
+- `_data/firmware.yml` verwaltet Projekte, Varianten, Versionen, Chipfamilien und Pfade.
+- `_layouts/esp32_firmware.html` rendert die Firmware-Seite mit Installationsbuttons.
+- `_layouts/firmware_manifest.json` rendert die Manifest-Antwort für ESP Web Tools.
+- `assets/firmware/.../firmware.bin` enthält die eigentliche Firmware.
+
+Dokumentation:
+
+- [ESP Web Tools Dokumentation](https://esphome.github.io/esp-web-tools/) — beschreibt Web-Serial, Manifest-Aufbau und Einbindung des Installationsbuttons.
+- [Espressif esptool: Flashing Firmware](https://docs.espressif.com/projects/esptool/en/latest/esp32/esptool/flashing-firmware.html) — technische Referenz zum Schreiben von Firmware in den Flash-Speicher per `esptool`.
+
 ## Puppen-Bereich
 
 Die Puppen-Übersicht (`/puppen/`) zeigt alle Figuren in einem responsiven Grid mit kreisrunden Passbildern (Goldrahmen, Dark-Theme). Jede Figur hat Name, Kurztext und ein quadratisches Portrait-Foto. Ein Klick auf Bild oder Text öffnet den ausführlichen Steckbrief in einem Overlay:

@@ -38,12 +38,14 @@ permalink: /downloads/firmware/
                     <div class="firmware-variant-desc">{{ variant.description }}</div>
                 </div>
                 <div class="firmware-variant-actions">
+                    {% if variant.info_file %}
                     <a class="firmware-readme-link"
-                       href="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/README.md' | relative_url }}"
+                       href="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/' | append: variant.info_file | relative_url }}"
                        target="_blank"
                        title="Versionsinformationen zu {{ variant.name }}">
                         &#x2139;&#xfe0f; Info
                     </a>
+                    {% endif %}
                     <esp-web-install-button
                         manifest="{{ '/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}">
                         <button slot="activate" class="firmware-install-button">
