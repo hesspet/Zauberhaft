@@ -9,8 +9,8 @@ projects:
     description: BLE Prompter Firmware für ESP32-C3 OLED
     chip_family: ESP32-C3
     variants:
-      - name: ESP32-C3 OLED 1.7.0
+      - name: ESP32-C3 OLED 1.8.1
         slug: esp32c3
         description: Stabile Download-Firmware vom 08.06.2026 für das ESP32-C3-OLED-Board
-        firmware_file: BlePrompter-esp32c3-v1.7.0-20260608-101858-download.bin
-        info_file: BlePrompter-esp32c3-v1.7.0-20260608-101858-download.md
+        firmware_file: BlePrompter-esp32c3-v1.8.1-20260608-115204-download.bin
+        info_file: BlePrompter-esp32c3-v1.8.1-20260608-115204-download.md

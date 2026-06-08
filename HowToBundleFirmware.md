@@ -2,709 +2,367 @@
 
 Stand: 08.06.2026
 
-Diese Anleitung beschreibt den Weg von einer fertigen Releaseversion im PlatformIO-Projekt `C:\dev\TheStampSizeDiyPeekDevice\BlePrompter` bis zu einem Firmwarepaket in diesem Website-Projekt. Ziel ist eine Datei, die ein Anwender über die Zauberhaft-Website per Browser auf sein ESP-Gerät flashen kann.
+Diese Anleitung beschreibt den aktuellen Weg von einer Releaseversion im PlatformIO-Projekt `C:\dev\TheStampSizeDiyPeekDevice\BlePrompter` bis zu den Dateien, die im Website-Projekt `C:\dev\Zauberhaft` für ESP Web Tools bereitgestellt werden.
 
-Der wichtige Gedanke ist: PlatformIO baut nicht nur eine einzelne Anwendung. Für ESP32-Geräte besteht ein vollständiger Flash-Vorgang aus mehreren Binärdateien an festen Flash-Adressen. Für ESP Web Tools ist es am einfachsten und robustesten, diese Dateien vorher zu einer einzigen `firmware.bin` zusammenzuführen und diese Datei dann im Zauberhaft-Projekt bereitzustellen.
+Der empfohlene Weg ist heute nicht mehr, `esptool` manuell aufzurufen. Das Firmware-Projekt enthält dafür das Builder-Skript:
+
+```powershell
+C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\tools\BuildDownloadBins.ps1
+```
+
+Hinweis: Der Dateiname lautet **`BuildDownloadBins.ps1`**. Falls irgendwo `BuildDownloadsBin.ps1` steht, ist das nur ein Vertipper.
+
+Das Skript baut alle veröffentlichbaren Boards, bündelt die einzelnen ESP-Binärdateien zu einem vollständigen Flash-Image und erzeugt pro Board ein fertiges Download-Paket mit:
+
+- zusammengeführter `.bin`
+- technischer `.md`-Info-Datei
+- statischer `manifest.json`
 
 ## Beteiligte Projekte
 
 ### Firmware-Projekt
 
-Pfad:
-
-```powershell
+```text
 C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
 ```
 
-Dieses Projekt enthält die eigentliche Firmware. Es ist ein PlatformIO-Projekt mit Arduino Framework und zwei Build-Umgebungen:
+Dieses Projekt enthält die Firmware und das Builder-Skript.
 
-| Umgebung | Gerät | Chipfamilie | Ergebnis |
+Aktuelle PlatformIO-Umgebungen:
+
+| Umgebung | Gerät | Chipfamilie | Bootloader-Offset |
 | --- | --- | --- | --- |
-| `esp32c3` | ESP32-C3 OLED | `ESP32-C3` | Firmware für das kleine OLED-Board |
-| `cyd` | CYB/CYD Board | `ESP32` | Firmware für das ESP32-WROOM-32-Board mit ILI9341-TFT |
+| `esp32c3` | ESP32-C3 OLED | `ESP32-C3` | `0x0000` |
+| `cyd` | CYB/CYD Board | `ESP32` | `0x1000` |
 
-Die Umgebungen stehen in `platformio.ini`. PlatformIO verwendet diese Datei, um Board, Framework, Bibliotheken, Build-Flags und Upload-Einstellungen festzulegen.
+Die Umgebungen stehen in:
+
+```text
+C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\platformio.ini
+```
 
 ### Website-Projekt
 
-Pfad:
-
-```powershell
+```text
 C:\dev\Zauberhaft
 ```
 
-Dieses Projekt hostet die fertige Firmware über GitHub Pages. Die Anwenderseite liegt unter:
+Dieses Projekt hostet die fertigen Download-Dateien über GitHub Pages. Die Anwenderseite liegt unter:
 
 ```text
 /downloads/firmware/
 ```
 
-Die Website nutzt ESP Web Tools. Dadurch kann ein Anwender im Browser auf `Installieren` klicken, den seriellen Port auswählen und die Firmware ohne lokal installiertes PlatformIO oder Arduino IDE flashen.
+Die Website nutzt ESP Web Tools. Der Anwender klickt auf `Installieren`, wählt den seriellen Port aus und flasht die Firmware direkt im Browser.
 
-## Grundbegriffe
+## Warum ein Gesamtimage nötig ist
 
-### PlatformIO
+PlatformIO erzeugt nicht nur eine einzelne Anwendungsdatei. Für einen vollständigen ESP-Flash-Vorgang werden mehrere Dateien an festen Offsets geschrieben:
 
-PlatformIO ist hier das Build-System. Es liest `platformio.ini`, lädt passende Toolchains und Bibliotheken und erzeugt aus `src/`, `include/` und den eingebundenen Bibliotheken die Firmware-Artefakte.
+| Bestandteil | ESP32-C3 OLED | CYB/CYD |
+| --- | --- | --- |
+| `bootloader.bin` | `0x0000` | `0x1000` |
+| `partitions.bin` | `0x8000` | `0x8000` |
+| `boot_app0.bin` | `0xe000` | `0xe000` |
+| `firmware.bin` | `0x10000` | `0x10000` |
 
-Der wichtigste Befehl ist:
+Die Datei `.pio\build\<umgebung>\firmware.bin` ist nur die Anwendung. Sie enthält normalerweise nicht Bootloader, Partitionstabelle und `boot_app0.bin`.
 
-```powershell
-pio run -e esp32c3
-```
-
-`-e esp32c3` bedeutet: Baue die Umgebung `[env:esp32c3]` aus `platformio.ini`.
-
-### Arduino Framework
-
-Das Arduino Framework stellt die Arduino-typischen APIs für ESP32 bereit, zum Beispiel `setup()`, `loop()`, serielle Ausgabe, GPIO, I2C, SPI und BLE-nahe Bibliotheksintegration. Der Code wird trotzdem für den konkreten ESP32-Chip kompiliert.
-
-Im Projekt steht das in `platformio.ini` so:
-
-```ini
-framework = arduino
-```
-
-### Firmware-Artefakte
-
-Nach einem erfolgreichen Build liegen die wichtigsten Dateien unter:
-
-```text
-.pio/build/<umgebung>/
-```
-
-Für `esp32c3` also:
-
-```text
-C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\.pio\build\esp32c3\
-```
-
-Wichtige Dateien:
-
-| Datei | Bedeutung |
-| --- | --- |
-| `bootloader.bin` | Startprogramm des ESP-Chips. Es startet nach Reset und lädt die Anwendung. |
-| `partitions.bin` | Partitionstabelle. Sie beschreibt, wo Anwendung, Datenbereiche und weitere Partitionen im Flash liegen. |
-| `firmware.bin` | Die eigentliche Anwendung aus deinem Quellcode. |
-| `firmware.elf` | Debug- und Symbol-Datei für Entwickler. Nicht für den Anwender-Download nötig. |
-| `firmware.map` | Speicherkarte des Builds. Hilfreich für Analyse, nicht für den Anwender-Download nötig. |
-
-Zusätzlich braucht der ESP32-Arduino-Build meist `boot_app0.bin`. Diese Datei liegt nicht im Projektordner, sondern im PlatformIO-Paket:
-
-```text
-C:\Users\hesspet\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin
-```
-
-## Warum die PlatformIO-`firmware.bin` nicht allein reicht
-
-Die Datei `.pio/build/<umgebung>/firmware.bin` ist die Anwendung. Sie enthält normalerweise nicht Bootloader, Partitionstabelle und `boot_app0.bin`.
-
-Beim normalen Upload macht PlatformIO deshalb einen mehrteiligen Flash-Vorgang mit `esptool`. Aus den aktuellen Build-Ausgaben ergeben sich diese Adressen:
-
-### ESP32-C3 OLED
-
-```text
-0x0000   bootloader.bin
-0x8000   partitions.bin
-0xe000   boot_app0.bin
-0x10000  firmware.bin
-```
-
-### CYB/CYD
-
-```text
-0x1000   bootloader.bin
-0x8000   partitions.bin
-0xe000   boot_app0.bin
-0x10000  firmware.bin
-```
-
-Die Website-Manifestdateien in Zauberhaft zeigen aktuell auf eine einzige Datei mit Offset `0`:
+Für die Website wird deshalb ein zusammengeführtes Gesamtimage erzeugt. Dieses Gesamtimage wird von ESP Web Tools als einzelner Manifest-Part mit Offset `0` geflasht:
 
 ```json
-{ "path": ".../firmware.bin", "offset": 0 }
+{
+  "path": "BlePrompter-esp32c3-v1.7.0-20260608-104642-download.bin",
+  "offset": 0
+}
 ```
 
-Das ist korrekt, wenn diese veröffentlichte `firmware.bin` ein zusammengeführtes Gesamtimage ist. Es wäre nicht korrekt, einfach die reine PlatformIO-App-Datei nach Zauberhaft zu kopieren und bei Offset `0` zu flashen.
+## Builder-Skript
 
-## Prozessübersicht
+Das zentrale Skript ist:
 
-Der vollständige Ablauf sieht so aus:
-
-1. Version im Firmware-Projekt festlegen.
-2. Firmware sauber bauen.
-3. Optional auf echter Hardware testen.
-4. Mehrere ESP-Binärdateien zu einem Gesamtimage bündeln.
-5. Gesamtimage als `firmware.bin` ins Zauberhaft-Projekt kopieren.
-6. Release-README aktualisieren.
-7. Manifest und Firmware-Katalog prüfen.
-8. Jekyll lokal starten und Manifest testen.
-9. Über GitHub Pages veröffentlichen.
-10. Anwender flasht über die Website mit ESP Web Tools.
-
-## 1. Releaseversion festlegen
-
-Im BlePrompter-Projekt steht die Programmversion in:
-
-```text
-C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\include\config.h
+```powershell
+C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\tools\BuildDownloadBins.ps1
 ```
 
-Aktuell:
-
-```cpp
-constexpr const char *programVersion = "1.7.0";
-```
-
-Diese Version wird im Startbildschirm und in der seriellen Ausgabe verwendet. Vor einem Release sollte sie bewusst gesetzt werden.
-
-Empfehlung:
-
-```text
-1.7.0
-```
-
-für stabile Releases, oder:
-
-```text
-1.7.0-test.1
-1.7.0-debug.1
-```
-
-für Test- oder Debugstände. Wichtig ist nicht das konkrete Schema, sondern dass Quellcode, README, Website-Katalog und veröffentlichte Datei dieselbe Version meinen.
-
-## 2. Arbeitsstand prüfen
-
-Vor einem Release sollte klar sein, welcher Quellstand gebaut wird.
-
-Im Firmware-Projekt:
+Es wird normalerweise über den Batch-Starter ausgeführt:
 
 ```powershell
 cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-git status
+tools\BuildDownloadBins.bat
 ```
 
-Wenn das Projekt nicht als Git-Repository genutzt wird, ersetze diesen Schritt durch eine manuelle Prüfung: Welche Dateien wurden geändert? Ist `include/config.h` aktuell? Ist `platformio.ini` korrekt?
+Der Batch-Starter ruft intern das PowerShell-Skript mit passender Execution Policy auf.
 
-## 3. Sauber bauen
+Das Skript erledigt:
 
-Für das ESP32-C3-OLED-Board:
+- Programmname und Version aus `include\config.h` lesen
+- `pio run -e <umgebung> --target clean` ausführen
+- `pio run -e <umgebung>` ausführen
+- `bootloader.bin`, `partitions.bin`, `boot_app0.bin` und `firmware.bin` mit `esptool.py merge_bin` bündeln
+- SHA256 der erzeugten Download-Binärdatei berechnen
+- technische Markdown-Info erzeugen
+- `manifest.json` für ESP Web Tools erzeugen
+- alte flache Artefakte direkt unter `download_bins` entfernen
+- pro Board ein eigenes Unterverzeichnis erzeugen
 
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-pio run -e esp32c3 --target clean
-pio run -e esp32c3
-```
+## Ausgabe des Builder-Skripts
 
-Für das CYB/CYD-Board:
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-pio run -e cyd --target clean
-pio run -e cyd
-```
-
-Der Clean-Schritt löscht alte Build-Artefakte für diese Umgebung. Das ist vor einem Release sinnvoll, weil du dann nicht versehentlich eine alte Binärdatei weiterverwendest.
-
-Nach dem Build sollten diese Dateien vorhanden sein:
-
-Für `esp32c3`:
+Nach einem erfolgreichen Lauf liegt die finale Struktur hier:
 
 ```text
-.pio/build/esp32c3/bootloader.bin
-.pio/build/esp32c3/partitions.bin
-.pio/build/esp32c3/firmware.bin
+C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\download_bins\
+├── esp32c3\
+│   ├── BlePrompter-esp32c3-v<version>-<zeitstempel>-download.bin
+│   ├── BlePrompter-esp32c3-v<version>-<zeitstempel>-download.md
+│   └── manifest.json
+└── cyd\
+    ├── BlePrompter-cyd-v<version>-<zeitstempel>-download.bin
+    ├── BlePrompter-cyd-v<version>-<zeitstempel>-download.md
+    └── manifest.json
 ```
 
-Für `cyd`:
+Diese Ordner sind die finale Zusammenstellung für die Bereitstellung. Für die Website wird ein Board-Ordner komplett in den passenden Asset-Ordner kopiert.
+
+## Manifest-Regel
+
+Die `manifest.json` liegt immer im selben Ordner wie die `.bin`. Deshalb verweist `path` relativ auf die Datei:
+
+```json
+{
+  "name": "BlePrompter ESP32-C3 OLED 1.7.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32-C3",
+      "parts": [
+        {
+          "path": "BlePrompter-esp32c3-v1.7.0-20260608-104642-download.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
+```
+
+Das ist wichtig: Die Website darf nicht mehr auf einen Jekyll-generierten Markdown-Manifest-Endpunkt unter `firmware/.../manifest.json` angewiesen sein. Das Manifest wird statisch unter `assets/firmware/.../manifest.json` ausgeliefert.
+
+Für CYB/CYD muss `chipFamily` `ESP32` sein. Für ESP32-C3 OLED muss `chipFamily` `ESP32-C3` sein.
+
+## Firmware in Zauberhaft bereitstellen
+
+Für die aktuell veröffentlichte ESP32-C3-Variante ist der Zielordner:
 
 ```text
-.pio/build/cyd/bootloader.bin
-.pio/build/cyd/partitions.bin
-.pio/build/cyd/firmware.bin
+C:\dev\Zauberhaft\assets\firmware\bleprompter\esp32c3
 ```
 
-## 4. Auf echter Hardware testen
-
-Der Build allein sagt nur, dass der Code kompiliert. Vor einem öffentlichen Release sollte mindestens ein Gerät geflasht und kurz getestet werden.
-
-ESP32-C3 OLED:
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-pio run -e esp32c3 --target upload --upload-port COM6
-pio device monitor --port COM6 --baud 115200
-```
-
-CYB/CYD:
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-pio run -e cyd --target upload --upload-port COM11
-pio device monitor --port COM11 --baud 115200
-```
-
-Kurz prüfen:
-
-- Startbildschirm zeigt Programmname, Version und Builddatum.
-- BLE-Gerät erscheint als `BlePrompter-xxxx`.
-- Ein einfacher BLE-Befehl wie `TEXT Hallo` wird angezeigt.
-- Bei Debug- oder Testversionen sind die erwarteten Logausgaben vorhanden.
-
-## 5. Flash-Adressen mit PlatformIO nachvollziehen
-
-Wenn du unsicher bist, welche Offsets zu einer Umgebung gehören, kannst du PlatformIO im Verbose-Modus starten. Mit einem ungültigen Port wird nichts geflasht, aber PlatformIO zeigt den geplanten `esptool`-Befehl.
-
-Beispiel:
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-pio run -e esp32c3 --target upload --upload-port COM0 --verbose
-```
-
-Am Ende steht ein Befehl mit `write_flash`. Daraus liest du die Paare aus Offset und Datei ab.
-
-Für den aktuellen Stand gilt:
-
-| Umgebung | Chip | Bootloader | Partitionen | Boot-App | Anwendung |
-| --- | --- | --- | --- | --- | --- |
-| `esp32c3` | `esp32c3` | `0x0000` | `0x8000` | `0xe000` | `0x10000` |
-| `cyd` | `esp32` | `0x1000` | `0x8000` | `0xe000` | `0x10000` |
-
-Diese Offsets sind nicht frei gewählt. Sie kommen aus der ESP32-Plattform, dem Board und der Partitionstabelle.
-
-## 6. Gesamtimage mit esptool erzeugen
-
-ESP Web Tools kann mehrere `parts` flashen. Für dieses Zauberhaft-Projekt ist aber die einfachste Regel:
-
-```text
-Veröffentliche eine zusammengeführte Datei namens firmware.bin und flashe sie bei Offset 0.
-```
-
-Dafür nutzt du `esptool merge_bin`. Das Tool ist bereits über PlatformIO installiert.
-
-### ESP32-C3 OLED bündeln
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-
-python "C:\Users\hesspet\.platformio\packages\tool-esptoolpy\esptool.py" --chip esp32c3 merge_bin `
-  -o ".pio\build\esp32c3\BlePrompter-esp32c3-1.7.0-merged.bin" `
-  --flash-mode dio `
-  --flash-freq 80m `
-  --flash-size 4MB `
-  0x0000 ".pio\build\esp32c3\bootloader.bin" `
-  0x8000 ".pio\build\esp32c3\partitions.bin" `
-  0xe000 "C:\Users\hesspet\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin" `
-  0x10000 ".pio\build\esp32c3\firmware.bin"
-```
-
-Ergebnis:
-
-```text
-.pio/build/esp32c3/BlePrompter-esp32c3-1.7.0-merged.bin
-```
-
-### CYB/CYD bündeln
-
-```powershell
-cd C:\dev\TheStampSizeDiyPeekDevice\BlePrompter
-
-python "C:\Users\hesspet\.platformio\packages\tool-esptoolpy\esptool.py" --chip esp32 merge_bin `
-  -o ".pio\build\cyd\BlePrompter-cyd-1.7.0-merged.bin" `
-  --flash-mode dio `
-  --flash-freq 40m `
-  --flash-size 4MB `
-  0x1000 ".pio\build\cyd\bootloader.bin" `
-  0x8000 ".pio\build\cyd\partitions.bin" `
-  0xe000 "C:\Users\hesspet\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin" `
-  0x10000 ".pio\build\cyd\firmware.bin"
-```
-
-Wichtig: Im CYB/CYD-Beispiel muss der Pfad zu `boot_app0.bin` zu deinem Benutzerprofil passen. Auf diesem Rechner ist es:
-
-```text
-C:\Users\hesspet\.platformio\packages\framework-arduinoespressif32\tools\partitions\boot_app0.bin
-```
-
-Die lokal installierte PlatformIO-`esptool.py`-Version akzeptiert `merge_bin`. In neuerer Dokumentation taucht teils auch die Schreibweise `merge-bin` auf. Wenn du eine andere `esptool`-Version verwendest, prüfe bei Bedarf die Hilfe:
-
-```powershell
-python "C:\Users\hesspet\.platformio\packages\tool-esptoolpy\esptool.py" --chip esp32c3 --help
-```
-
-Einige `esptool`-Versionen verwenden den Unterstrich, andere den Bindestrich. Die Funktion ist dieselbe.
-
-## 7. Optional: Gesamtimage prüfen
-
-Du kannst die Datei mit `image-info` prüfen:
-
-```powershell
-python "C:\Users\hesspet\.platformio\packages\tool-esptoolpy\esptool.py" --chip esp32c3 image-info ".pio\build\esp32c3\BlePrompter-esp32c3-1.7.0-merged.bin"
-```
-
-Außerdem ist ein Hash sinnvoll:
-
-```powershell
-Get-FileHash ".pio\build\esp32c3\BlePrompter-esp32c3-1.7.0-merged.bin" -Algorithm SHA256
-```
-
-Der Hash ist kein Muss für ESP Web Tools. Er hilft aber, später zu erkennen, ob eine Datei wirklich unverändert ist.
-
-## 8. Firmware in Zauberhaft bereitstellen
-
-Wechsle ins Website-Projekt:
-
-```powershell
-cd C:\dev\Zauberhaft
-```
-
-Für die aktuelle BlePrompter-Releasevariante ist dieser Zielpfad vorgesehen:
-
-```text
-assets/firmware/bleprompter/release-1/firmware.bin
-```
-
-Kopiere das zusammengeführte ESP32-C3-Image dorthin:
+Kopiere den Inhalt des erzeugten Board-Ordners dorthin:
 
 ```powershell
 Copy-Item `
-  "C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\.pio\build\esp32c3\BlePrompter-esp32c3-1.7.0-merged.bin" `
-  "C:\dev\Zauberhaft\assets\firmware\bleprompter\release-1\firmware.bin" `
+  -Path "C:\dev\TheStampSizeDiyPeekDevice\BlePrompter\download_bins\esp32c3\*" `
+  -Destination "C:\dev\Zauberhaft\assets\firmware\bleprompter\esp32c3" `
+  -Recurse `
   -Force
 ```
 
-Wichtig: Der Zielname muss `firmware.bin` bleiben, weil das Manifest genau diese Datei referenziert.
-
-## 9. Release-README aktualisieren
-
-Zu jeder Firmwarevariante gehört eine README-Datei:
+Danach müssen im Zielordner mindestens diese Dateien liegen:
 
 ```text
-assets/firmware/bleprompter/release-1/README.md
+assets/firmware/bleprompter/esp32c3/
+├── BlePrompter-esp32c3-v<version>-<zeitstempel>-download.bin
+├── BlePrompter-esp32c3-v<version>-<zeitstempel>-download.md
+└── manifest.json
 ```
 
-Aktualisiere dort mindestens:
+Wenn eine alte `.bin` oder `.md` mit vorherigem Zeitstempel dort liegt, sollte sie entfernt werden, damit die Website nicht mehrere veraltete Artefakte enthält.
 
-- Version
-- Datum im Format `DD.MM.YYYY`
-- Chip
-- kurze Beschreibung
-- wichtige Änderungen
-- bekannte Einschränkungen
+## Firmware-Katalog in Zauberhaft
 
-Beispiel:
-
-```markdown
-# BlePrompter - Release 1
-
-**Version:** 1.7.0
-**Datum:** 08.06.2026
-**Chip:** ESP32-C3
-
-## Beschreibung
-
-Stabile Releaseversion für das ESP32-C3-OLED-Board.
-
-## Enthaltene Funktionen
-
-- BLE-UART über Nordic UART Service
-- Anzeige von Text, Symbolen, Pfeilen, Karten und Würfeln
-- Zyklischer Tiefschlaf für bessere Batterielaufzeit
-
-## Installation
-
-1. ESP32-C3 per USB anschließen.
-2. Auf der Firmware-Seite `Installieren` klicken.
-3. Im Browser den seriellen Port auswählen.
-4. Warten, bis der Flash-Vorgang abgeschlossen ist.
-```
-
-## 10. Firmware-Katalog prüfen
-
-Die Firmware-Seite liest ihre Projekte und Varianten aus:
+Die Firmware-Seite liest ihre Einträge aus:
 
 ```text
-_data/firmware.yml
+C:\dev\Zauberhaft\_data\firmware.yml
 ```
 
-Aktuell gibt es:
+Für ESP32-C3 sieht der Eintrag sinngemäß so aus:
 
 ```yaml
 projects:
   - name: BlePrompter
     slug: bleprompter
-    description: BLE Prompter Firmware für ESP32-C3
+    description: BLE Prompter Firmware für ESP32-C3 OLED
     chip_family: ESP32-C3
     variants:
-      - name: Release 1
-        slug: release-1
-        description: Stabile Version für den produktiven Einsatz
+      - name: ESP32-C3 OLED 1.7.0
+        slug: esp32c3
+        description: Stabile Download-Firmware vom 08.06.2026 für das ESP32-C3-OLED-Board
+        firmware_file: BlePrompter-esp32c3-v1.7.0-20260608-104642-download.bin
+        info_file: BlePrompter-esp32c3-v1.7.0-20260608-104642-download.md
 ```
 
-Wenn du nur die bestehende ESP32-C3-Releaseversion ersetzt, muss hier nichts geändert werden.
+Wichtig:
 
-Wenn du eine neue Variante anlegen willst, zum Beispiel `release-2`, brauchst du:
+- `slug` muss zum Asset-Ordner passen.
+- `info_file` steuert den Info-Link auf der Website.
+- Die Installation nutzt `assets/firmware/<projekt>/<variante>/manifest.json`.
+- Wenn sich der Zeitstempel im Dateinamen ändert, müssen `firmware_file`, `info_file` und `manifest.json` zusammenpassen.
 
-```yaml
-      - name: Release 2
-        slug: release-2
-        description: Stabile Version 2 für den produktiven Einsatz
-```
+## Firmware-Seite
 
-Dann muss auch dieser Ordner existieren:
+Die relevante Seite ist:
 
 ```text
-assets/firmware/bleprompter/release-2/
+C:\dev\Zauberhaft\downloads\firmware.md
 ```
 
-## 11. Manifest prüfen oder anlegen
+Der Install-Button muss auf das statische Manifest unter `assets/firmware` zeigen:
 
-Für jede Variante gibt es eine Manifest-Datei unter:
-
-```text
-firmware/bleprompter/<varianten-slug>.md
+```liquid
+manifest="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}"
 ```
 
-Für `release-1`:
+Der Info-Link zeigt auf die konfigurierte Markdown-Datei:
 
-```text
-firmware/bleprompter/release-1.md
+```liquid
+href="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/' | append: variant.info_file | relative_url }}"
 ```
 
-Der Inhalt sieht aktuell so aus:
+## Lokale Prüfung
 
-```json
-{
-  "name": "BlePrompter Release 1",
-  "builds": [
-    {
-      "chipFamily": "ESP32-C3",
-      "parts": [
-        { "path": "{{ '/assets/firmware/bleprompter/release-1/firmware.bin' | relative_url }}", "offset": 0 }
-      ]
-    }
-  ]
-}
-```
-
-Das passt zu einem zusammengeführten Image. `offset: 0` bedeutet: Das Gesamtimage beginnt am Anfang des Flash-Speichers. Die internen Bestandteile liegen bereits an den richtigen Positionen, weil `esptool merge_bin` die Lücken passend aufgefüllt hat.
-
-Wenn du eine CYB/CYD-Variante veröffentlichen willst, darf sie nicht dieselbe `chipFamily` wie ESP32-C3 verwenden. Für CYB/CYD brauchst du `ESP32`.
-
-Beispiel:
-
-```json
-{
-  "name": "BlePrompter CYD Release 1",
-  "builds": [
-    {
-      "chipFamily": "ESP32",
-      "parts": [
-        { "path": "{{ '/assets/firmware/bleprompter-cyd/release-1/firmware.bin' | relative_url }}", "offset": 0 }
-      ]
-    }
-  ]
-}
-```
-
-## 12. Warum das Manifest so wichtig ist
-
-ESP Web Tools lädt nicht einfach irgendeine Datei herunter. Es liest zuerst das Manifest.
-
-Das Manifest sagt:
-
-- Wie die Firmware heißt.
-- Für welche Chipfamilie sie gedacht ist.
-- Welche Datei oder Dateien geflasht werden.
-- An welchen Flash-Offset jede Datei geschrieben wird.
-
-ESP Web Tools erkennt den angeschlossenen Chip. Wenn im Manifest `ESP32-C3` steht, wird diese Firmware nur für ein ESP32-C3-Gerät ausgewählt. Für ein klassisches ESP32-Gerät muss `ESP32` angegeben werden.
-
-## 13. Lokale Website prüfen
-
-Starte Jekyll:
+Wenn Jekyll lokal verfügbar ist:
 
 ```powershell
 cd C:\dev\Zauberhaft
 bundle exec jekyll serve --livereload
 ```
 
-Dann im Browser prüfen:
+Dann prüfen:
 
 ```text
 http://localhost:4000/Zauberhaft/downloads/firmware/
+http://localhost:4000/Zauberhaft/assets/firmware/bleprompter/esp32c3/manifest.json
 ```
 
-Das Manifest direkt prüfen:
+Die Manifest-Antwort muss gültiges JSON sein. Der `path` in der Manifest-Datei muss auf eine Datei zeigen, die im selben Ordner existiert.
 
-```text
-http://localhost:4000/Zauberhaft/firmware/bleprompter/release-1/manifest.json
-```
-
-Die Manifest-Antwort muss gültiges JSON sein. Sie muss den korrekten Pfad zur Firmware enthalten:
-
-```text
-/Zauberhaft/assets/firmware/bleprompter/release-1/firmware.bin
-```
-
-Die Firmware-Datei direkt prüfen:
-
-```text
-http://localhost:4000/Zauberhaft/assets/firmware/bleprompter/release-1/firmware.bin
-```
-
-Der Browser sollte die Datei herunterladen oder als Binärdatei anzeigen.
-
-## 14. Browser-Flash lokal testen
-
-ESP Web Tools braucht Web Serial. Das funktioniert auf Desktop-Systemen in Chromium-basierten Browsern wie Chrome oder Edge. Die Seite muss über HTTPS geladen werden. `localhost` gilt für Browser als sichere Ausnahme.
-
-Lokaler Test:
-
-1. ESP-Gerät per USB anschließen.
-2. `http://localhost:4000/Zauberhaft/downloads/firmware/` öffnen.
-3. Bei der gewünschten Variante `Installieren` klicken.
-4. Seriellen Port auswählen.
-5. Flash-Vorgang beobachten.
-6. Gerät nach Abschluss neu starten lassen.
-7. BLE-Gerät und Startbildschirm prüfen.
-
-Wenn der Flash-Vorgang fehlschlägt:
-
-- Anderen USB-Port testen.
-- USB-Kabel prüfen. Manche Kabel liefern nur Strom.
-- Seriellen Monitor und andere Programme schließen.
-- Bei manchen Boards beim Start des Flash-Vorgangs die Boot-Taste halten.
-- Prüfen, ob die Manifest-`chipFamily` zum Gerät passt.
-
-## 15. Veröffentlichen
-
-Wenn lokal alles passt:
+Schnellprüfung per PowerShell:
 
 ```powershell
-cd C:\dev\Zauberhaft
-git status
+$manifestPath = "C:\dev\Zauberhaft\assets\firmware\bleprompter\esp32c3\manifest.json"
+$manifest = Get-Content -Raw $manifestPath | ConvertFrom-Json
+$firmwarePath = Join-Path (Split-Path -Parent $manifestPath) $manifest.builds[0].parts[0].path
+Test-Path -LiteralPath $firmwarePath
 ```
 
-Erwartete Änderungen:
+Das Ergebnis muss `True` sein.
 
-```text
-assets/firmware/bleprompter/release-1/firmware.bin
-assets/firmware/bleprompter/release-1/README.md
-```
+## Browser-Flash testen
 
-Falls neue Varianten angelegt wurden, zusätzlich:
+ESP Web Tools braucht Web Serial. Das funktioniert auf Desktop-Systemen in Chromium-basierten Browsern wie Chrome oder Edge.
 
-```text
-_data/firmware.yml
-firmware/bleprompter/<varianten-slug>.md
-assets/firmware/bleprompter/<varianten-slug>/
-```
-
-Nach Commit und Push nach `main` baut GitHub Pages die Website automatisch. Die produktive Seite liegt unter:
+Produktiv läuft die Seite über HTTPS:
 
 ```text
 https://hesspet.github.io/Zauberhaft/downloads/firmware/
 ```
 
-GitHub Pages liefert HTTPS aus. Damit erfüllt die produktive Seite die Web-Serial-Anforderung von ESP Web Tools.
+Testablauf:
 
-## 16. Anwenderprozess
-
-Der Anwender braucht danach kein PlatformIO und keine Arduino IDE.
-
-Für ihn sieht der Prozess so aus:
-
-1. Firmware-Seite öffnen.
-2. ESP-Gerät per USB anschließen.
-3. `Installieren` klicken.
+1. ESP-Gerät per USB anschließen.
+2. Firmware-Seite öffnen.
+3. Bei der passenden Variante `Installieren` klicken.
 4. Seriellen Port auswählen.
 5. Flash-Vorgang abwarten.
-6. Gerät verwenden.
+6. Gerät neu starten lassen.
+7. Startbildschirm, BLE-Name und einfache BLE-Befehle prüfen.
 
-Die Website übernimmt dabei:
+## Typische Fehlerquellen
 
-- Laden des ESP-Web-Tools-Skripts.
-- Laden des passenden Manifests.
-- Laden der `firmware.bin`.
-- Schreiben in den Flash-Speicher über Web Serial.
+### `Failed to download manifest`
 
-## 17. Typische Fehlerquellen
+Ursache: Die Manifest-URL zeigt auf eine Datei, die nicht existiert, nicht veröffentlicht wurde oder nicht als statische JSON-Datei erreichbar ist.
 
-### Reine PlatformIO-App-Datei wurde veröffentlicht
+Lösung:
 
-Symptom: Flash läuft durch, Gerät startet aber nicht korrekt.
+- Prüfen, ob `assets/firmware/<projekt>/<variante>/manifest.json` existiert.
+- Manifest-URL direkt im Browser öffnen.
+- Prüfen, ob der Install-Button auf `assets/firmware/.../manifest.json` zeigt.
+- Nicht mehr auf `firmware/<projekt>/<variante>/manifest.json` aus einer Markdown-Datei setzen.
 
-Ursache: `.pio/build/<umgebung>/firmware.bin` wurde direkt nach Zauberhaft kopiert, obwohl das Manifest Offset `0` verwendet.
+### Manifest lädt, aber Firmware lädt nicht
 
-Lösung: Gesamtimage mit `esptool merge_bin` erzeugen und dieses als `assets/firmware/.../firmware.bin` veröffentlichen.
+Ursache: `path` in `manifest.json` zeigt auf eine Datei, die im Manifest-Ordner nicht existiert.
 
-### Falsche Chipfamilie im Manifest
+Lösung:
 
-Symptom: ESP Web Tools wählt die Firmware nicht aus oder flasht nicht.
+- `path` nur als relativen Dateinamen setzen.
+- `.bin` und `manifest.json` im selben Ordner halten.
+- Dateinamen inklusive Zeitstempel exakt vergleichen.
 
-Ursache: Manifest enthält `ESP32-C3`, angeschlossen ist aber ein klassisches ESP32-Board, oder umgekehrt.
+### Falsche Chipfamilie
 
-Lösung: `chipFamily` passend setzen:
+Ursache: Manifest enthält `ESP32-C3`, angeschlossen ist aber ein klassischer ESP32, oder umgekehrt.
+
+Lösung:
 
 | Gerät | `chipFamily` |
 | --- | --- |
 | ESP32-C3 OLED | `ESP32-C3` |
 | CYB/CYD ESP32-WROOM-32 | `ESP32` |
 
-### Falscher Bootloader-Offset beim Bündeln
+### Gerät startet nach Flash nicht
 
-Symptom: Gerät startet nicht oder bleibt im Bootloader hängen.
-
-Ursache: ESP32-C3 und klassischer ESP32 haben unterschiedliche Bootloader-Offsets.
+Ursache: Reine PlatformIO-App-Datei wurde veröffentlicht oder mit falschem Bootloader-Offset gebündelt.
 
 Lösung:
 
-- ESP32-C3: Bootloader bei `0x0000`
-- ESP32: Bootloader bei `0x1000`
+- Immer die vom Builder-Skript erzeugte `*-download.bin` verwenden.
+- ESP32-C3: Bootloader bei `0x0000`.
+- ESP32/CYD: Bootloader bei `0x1000`.
 
-### Alte Datei im Website-Projekt
+### Website zeigt neue Info, flasht aber alte Firmware
 
-Symptom: Website zeigt neue README, flasht aber alte Firmware.
-
-Ursache: `firmware.bin` wurde nicht ersetzt oder Browser-/GitHub-Pages-Cache liefert noch alte Datei.
-
-Lösung:
-
-- Dateigröße und Hash prüfen.
-- Build erneut veröffentlichen.
-- URL mit Cache-Busting testen, zum Beispiel `firmware.bin?v=1.7.0`.
-
-### Web Serial wird nicht angeboten
-
-Symptom: Button zeigt, dass der Browser nicht unterstützt wird.
-
-Ursache: Browser unterstützt Web Serial nicht oder Seite läuft nicht in einem sicheren Kontext.
+Ursache: Alte `.bin`, alte `manifest.json` oder Browser-/GitHub-Pages-Cache.
 
 Lösung:
 
-- Chrome oder Edge auf Desktop nutzen.
-- Produktivseite über HTTPS öffnen.
-- Lokal `localhost` nutzen.
+- Zielordner vor dem Kopieren bereinigen.
+- `manifest.json` und `info_file` auf denselben Zeitstempel prüfen.
+- Direkt die Manifest-URL öffnen und den `path` kontrollieren.
 
-## 18. Dokumentationslinks
+## Veröffentlichung
 
-- [PlatformIO `pio run`](https://docs.platformio.org/en/latest/core/userguide/cmd_run.html)
-- [ESP Web Tools](https://esphome.github.io/esp-web-tools/)
-- [Espressif esptool: Basic Commands und `merge-bin`/`merge_bin`](https://docs.espressif.com/projects/esptool/en/latest/esp32/esptool/basic-commands.html)
+Nach dem Kopieren in `C:\dev\Zauberhaft` prüfen:
 
-## 19. Kurzcheckliste für ein BlePrompter-Release
+```powershell
+cd C:\dev\Zauberhaft
+git status
+```
 
-1. `include/config.h` Version setzen.
-2. `pio run -e esp32c3 --target clean` ausführen.
-3. `pio run -e esp32c3` ausführen.
-4. Optional mit `pio run -e esp32c3 --target upload --upload-port COM6` testen.
-5. Mit `esptool merge_bin` ein Gesamtimage erzeugen.
-6. Gesamtimage nach `C:\dev\Zauberhaft\assets\firmware\bleprompter\release-1\firmware.bin` kopieren.
-7. `assets/firmware/bleprompter/release-1/README.md` aktualisieren.
-8. Manifest unter `firmware/bleprompter/release-1.md` prüfen.
-9. `bundle exec jekyll serve --livereload` starten.
-10. Manifest und Firmware-Seite lokal prüfen.
-11. Commit und Push nach `main`.
-12. Produktivseite öffnen und Testflash durchführen.
+Erwartete Änderungen bei einer neuen ESP32-C3-Version:
+
+```text
+assets/firmware/bleprompter/esp32c3/manifest.json
+assets/firmware/bleprompter/esp32c3/BlePrompter-esp32c3-v<version>-<zeitstempel>-download.bin
+assets/firmware/bleprompter/esp32c3/BlePrompter-esp32c3-v<version>-<zeitstempel>-download.md
+_data/firmware.yml
+```
+
+Falls alte Artefakte ersetzt werden, erscheinen diese zusätzlich als gelöscht.
+
+Nach Commit und Push nach `main` baut GitHub Pages die Website automatisch.
+
+## Kurzcheckliste
+
+1. Version in `include\config.h` prüfen.
+2. Im Firmware-Projekt `tools\BuildDownloadBins.bat` ausführen.
+3. Prüfen, ob `download_bins\esp32c3` und `download_bins\cyd` jeweils `.bin`, `.md` und `manifest.json` enthalten.
+4. Gewünschten Board-Ordner nach `C:\dev\Zauberhaft\assets\firmware\bleprompter\<variante>` kopieren.
+5. Alte Artefakte im Zielordner entfernen.
+6. `_data\firmware.yml` auf neuen Dateinamen und Zeitstempel aktualisieren.
+7. Manifest direkt öffnen und JSON prüfen.
+8. Firmware-Seite öffnen.
+9. Browser-Flash mit dem passenden Gerät testen.
+10. Änderungen committen und nach GitHub Pages veröffentlichen.
