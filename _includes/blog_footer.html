@@ -2,5 +2,6 @@
   <div class="site-footer__inner">
     <p>&copy; {{ site.time | date: '%Y' }} {{ site.author }} &mdash; Gebaut mit ♠ ♥ ♣ ♦ ({{ site.time | date: "%d.%m.%Y %H:%M %Z" }})</p>
     <p><a href="{{ '/blog/impressum/' | relative_url }}">Impressum</a></p>
+    {% include buymeacoffee.html %}
   </div>
 </footer>
