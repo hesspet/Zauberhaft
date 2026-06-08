@@ -18,6 +18,9 @@ permalink: /blog/themen/
             {% include blog_article-card.html article=artikel %}
           {% endfor %}
         </div>
+        <p class="topic-search-link-wrapper">
+          <a href="{{ '/blog/suche/' | relative_url }}?topic={{ topic | uri_escape }}" class="topic-search-link">Alle zu diesem Thema →</a>
+        </p>
       </section>
     {% endif %}
   {% endfor %}

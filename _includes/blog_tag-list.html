@@ -1,7 +1,7 @@
 {% if include.topics and include.topics.size > 0 %}
   <ul class="tag-list" aria-label="Themen">
     {% for topic in include.topics %}
-      <li>{{ topic }}</li>
+      <li><a href="{{ '/blog/suche/' | relative_url }}?topic={{ topic | uri_escape }}">{{ topic }}</a></li>
     {% endfor %}
   </ul>
 {% endif %}

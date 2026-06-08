@@ -25,6 +25,7 @@ topics:
   - Smartphone
   - Zauberapp
   - Android
+  - AppGehoert
 summary: "Eine \"längere\" Zusammenfassung was das alle mit dieser Webseite auf sich hat. Was Peter sich dabei gedacht hat (oder übersehen hat)
 Und wie es hier weitergehten soll. Einfach eine \"Zauberhafte\" Imageseite."
 hero:

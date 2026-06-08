@@ -6,6 +6,7 @@ updated:
 type: "Bericht"
 topics:
   - Allgemein
+  - AppGehoert
 summary: "Profanes Spendensammeln. Ein paar Infos um was es dabei geht."
 hero:
 status: "fertig"

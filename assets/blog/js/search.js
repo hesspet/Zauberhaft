@@ -3,10 +3,11 @@
   const config = document.getElementById("search-config");
   const searchInput = document.getElementById("search-input");
   const typeFilter = document.getElementById("type-filter");
+  const topicFilter = document.getElementById("topic-filter");
   const yearFilter = document.getElementById("year-filter");
   const resultsElement = document.getElementById("search-results");
 
-  if (!config || !searchInput || !typeFilter || !yearFilter || !resultsElement) {
+  if (!config || !searchInput || !typeFilter || !topicFilter || !yearFilter || !resultsElement) {
     return;
   }
 
@@ -17,6 +18,12 @@
   config.dataset.searchInitialized = "true";
 
   const searchUrl = config.dataset.searchUrl;
+  let configuredTopics = [];
+  try {
+    configuredTopics = JSON.parse(config.dataset.topics || "[]");
+  } catch (e) {
+    configuredTopics = [];
+  }
   let articles = [];
 
   function normalizeText(value) {
@@ -80,6 +87,19 @@
     for (const year of years) {
       yearFilter.appendChild(createOption(year, year));
     }
+
+    const usedTopics = new Set();
+    for (const article of articles) {
+      for (const topic of (article.topics || [])) {
+        usedTopics.add(topic);
+      }
+    }
+
+    for (const topic of configuredTopics) {
+      if (usedTopics.has(topic)) {
+        topicFilter.appendChild(createOption(topic, topic));
+      }
+    }
   }
 
   function renderResults(results, query) {
@@ -90,7 +110,7 @@
 
     const heading = query ? `${results.length} Treffer` : "Neueste Artikel";
     const items = results.slice(0, 50).map((article) => {
-      const topics = (article.topics || []).map((topic) => `<li>${escapeHtml(topic)}</li>`).join("");
+      const topics = (article.topics || []).map((topic) => `<li><a href="?topic=${encodeURIComponent(topic)}">${escapeHtml(topic)}</a></li>`).join("");
       return `
         <article class="article-card">
           <div class="article-card__body">
@@ -112,12 +132,14 @@
   function updateResults() {
     const query = normalizeText(searchInput.value.trim());
     const selectedType = typeFilter.value;
+    const selectedTopic = topicFilter.value;
     const selectedYear = yearFilter.value;
 
     const results = articles
       .map((article) => ({ article, score: scoreArticle(article, query) }))
       .filter((entry) => entry.score > 0)
       .filter((entry) => !selectedType || entry.article.type === selectedType)
+      .filter((entry) => !selectedTopic || (entry.article.topics || []).includes(selectedTopic))
       .filter((entry) => !selectedYear || entry.article.year === selectedYear)
       .sort((first, second) => {
         if (second.score !== first.score) {
@@ -140,6 +162,18 @@
     .then((data) => {
       articles = Array.isArray(data) ? data : [];
       populateFilters();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const topicFromUrl = urlParams.get("topic");
+      if (topicFromUrl) {
+        for (const option of topicFilter.options) {
+          if (option.value === topicFromUrl) {
+            topicFilter.value = topicFromUrl;
+            break;
+          }
+        }
+      }
+
       updateResults();
     })
     .catch(() => {
@@ -149,6 +183,7 @@
   searchInput.addEventListener("input", updateResults);
   typeFilter.addEventListener("change", updateResults);
   yearFilter.addEventListener("change", updateResults);
+  topicFilter.addEventListener("change", updateResults);
   }
 
   window.zauberhaftInitialisiereSuche = initializeSearch;

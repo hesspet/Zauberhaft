@@ -11,6 +11,7 @@ topics:
   - Daumenspitze
   - BLE-Prompter
   - ESP32
+  - AppGehoert
 summary: "Das Eckige muss ins Runde. Weitere Prompter Variante!"
 hero:
 status: "fertig"
@@ -103,3 +104,4 @@ Das Ganze hat aber eine Nachteil. Zwei der Lötaugen werden eigentlich gebraucht
 
 ![](../../assets/blog/images/articles/ds-prompter/AngeknabbertRueckseite.jpg)
 
+* 

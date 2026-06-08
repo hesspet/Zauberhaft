@@ -7,7 +7,9 @@ permalink: /blog/suche/
 
 {% assign asset_version = site.github.build_revision | default: site.time %}
 
-<div id="search-config" data-search-url="{{ '/blog/search.json' | relative_url }}?v={{ asset_version | uri_escape }}"></div>
+<div id="search-config"
+     data-search-url="{{ '/blog/search.json' | relative_url }}?v={{ asset_version | uri_escape }}"
+     data-topics="{{ site.data.blog_topics | jsonify | escape }}"></div>
 
 <form class="search-controls" role="search">
   <label for="search-input">Suchbegriff</label>
@@ -16,6 +18,11 @@ permalink: /blog/suche/
   <label for="type-filter">Artikeltyp</label>
   <select id="type-filter">
     <option value="">Alle Typen</option>
+  </select>
+
+  <label for="topic-filter">Thema</label>
+  <select id="topic-filter">
+    <option value="">Alle Themen</option>
   </select>
 
   <label for="year-filter">Jahr</label>
