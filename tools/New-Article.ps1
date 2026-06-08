@@ -1,4 +1,4 @@
-param(
+﻿param(
   [Parameter(Mandatory = $true)]
   [string]$Title,
 
@@ -16,6 +16,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Konsolen-Encoding auf UTF-8, damit Umlaute korrekt nach stdout/stderr gehen
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 function Convert-ToSlug {
   param([string]$Value)
 
@@ -32,7 +35,7 @@ function Escape-YamlValue {
 }
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$dateText = $Date.ToString("yyyy-MM-dd HH:mm")
+$dateText = $Date.ToString("yyyy-MM-dd HH-mm")
 $slug = Convert-ToSlug -Value $Title
 
 if ([string]::IsNullOrWhiteSpace($slug)) {
@@ -82,5 +85,5 @@ difficulty:
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($articlePath, $content, $utf8NoBom)
 
-Write-Host "Artikel erzeugt: $articlePath"
-Write-Host "Bildordner erzeugt: $imageDirectory"
+Write-Output "Artikel erzeugt: $articlePath"
+Write-Output "Bildordner erzeugt: $imageDirectory"
