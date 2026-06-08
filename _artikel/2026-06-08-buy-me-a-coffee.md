@@ -23,3 +23,5 @@ Diese Seite nennt sich Ko-fi und wird von vielen Bastlern, Kreativen, Influencer
 Wenn Euch meine Ideen gefallen und Ihr ein paar Euro übrig habt: Ich trinke viel Kaffee ...
 
 Dafür schon einmal herzlichen Dank. Ihr helft mir damit, diese Sachen weiterhin frei und ohne Preisschild anbieten zu können.
+
+<a href='https://ko-fi.com/Z4E020ZX00' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
