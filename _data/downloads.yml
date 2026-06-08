@@ -3,11 +3,14 @@
 
 - chapter: Magische Webanwendungen
   items:
-    - name: "Camera Arcanum (PWA)"
+    - name: "Camera Arcanum (Webanwendung)"
       emoji: "🌐"
-      description: "Direkt im Browser nutzbar"
+      description: "Arcane Geisterdedection mit dem Smartphone"
       url: https://hesspet.github.io/Nasreddins-Camera-Arcanum/
-
+    - name: "Nassredin Simple Peek Companion (Webanwendung)"
+      emoji: "🌐"
+      description: "Smartphone Companion Anwendung für den ESP32-BlePrompter (siehe Firmware Download)"
+      url: https://hesspet.github.io/Nasreddins-Simple-Peek-Client2Web/     
 - chapter: Texte
   items:
     - name: "DiyMagic Archiv"
