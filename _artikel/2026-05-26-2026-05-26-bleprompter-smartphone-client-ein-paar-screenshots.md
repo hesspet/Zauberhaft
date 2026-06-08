@@ -12,7 +12,7 @@ topics:
   - Android
 summary: "Eine erste Vorstellung der Bedienung des BlePrompter Smartphone Client"
 hero:
-status: "fertig"
+status: "entwurf"
 difficulty:
 ---
 
