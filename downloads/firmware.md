@@ -47,7 +47,7 @@ permalink: /downloads/firmware/
                     </a>
                     {% endif %}
                     <esp-web-install-button
-                        manifest="{{ '/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}">
+                        manifest="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}">
                         <button slot="activate" class="firmware-install-button">
                             &#x1F4E5; Installieren
                         </button>

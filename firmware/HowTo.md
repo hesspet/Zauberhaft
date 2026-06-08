@@ -10,9 +10,7 @@ Zauberhaft/
 │       └── <variant-slug>/
 │           ├── <firmware-datei>.bin   ← Die eigentliche Firmware
 │           └── <info-datei>.md        ← Versionsinformationen
-└── firmware/                          ← Manifest-Generator (eine .md pro Variante)
-    └── <projekt-slug>/
-        └── <variant-slug>.md         ← Erzeugt manifest.json-Endpunkt
+│           └── manifest.json          ← ESP-Web-Tools-Manifest
 ```
 
 ## 2. Firmware-Datei bereitstellen
@@ -87,28 +85,24 @@ projects:
 - `slug` in der YAML muss mit dem Verzeichnisnamen unter `assets/firmware/` &uuml;bereinstimmen
 - `slug` wird auch f&uuml;r die Manifest-URL verwendet
 
-## 5. Manifest-Generator anlegen
+## 5. Manifest anlegen
 
-Jede Variante braucht eine kleine Markdown-Datei, die den ESP-Web-Tools-Manifest-Endpunkt erzeugt:
+Jede Variante braucht eine statische JSON-Datei direkt neben der Firmware:
 
 ```
-firmware/<projekt-slug>/<variant-slug>.md
+assets/firmware/<projekt-slug>/<variant-slug>/manifest.json
 ```
 
-**Inhalt (komplett &uuml;bernehmen, nur Projektname und Chip anpassen):**
+**Inhalt (komplett übernehmen, nur Projektname, Chip und Dateiname anpassen):**
 
-```yaml
----
-layout: firmware_manifest.json
-permalink: /firmware/projekt-slug/variant-slug/manifest.json
----
+```json
 {
   "name": "Projektname Variante",
   "builds": [
     {
       "chipFamily": "ESP32-C3",
       "parts": [
-        { "path": "{{ '/assets/firmware/projekt-slug/variant-slug/<firmware-datei>.bin' | relative_url }}", "offset": 0 }
+        { "path": "<firmware-datei>.bin", "offset": 0 }
       ]
     }
   ]
@@ -117,10 +111,8 @@ permalink: /firmware/projekt-slug/variant-slug/manifest.json
 
 **Erkl&auml;rung:**
 
-- `layout: firmware_manifest.json` sorgt daf&uuml;r, dass Jekyll nur das JSON ausgibt (kein HTML-Wrapper)
-- `permalink` legt die URL fest, unter der das Manifest erreichbar ist
 - `chipFamily` muss mit dem Eintrag in `_data/firmware.yml` &uuml;bereinstimmen
-- `path` verwendet `relative_url`, damit der Pfad mit dem `baseurl`-Pr&auml;fix (`/Zauberhaft`) korrigiert wird
+- `path` ist relativ zur `manifest.json`, wenn Firmware und Manifest im selben Ordner liegen
 - `offset: 0` ist der Standard — Flash-Beginn bei Adresse 0x0. Bei Partitionstabellen oder Bootloadern abweichende Offsets verwenden
 
 ## 6. Lokal testen
@@ -132,7 +124,7 @@ bundle exec jekyll serve --livereload
 **Pr&uuml;fen:**
 
 1. Manifest-Endpunkt im Browser &ouml;ffnen:
-   `http://localhost:4000/Zauberhaft/firmware/projekt-slug/variant-slug/manifest.json`
+   `http://localhost:4000/Zauberhaft/assets/firmware/projekt-slug/variant-slug/manifest.json`
    → Muss sauberes JSON mit `name`, `builds`, `chipFamily` und `parts` zeigen
 
 2. Firmware-Seite aufrufen:
@@ -155,7 +147,7 @@ bundle exec jekyll serve --livereload
 Nach Commit und Push nach `main` baut GitHub Pages automatisch:
 
 1. `.bin`-Dateien werden unter `assets/firmware/` ausgeliefert
-2. Manifest-JSONs werden aus den `.md`-Dateien unter `firmware/` generiert
+2. Manifest-JSONs werden direkt unter `assets/firmware/` ausgeliefert
 3. Die Firmware-Seite zeigt die neuen Varianten an
 4. ESP Web Tools finden die Manifeste und k&ouml;nnen flashen
 
@@ -176,5 +168,5 @@ Die Struktur ist f&uuml;r beliebig viele Projekte ausgelegt. Neues Projekt anleg
 
 1. Neuen Eintrag in `_data/firmware.yml` (unter `projects:`)
 2. Verzeichnis `assets/firmware/<neuer-slug>/` anlegen
-3. Pro Variante: Firmware-`.bin` + Info-`.md` + Manifest-`.md`
+3. Pro Variante: Firmware-`.bin` + Info-`.md` + `manifest.json`
 4. Fertig — die Firmware-Seite iteriert automatisch &uuml;ber alle Projekte
