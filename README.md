@@ -15,11 +15,31 @@ Startseite, Projektverteiler und Blog von Peter Heß — statische Website mit *
 
 ## Lokale Vorschau
 
-```bash
-bundle exec jekyll serve --livereload
+Einmalig RubyInstaller mit DevKit installieren, zum Beispiel:
+
+```powershell
+winget install RubyInstallerTeam.RubyWithDevKit.3.3
 ```
 
-Öffnet `http://localhost:4000/Zauberhaft/`.
+Danach ein neues Terminal öffnen und die lokalen Projektabhängigkeiten installieren:
+
+```powershell
+.\JekyllInstallieren.bat
+```
+
+Lokale Vorschau starten:
+
+```powershell
+.\WebStarten.bat
+```
+
+Öffnet `http://127.0.0.1:4000/Zauberhaft/`.
+
+Einmaliger Build ohne Vorschau-Server:
+
+```powershell
+.\WebBauen.bat
+```
 
 ## Projekte und Downloads verwalten
 

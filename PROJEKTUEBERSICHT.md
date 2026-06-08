@@ -176,11 +176,28 @@ Nach jedem Build wird eine Status-Mail an die in den GitHub-Secrets hinterlegte 
 
 ## Lokale Entwicklung
 
-```bash
-gem install bundler
-bundle install
-bundle exec jekyll serve --livereload    # http://localhost:4000/Zauberhaft/
+Ruby wird lokal über RubyInstaller mit DevKit benötigt. Bevorzugte Installation:
+
+```powershell
+winget install RubyInstallerTeam.RubyWithDevKit.3.3
 ```
+
+Danach ein neues Terminal öffnen und im Projektstamm:
+
+```powershell
+.\JekyllInstallieren.bat
+.\WebStarten.bat
+```
+
+Die lokale Vorschau läuft unter `http://127.0.0.1:4000/Zauberhaft/`.
+
+Für einen einmaligen Build ohne Vorschau-Server:
+
+```powershell
+.\WebBauen.bat
+```
+
+Die Batchdateien starten PowerShell mit `-NoProfile`, damit lokale Profilfehler die Jekyll-Werkzeuge nicht stören. Intern wird zuerst `tools/Validate-Articles.ps1` ausgeführt und danach bevorzugt `bundle exec jekyll` verwendet. `JekyllInstallieren.bat` installiert lokale Gems nach `vendor/bundle`; `vendor/` und `Gemfile.lock` bleiben ignoriert, damit lokale Windows-Auflösung die GitHub-Pages-Veröffentlichung nicht beeinflusst.
 
 Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 
