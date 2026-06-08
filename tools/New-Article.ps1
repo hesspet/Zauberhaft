@@ -32,7 +32,7 @@ function Escape-YamlValue {
 }
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$dateText = $Date.ToString("yyyy-MM-dd")
+$dateText = $Date.ToString("yyyy-MM-dd HH:mm")
 $slug = Convert-ToSlug -Value $Title
 
 if ([string]::IsNullOrWhiteSpace($slug)) {

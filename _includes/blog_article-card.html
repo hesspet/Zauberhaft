@@ -7,7 +7,7 @@
   <div class="article-card__body">
     <div class="article-card__meta">
       <span>{{ include.article.type | default: "Artikel" }}</span>
-      <time datetime="{{ include.article.date | date: "%Y-%m-%d" }}">{{ include.article.date | date: "%d.%m.%Y" }}</time>
+      <time datetime="{{ include.article.date | date: "%Y-%m-%dT%H:%M:%S" }}">{{ include.article.date | date: "%d.%m.%Y %H:%M" }}</time>
     </div>
     <h2 class="article-card__title">
       <a href="{{ include.article.url | relative_url }}">{{ include.article.title }}</a>

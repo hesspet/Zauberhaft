@@ -25,13 +25,20 @@ chapter: Texte
         {% for chapter in site.data.downloads %}
             {% if chapter.chapter == page.chapter %}
                 {% for dl in chapter.items %}
-                <a class="dl-item" href="{{ dl.url }}" target="_blank" rel="noopener">
-                    <span class="dl-icon">{{ dl.emoji }}</span>
-                    <span class="dl-info">
-                        <span class="dl-name">{{ dl.name }}</span>
-                        <span class="dl-desc">{{ dl.description }}</span>
-                    </span>
-                </a>
+                <div class="dl-item">
+                    <a class="dl-main-link" href="{{ dl.url }}" target="_blank" rel="noopener">
+                        <span class="dl-icon">{{ dl.emoji }}</span>
+                        <span class="dl-info">
+                            <span class="dl-name">{{ dl.name }}</span>
+                            <span class="dl-desc">{{ dl.description }}</span>
+                        </span>
+                    </a>
+                    {% if dl.doclink %}
+                    <a class="dl-doclink" href="{{ dl.doclink | relative_url }}" title="Erweitere Dokumentation">
+                        &#x1F4C4;
+                    </a>
+                    {% endif %}
+                </div>
                 {% endfor %}
             {% endif %}
         {% endfor %}

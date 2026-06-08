@@ -1,8 +1,8 @@
 ---
 layout: blog_artikel
 title: "Buy me a coffee!"
-date: 2026-06-08
-updated:
+date: 2026-06-07 00:00
+updated: 2026-06-07 00:00
 type: "Bericht"
 topics:
   - Allgemein

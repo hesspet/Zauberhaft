@@ -29,7 +29,7 @@ layout: blog_default
                   <p>{{ artikel.summary }}</p>
                   <div class="article-card__meta">
                     <span>{{ artikel.type | default: "Artikel" }}</span>
-                    <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%d" }}">{{ artikel.updated | date: "%d.%m.%Y" }}</time></span>
+                    <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%dT%H:%M:%S" }}">{{ artikel.updated | date: "%d.%m.%Y %H:%M" }}</time></span>
                   </div>
                 </article>
               </li>
@@ -52,7 +52,7 @@ layout: blog_default
                     <p>{{ artikel.summary }}</p>
                     <div class="article-card__meta">
                       <span>{{ artikel.type | default: "Artikel" }}</span>
-                      <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
+                      <time datetime="{{ artikel.date | date: "%Y-%m-%dT%H:%M:%S" }}">{{ artikel.date | date: "%d.%m.%Y %H:%M" }}</time>
                     </div>
                   </article>
                 </li>

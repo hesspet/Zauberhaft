@@ -151,12 +151,12 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
       }
     }
 
-    if ($metadata.ContainsKey("date") -and $metadata["date"] -notmatch "^\d{4}-\d{2}-\d{2}$") {
-      Add-Error "${relativeName}: date muss im Format YYYY-MM-DD stehen."
+    if ($metadata.ContainsKey("date") -and $metadata["date"] -notmatch "^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$") {
+      Add-Error "${relativeName}: date muss im Format YYYY-MM-DD oder YYYY-MM-DD HH:MM stehen."
     }
 
-    if ($metadata.ContainsKey("updated") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["updated"]) -and $metadata["updated"] -notmatch "^\d{4}-\d{2}-\d{2}$") {
-      Add-Error "${relativeName}: updated muss im Format YYYY-MM-DD stehen."
+    if ($metadata.ContainsKey("updated") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["updated"]) -and $metadata["updated"] -notmatch "^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$") {
+      Add-Error "${relativeName}: updated muss im Format YYYY-MM-DD oder YYYY-MM-DD HH:MM stehen."
     }
 
     if ($metadata.ContainsKey("type") -and $allowedTypes -notcontains $metadata["type"]) {

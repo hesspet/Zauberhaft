@@ -8,8 +8,8 @@ permalink: /blog/search.json
   {
     "title": {{ item.title | jsonify }},
     "url": {{ item.url | relative_url | jsonify }},
-    "date": {{ item.date | date: "%Y-%m-%d" | jsonify }},
-    "displayDate": {{ item.date | date: "%d.%m.%Y" | jsonify }},
+    "date": {{ item.date | date: "%Y-%m-%d %H:%M" | jsonify }},
+    "displayDate": {{ item.date | date: "%d.%m.%Y %H:%M" | jsonify }},
     "year": {{ item.date | date: "%Y" | jsonify }},
     "type": {{ item.type | default: "Artikel" | jsonify }},
     "summary": {{ item.summary | default: "" | jsonify }},

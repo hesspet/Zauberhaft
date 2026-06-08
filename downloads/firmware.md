@@ -64,6 +64,13 @@ permalink: /downloads/firmware/
                         &#x2139;&#xfe0f; Info
                     </a>
                     {% endif %}
+                    {% if variant.doclink %}
+                    <a class="firmware-doclink"
+                       href="{{ variant.doclink | relative_url }}"
+                       title="Erweitere Dokumentation">
+                        &#x1F4C4; Doku
+                    </a>
+                    {% endif %}
                     <esp-web-install-button
                         manifest="{{ '/assets/firmware/' | append: project.slug | append: '/' | append: variant.slug | append: '/manifest.json' | relative_url }}">
                         <button slot="activate" class="firmware-install-button">

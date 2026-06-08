@@ -116,7 +116,7 @@
           <div class="article-card__body">
             <div class="article-card__meta">
               <span>${escapeHtml(article.type || "Artikel")}</span>
-              <time datetime="${escapeHtml(article.date)}">${escapeHtml(article.displayDate || article.date)}</time>
+              <time datetime="${escapeHtml((article.date || "").replace(" ", "T") + ":00")}">${escapeHtml(article.displayDate || article.date)}</time>
             </div>
             <h2 class="article-card__title"><a href="${escapeHtml(article.url)}">${escapeHtml(article.title)}</a></h2>
             <p>${escapeHtml(article.summary || "")}</p>

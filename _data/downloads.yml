@@ -1,5 +1,6 @@
 # Zauberhaft — Download-Daten
 # Kapitel mit optionalen Unterkapiteln und Einträgen.
+# Optional: doclink verweist auf eine erweiterte Dokumentationsseite innerhalb des Webs (z.B. Blog-Artikel).
 
 - chapter: Magische Webanwendungen
   items:
@@ -10,7 +11,8 @@
     - name: "Nassredin Simple Peek Companion (Webanwendung)"
       emoji: "🌐"
       description: "Smartphone Companion Anwendung für den ESP32-BlePrompter (siehe Firmware Download)"
-      url: https://hesspet.github.io/Nasreddins-Simple-Peek-Client2Web/     
+      url: https://hesspet.github.io/Nasreddins-Simple-Peek-Client2Web/
+      doclink: /blog/artikel/2026-05-26-bleprompter-einbau-in-daumenspitze.html
 - chapter: Texte
   items:
     - name: "DiyMagic Archiv"
