@@ -35,7 +35,8 @@ function Escape-YamlValue {
 }
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$dateText = $Date.ToString("yyyy-MM-dd HH-mm")
+$dateText = $Date.ToString("yyyy-MM-dd HH:mm")
+$dateOnly = $Date.ToString("yyyy-MM-dd")
 $slug = Convert-ToSlug -Value $Title
 
 if ([string]::IsNullOrWhiteSpace($slug)) {
@@ -44,7 +45,7 @@ if ([string]::IsNullOrWhiteSpace($slug)) {
 
 $articleDirectory = Join-Path $projectRoot "_artikel"
 $imageDirectory = Join-Path (Join-Path (Join-Path (Join-Path (Join-Path $projectRoot "assets") "blog") "images") "articles") $slug
-$articlePath = Join-Path $articleDirectory "$dateText-$slug.md"
+$articlePath = Join-Path $articleDirectory "$dateOnly-$slug.md"
 
 if (Test-Path -LiteralPath $articlePath) {
   throw "Der Artikel existiert bereits: $articlePath"
@@ -68,7 +69,7 @@ $content = @"
 layout: blog_artikel
 title: "$escapedTitle"
 date: $dateText
-updated:
+updated: $dateText
 type: "$escapedType"
 topics:
 $topicYaml

@@ -6,7 +6,7 @@ $dataDirectory = Join-Path $projectRoot "_data"
 $articleTypesPath = Join-Path $dataDirectory "blog_article_types.yml"
 $topicsPath = Join-Path $dataDirectory "blog_topics.yml"
 $allowedStatuses = @("entwurf", "fertig", "überarbeitet", "archiviert")
-$requiredFields = @("title", "date", "type", "topics", "summary", "status")
+$requiredFields = @("title", "date", "updated", "type", "topics", "summary", "status")
 $errors = New-Object System.Collections.Generic.List[string]
 $visibleArticles = New-Object System.Collections.Generic.List[string]
 
@@ -155,7 +155,7 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
       Add-Error "${relativeName}: date muss im Format YYYY-MM-DD oder YYYY-MM-DD HH:MM stehen."
     }
 
-    if ($metadata.ContainsKey("updated") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["updated"]) -and $metadata["updated"] -notmatch "^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$") {
+    if ($metadata.ContainsKey("updated") -and $metadata["updated"] -notmatch "^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$") {
       Add-Error "${relativeName}: updated muss im Format YYYY-MM-DD oder YYYY-MM-DD HH:MM stehen."
     }
 

@@ -2,7 +2,7 @@
 layout: blog_artikel
 title: "BlePrompter Einbau in Daumenspitze 2"
 date: 2026-06-08 16:00
-updated:
+updated: 2026-06-08 16:00
 type: "Bericht"
 topics:
   - AppGehoert

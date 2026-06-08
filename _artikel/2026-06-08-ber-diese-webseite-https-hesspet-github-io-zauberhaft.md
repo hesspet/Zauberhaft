@@ -2,7 +2,7 @@
 layout: blog_artikel
 title: "Über diese Webseite: https://hesspet.github.io/Zauberhaft/"
 date: 2026-06-07 00:00
-updated:
+updated: 2026-06-07 00:00
 type: "Bericht"
 topics:
   - Allgemein

@@ -1,8 +1,7 @@
 ---
 layout: blog_default
 ---
-{% assign artikel_nach_aktualisierung = site.artikel | sort: "updated" | reverse %}
-{% assign artikel_nach_datum = site.artikel | sort: "date" | reverse %}
+{% assign artikel_nach_datum = site.artikel | sort: "updated" | reverse %}
 
 <section class="home-hero">
   <h1>Diy<span class="accent">Magic</span></h1>
@@ -18,49 +17,23 @@ layout: blog_default
 
     {% assign artikel_zaehler = 0 %}
     <ol class="update-list">
-      {% for artikel in artikel_nach_aktualisierung %}
+      {% for artikel in artikel_nach_datum %}
         {% unless artikel.status == "entwurf" %}
-          {% if artikel.updated %}
-            {% if artikel_zaehler < 25 %}
-              {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
-              <li>
-                <article>
-                  <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
-                  <p>{{ artikel.summary }}</p>
-                  <div class="article-card__meta">
-                    <span>{{ artikel.type | default: "Artikel" }}</span>
+          {% if artikel_zaehler < 25 %}
+            {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
+            <li>
+              <article>
+                <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
+                <p>{{ artikel.summary }}</p>
+                <div class="article-card__meta">
+                  <span>{{ artikel.type | default: "Artikel" }}</span>
                     <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%dT%H:%M:%S" }}">{{ artikel.updated | date: "%d.%m.%Y %H:%M" }}</time></span>
-                  </div>
-                </article>
-              </li>
-            {% endif %}
+                </div>
+              </article>
+            </li>
           {% endif %}
         {% endunless %}
       {% endfor %}
-
-      {% assign restplaetze = 25 | minus: artikel_zaehler %}
-      {% if restplaetze > 0 %}
-        {% for artikel in artikel_nach_datum %}
-          {% unless artikel.status == "entwurf" %}
-            {% unless artikel.updated %}
-              {% if restplaetze > 0 %}
-                {% assign restplaetze = restplaetze | minus: 1 %}
-                {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
-                <li>
-                  <article>
-                    <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
-                    <p>{{ artikel.summary }}</p>
-                    <div class="article-card__meta">
-                      <span>{{ artikel.type | default: "Artikel" }}</span>
-                      <time datetime="{{ artikel.date | date: "%Y-%m-%dT%H:%M:%S" }}">{{ artikel.date | date: "%d.%m.%Y %H:%M" }}</time>
-                    </div>
-                  </article>
-                </li>
-              {% endif %}
-            {% endunless %}
-          {% endunless %}
-        {% endfor %}
-      {% endif %}
     </ol>
   {% if artikel_zaehler == 0 %}
     <p class="empty-state">Noch keine veröffentlichten Artikel vorhanden.</p>
