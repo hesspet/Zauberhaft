@@ -34,8 +34,8 @@ chapter: Texte
                         </span>
                     </a>
                     {% if dl.doclink %}
-                    <a class="dl-doclink" href="{{ dl.doclink | relative_url }}" title="Erweitere Dokumentation">
-                        &#x1F4C4;
+                    <a class="dl-doclink" href="{{ dl.doclink | relative_url }}">
+                        &#x1F4C4; Dokumentation
                     </a>
                     {% endif %}
                 </div>

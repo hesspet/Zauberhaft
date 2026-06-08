@@ -337,7 +337,7 @@ section {
     margin-top: 0.75rem;
 }
 .dl-item {
-    display: flex; align-items: center;
+    display: flex; flex-direction: column;
     padding: 0;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -350,7 +350,6 @@ section {
 .dl-main-link {
     display: flex; align-items: center; gap: 1rem;
     padding: 1rem 1.25rem;
-    flex: 1;
     min-width: 0;
     color: inherit;
     text-decoration: none;
@@ -358,18 +357,16 @@ section {
 .dl-main-link:hover { color: inherit; }
 
 .dl-doclink {
-    display: flex; align-items: center; justify-content: center;
-    padding: 1rem 0.85rem;
-    flex-shrink: 0;
-    font-size: 1rem;
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.45rem 1.25rem 0.7rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    border-left: 1px solid var(--border);
-    transition: color 0.2s, background 0.2s;
+    border-top: 1px solid var(--border);
+    transition: color 0.2s;
     text-decoration: none;
 }
 .dl-doclink:hover {
     color: var(--accent);
-    background: var(--bg-card-hover);
 }
 .dl-icon {
     font-size: 1.6rem;
