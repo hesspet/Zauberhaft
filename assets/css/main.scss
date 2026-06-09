@@ -73,6 +73,7 @@ body {
 
 a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
 a:hover { color: #e0c46d; }
+a, button, [role="button"] { touch-action: manipulation; }
 
 /* ── Navigation ── */
 nav {
@@ -95,6 +96,75 @@ nav a {
     transition: color 0.2s, border-color 0.2s;
 }
 nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* ── Mobile Nav Toggle ── */
+.nav-toggle-checkbox {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 16px;
+    z-index: 110;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+}
+
+.nav-toggle-icon,
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+}
+
+.nav-toggle-icon {
+    position: relative;
+}
+.nav-toggle-icon::before,
+.nav-toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+}
+.nav-toggle-icon::before { top: -6px; }
+.nav-toggle-icon::after  { top:  6px; }
+
+/* Hamburger → X animation */
+.nav-toggle-checkbox:checked ~ .nav-toggle-label .nav-toggle-icon {
+    background: transparent;
+}
+.nav-toggle-checkbox:checked ~ .nav-toggle-label .nav-toggle-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+.nav-toggle-checkbox:checked ~ .nav-toggle-label .nav-toggle-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+/* Overlay hinter dem Menü */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: var(--nav-height);
+    z-index: 99;
+    background: rgba(15, 10, 26, 0.65);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
 
 /* ── Hero ── */
 #intro {
@@ -203,6 +273,8 @@ section {
 /* ── Projektkarten ── */
 .card-grid {
     display: grid;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
 }
@@ -562,7 +634,8 @@ footer {
     .hero-text .tagline, .hero-text .intro-p, .hero-text .hero-partner {
         margin-left: auto; margin-right: auto;
     }
-    nav { gap: 1rem; font-size: 0.8rem; }
+    nav { gap: 1.25rem; }
+    nav a { font-size: 0.85rem; }
     .card-grid { grid-template-columns: 1fr; }
     .dl-grid { grid-template-columns: 1fr; }
     section { padding: 3.5rem 1.25rem; }
@@ -571,7 +644,49 @@ footer {
     .firmware-mobile-hinweis { display: block; }
 }
 
+@media (max-width: 600px) {
+    .nav-toggle-label {
+        display: flex;
+    }
+    nav {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        transform: translateY(-110%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.25s, opacity 0.25s, visibility 0.25s;
+    }
+    .nav-toggle-checkbox:checked ~ nav {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    .nav-toggle-checkbox:checked ~ .nav-overlay {
+        display: block;
+    }
+    nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+        border-bottom-color: var(--border);
+    }
+    nav a:last-child {
+        border-bottom: none;
+    }
+}
+
 @media (max-width: 400px) {
-    nav { gap: 0.6rem; }
-    nav a { font-size: 0.7rem; letter-spacing: 0.03em; }
+    nav a {
+        font-size: 0.95rem;
+    }
 }

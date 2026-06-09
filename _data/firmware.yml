@@ -15,4 +15,4 @@ projects:
         description: Stabile Download-Firmware vom 08.06.2026 für das ESP32-C3-OLED-Board
         firmware_file: BlePrompter-esp32c3-v1.8.1-20260608-115204-download.bin
         info_file: BlePrompter-esp32c3-v1.8.1-20260608-115204-download.md
-        doclink: /blog/artikel/2026-05-26-bleprompter-einbau-in-daumenspitze.html
+        doclink: /blog/artikel/2026-06-08-handbuch-bleprompter.html

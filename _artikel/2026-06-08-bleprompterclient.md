@@ -1,6 +1,6 @@
 ---
 layout: blog_artikel
-title: "BlePrompterClient"
+title: "Handbuch: Nassredin Simple Peek Companion"
 date: 2026-06-08 23:42
 updated: 2026-06-08 23:42
 type: "Anleitung"
@@ -13,4 +13,7 @@ status: "fertig"
 difficulty:
 ---
 
-## Worum geht es?
+# # Einleitung
+
+
+

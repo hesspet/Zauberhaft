@@ -1,7 +1,7 @@
 <article class="article-card">
   {% if include.article.hero %}
     <a class="article-card__image" href="{{ include.article.url | relative_url }}" aria-label="{{ include.article.title }}">
-      <img src="{{ include.article.hero | relative_url }}" alt="">
+      <img src="{{ include.article.hero | relative_url }}" alt="" loading="lazy">
     </a>
   {% endif %}
   <div class="article-card__body">

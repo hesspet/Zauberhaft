@@ -8,11 +8,12 @@
       emoji: "🌐"
       description: "Arcane Geisterdedection mit dem Smartphone"
       url: https://hesspet.github.io/Nasreddins-Camera-Arcanum/
+      doclink: /blog/artikel/2026-06-08-handbuch-camera-arcanum.html
     - name: "Nassredin Simple Peek Companion (Webanwendung)"
       emoji: "🌐"
       description: "Smartphone Companion Anwendung für den ESP32-BlePrompter (siehe Firmware Download)"
       url: https://hesspet.github.io/Nasreddins-Simple-Peek-Client2Web/
-      doclink: /blog/artikel/2026-05-26-bleprompter-einbau-in-daumenspitze.html
+      doclink: /blog/artikel/2026-06-08-bleprompterclient.html
 - chapter: Texte
   items:
     - name: "DiyMagic Archiv"

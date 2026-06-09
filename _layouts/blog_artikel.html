@@ -19,7 +19,7 @@ layout: blog_default
     {% endif %}
     {% include blog_tag-list.html topics=page.topics %}
     {% if page.hero %}
-      <img class="article-hero" src="{{ page.hero | relative_url }}" alt="">
+      <img class="article-hero" src="{{ page.hero | relative_url }}" alt="" loading="lazy">
     {% endif %}
   </header>
 
