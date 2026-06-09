@@ -15,6 +15,8 @@ status: "fertig"
 difficulty:
 ---
 
+[PDF Version dieses Textes](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/bleprompter-einbau-komplette-anleitung.pdf) 
+
 # Ziel
 
 Dieser Text zeigt den grundsätzlichen Aufbau eines BlePrompters am Beispiel des versteckten Einbaus in eine profane Streichholzschachtel.
@@ -33,6 +35,8 @@ Hinweis: Im Folgenden spreche ich immer von dem "Board". Gemeint ist damit die k
 ![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/001_DasBoard.png)
 
 > Dieser Aufbau benötigt definitiv nur zwei Lötstellen, die auch von einem ungeübten Bastler zu bewerkstelligen sind. Naja, sofern man weiß, an welcher Seite der Lötkolben heiß wird.
+
+**Und wie immer bei solchen Texten. Bitte einmal bis zum Ende durchlesen und dann erst basteln anfangen! Schont die Nerven!**
 
 # Einkaufsliste
 
@@ -171,6 +175,42 @@ Fehlersuche:
 
 > Keine Panik: Bis auf Fall 1 und 2 hatte ich da noch nie ein Problem. Naja, und klar, der Sonderfall kann vorkommen, aber der ist unkritisch. Man muss nur kurz die Taster bedienen. Bekommt Ihr hin ...
 
+# Vorbereitung
+
+Nun interessiert uns an unserem Board die Stelle an der der Strom hinein kommt.
+
+![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/011_Loetaugen.jpg)
+
+Wir finden
+
+* 5V - Da lassen wir beim Löten unsere Finger davon. Das ist die 5V die von der USB an das Board geliefert wird. Würden wir da den Akku anschliessen, na, keine gute Idee. 
+* GD - Ja das ist "Minus", "Ground" hier löten wir unser schwarzes Kabel an
+* 3V - und klar 3 Volt. Auf manchen Boards auch BAT. Hier kommt unser Akku dran. Stört Euch nicht an 3V. Der Akku liefert über seine Betriebszeit bis er leer ist alles von 4,2 Volt bis zum Betriebsende 2,8 Volt. Passt schon.
+
+Je nach Einbau sollten wir jetzt unser "Männchen" die Kabel etwas verkürzen. In unserem Fall für die Streichholzschachtel liegt ja der Akku direkt daneben,  da reichen ein paar Zentimeter.
+
+Hier ein Beispiel wie ich das verschalte, so dass es einfach in die Streichholzschachtel passt.
+
+---
+
+==TBD: Löten und Bilder machen==
+
+---
+
+So das Erste ist geschafft. Ist Euer Akku geladen? Na dann los springt das Board wieder an. Steckt den Akku mal an. 
+
+> Erfolg? Gratulation. Raucht es? Ja auch das Board innere besteht nur aus magischen blauen Rauch. Spaß.. selbst wenn ihr das verkehrt herum angeschossen habt. Passiert nichts. Im Board ist eine Schutzdiode gegen dusselige Finger...
+
+**ACHTUNG!!! Wird der Akku heiß, sofort abziehen. Dann habt ihr ggf. beim Löten nicht aufgepaßt und zwischen GD und 3V einen Kurzschluss produziert. Bitte sofort abziehen. Je nach Größe des Akkus kann der in diesem Fall die Kabel durchschmelzen oder sogar zu brennen anfangen.**
+
+
+
+
+
+
+
+
+
 # Bezugsquellen:
 
 TBD:
@@ -183,3 +223,9 @@ Kabel:
 https://www.amazon.de/dp/B0CTLHF8B5?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
 
 # 20 Paare 1,25 mm JST 2 Pin Mikro Elektronik Männlichen und Weiblichen Steckverbinder Stecker mit 10 cm Draht Kabel
+
+# TBD
+
+
+
+* TODO: markdig ertüchtigen, dass der Link in einem neuen Reiter geöffnet wird
