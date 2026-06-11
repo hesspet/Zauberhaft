@@ -2,7 +2,7 @@
 name: Elmse Wetterwachs
 kurztext: Eine Hexe - muss man da jetzt wirklich noch mehr sagen?
 passbild: /assets/puppen/passbilder/elmse-wetterwachs.jpg
-reihenfolge: 3
+reihenfolge: 30
 ---
 
 ## Emse Wetterwachs
