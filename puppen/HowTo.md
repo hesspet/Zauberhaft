@@ -7,12 +7,12 @@ Zauberhaft/
 ├── _puppen/                          ← Hier liegen die Steckbrief-Dateien
 │   ├── nasreddin.md
 │   ├── alrich.md
-│   └── emse-wetterwachs.md
+│   └── elmse-wetterwachsmse-wetterwachs.md
 ├── assets/puppen/
 │   ├── passbilder/                   ← Portrait-Fotos (quadratisch, min. 400×400px)
 │   │   ├── nasreddin.jpg
 │   │   ├── alrich.jpg
-│   │   └── emse-wetterwachs.jpg
+│   │   └── elmse-wetterwachs.jpg
 │   └── steckbriefe/                  ← Bilder für die Steckbrief-Inhalte
 │       ├── nasreddin/
 │       │   └── show.jpg
@@ -41,7 +41,7 @@ Jeder Steckbrief beginnt mit einem YAML-Header zwischen `---`:
 ---
 name: Name der Figur
 kurztext: Ein Satz, der die Figur beschreibt (max. 120 Zeichen)
-passbild: /Zauberhaft/assets/puppen/passbilder/dateiname.jpg
+passbild: /assets/puppen/passbilder/dateiname.jpg
 reihenfolge: 4
 ---
 ```
@@ -70,10 +70,10 @@ Fließtext mit **Formatierung** und *Betonung*.
 
 > Ein schönes Zitat der Figur
 
-![Beschreibung](/Zauberhaft/assets/puppen/steckbriefe/neue-figur/bild.jpg)
+<img src="{{ '/assets/puppen/steckbriefe/neue-figur/bild.jpg' | relative_url }}" alt="Beschreibung">
 ```
 
-**Wichtig bei Bildpfaden:** Immer mit `/Zauberhaft/assets/puppen/…` beginnen (absoluter Pfad ab Website-Wurzel). Relative Pfade funktionieren im Overlay nicht zuverlässig.
+**Wichtig bei Bildpfaden:** Im Markdown-Body **keine** Markdown-Syntax (`![...](...)`) für Bilder verwenden, sondern HTML mit dem Liquid-Filter `relative_url` — nur so wird `site.baseurl` korrekt vorangestellt. Der Pfad beginnt **ohne** `/Zauberhaft/`, also z.B. `/assets/puppen/steckbriefe/neue-figur/bild.jpg`. Das `relative_url`-Filter im Template setzt die Baseurl automatisch davor.
 
 ## 3. Passbilder vorbereiten
 

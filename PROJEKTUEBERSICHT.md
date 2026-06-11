@@ -80,7 +80,7 @@ Zauberhaft/
 ├── _puppen/                     # Steckbriefe der Puppen und Charaktere (Jekyll Collection)
 │   ├── nasreddin.md
 │   ├── alrich.md
-│   └── emse-wetterwachs.md
+│   └── elmse-wetterwachs.md
 ├── blog/                        # Blog-Seiten
 │   ├── index.md                 # Blog-Start
 │   ├── archiv.md                # Artikel-Archiv (nach Jahren)
