@@ -6,3 +6,4 @@ _site/
 Gemfile.lock
 vendor/
 /__pycache__
+graphify-out/
