@@ -18,11 +18,11 @@ difficulty:
 
 M5Stack hat es getan - der gelbe "M5StickC Plus2" ist nicht mehr lieferbar. 
 
-<img src="./../../assets/blog/images/articles/bleprompter-fix-und-fertig-hardware/M5StickCgelb.webp" style="zoom:37%;" />
+<img src="../assets/blog/images/articles/bleprompter-fix-und-fertig-hardware/M5StickCgelb.webp" style="zoom:37%;" />
 
 Es gibt seit einiger Zeit einen Neuen, den M5StickS3: 
 
-<img src="./../../assets/blog/images/articles/bleprompter-fix-und-fertig-hardware/M5StickS3grau.webp" alt="M5StickS3grau" style="zoom:25%;" />
+<img src="../assets/blog/images/articles/bleprompter-fix-und-fertig-hardware/M5StickS3grau.webp" alt="M5StickS3grau" style="zoom:25%;" />
 
 In den meisten Belangen ist er deutlich verbessert, nur hat er keine interne Echtzeituhr mehr. Naja, etwas was mich noch nie interessiert hat. Dafür mehr 
 

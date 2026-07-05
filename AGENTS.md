@@ -23,7 +23,7 @@ GitHub Actions CI: `.github/workflows/pages.yml` — validate → build → depl
 - **Artikel:** Markdown in `_artikel/`, Dateiname `YYYY-MM-DD-slug.md`, YAML-Frontmatter mit `title`, `date`, `updated`, `type`, `topics`, `summary`, `status`. Validierung via `Validate-Articles.ps1` prüft Schema, Typen, Themen, BOM, Bildpfade.
 - **Puppen:** Markdown in `_puppen/`, Frontmatter: `name`, `kurztext`, `passbild`, `reihenfolge`. Bilder im Body zwingend als `<img src="{{ '/assets/puppen/steckbriefe/...' | relative_url }}">` (kein Markdown `![]()`).
 - **Projekte/Downloads/Navigation:** YAML-Dateien in `_data/` — kein HTML.
-- **Artikel-Bildpfade:** relativ `../../assets/blog/images/articles/<slug>/…`
+- **Artikel-Bildpfade:** in Quellen Typora-kompatibel `../assets/blog/images/articles/<slug>/…`; `blog_artikel` schreibt sie beim Rendern auf `../../assets/...` um.
 - **Puppen-Bildpfade:** absolut `/assets/puppen/…` (mit `relative_url` im Template)
 - **Artikel-Umbenennung:** `BlogArtikelBearbeiten.py` (Tk-GUI) passt Dateiname, Bildverzeichnis und Bildreferenzen an.
 

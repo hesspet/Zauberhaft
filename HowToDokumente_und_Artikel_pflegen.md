@@ -92,10 +92,10 @@ assets/blog/images/articles/<artikel-slug>/
 Im Artikel referenzierst du sie so:
 
 ```markdown
-![Beschreibung des Bildes](/assets/blog/images/articles/artikel-slug/bild.webp)
+![Beschreibung des Bildes](../assets/blog/images/articles/artikel-slug/bild.webp)
 ```
 
-Diese Schreibweise ist für Typora gedacht. Sie funktioniert auch auf GitHub Pages, weil Artikel unter `/blog/artikel/<slug>.html` veröffentlicht werden.
+Diese Schreibweise ist für Typora gedacht. Beim Jekyll-Build schreibt das Artikel-Layout diese Pfade für GitHub Pages passend um, weil Artikel unter `/blog/artikel/<slug>.html` veröffentlicht werden.
 
 ## 6. Artikel schreiben
 

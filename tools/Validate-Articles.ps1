@@ -95,29 +95,45 @@ function Test-ExistingSitePath {
   return Test-Path -LiteralPath $candidatePath
 }
 
-function Test-ExistingMarkdownImagePath {
+function Get-ArticleAssetPathProblem {
   param(
     [string]$Value,
     [string]$ArticleDirectory
   )
 
   if ([string]::IsNullOrWhiteSpace($Value)) {
-    return $true
+    return $null
   }
 
   $normalizedValue = $Value.Trim('"')
+  $normalizedValue = $normalizedValue.Trim()
 
-  if ($normalizedValue -match "^/assets/") {
-    return Test-ExistingSitePath -Value $normalizedValue
+  if ($normalizedValue -notmatch "assets/blog/images/articles/") {
+    return $null
   }
 
-  if ($normalizedValue -match "^\./\.\./assets/") {
-    $relativePath = $normalizedValue -replace "/", [System.IO.Path]::DirectorySeparatorChar
+  $pathOnly = ($normalizedValue -split "[?#]", 2)[0]
+  $pathOnly = [System.Uri]::UnescapeDataString($pathOnly)
+
+  if ($pathOnly -match "^(\./)?\.\./\.\./assets/blog/images/articles/") {
+    return "Alter Jekyll-Pfad gefunden. Bitte für Typora ../assets/blog/images/articles/... verwenden: $normalizedValue"
+  }
+
+  if ($pathOnly -match "^/assets/blog/images/articles/") {
+    return "Absoluter Artikel-Assetpfad funktioniert mit GitHub-Pages-baseurl nicht. Bitte ../assets/blog/images/articles/... verwenden: $normalizedValue"
+  }
+
+  if ($pathOnly -match "^\.\./assets/blog/images/articles/") {
+    $relativePath = $pathOnly -replace "/", [System.IO.Path]::DirectorySeparatorChar
     $candidatePath = Join-Path $ArticleDirectory $relativePath
-    return Test-Path -LiteralPath $candidatePath
+    if (-not (Test-Path -LiteralPath $candidatePath)) {
+      return "Artikel-Assetreferenz existiert nicht: $normalizedValue"
+    }
+
+    return $null
   }
 
-  return $true
+  return "Artikel-Assetpfad muss mit ../assets/blog/images/articles/... beginnen: $normalizedValue"
 }
 
 $allowedTypes = Read-ListFile -Path $articleTypesPath
@@ -196,11 +212,23 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
       Add-Error "${relativeName}: Dateiname muss mit Datum beginnen und einen Slug aus Kleinbuchstaben, Zahlen und Bindestrichen haben."
     }
 
-    $markdownImageMatches = [regex]::Matches(($lines -join [Environment]::NewLine), "!\[[^\]]*\]\(((?:/assets/|\./\.\./assets/)[^)\s]+)\)")
-    foreach ($match in $markdownImageMatches) {
-      $imagePath = $match.Groups[1].Value
-      if (-not (Test-ExistingMarkdownImagePath -Value $imagePath -ArticleDirectory $file.DirectoryName)) {
-        Add-Error "${relativeName}: Bildreferenz existiert nicht: $imagePath"
+    $content = $lines -join [Environment]::NewLine
+
+    $markdownLinkMatches = [regex]::Matches($content, "!?\[[^\]]*\]\(([^)]+)\)")
+    foreach ($match in $markdownLinkMatches) {
+      $assetPath = $match.Groups[1].Value
+      $problem = Get-ArticleAssetPathProblem -Value $assetPath -ArticleDirectory $file.DirectoryName
+      if ($problem) {
+        Add-Error "${relativeName}: $problem"
+      }
+    }
+
+    $htmlAssetMatches = [regex]::Matches($content, '(?i)\b(?:src|href)\s*=\s*["'']([^"'']*assets/blog/images/articles/[^"'']*)["'']')
+    foreach ($match in $htmlAssetMatches) {
+      $assetPath = $match.Groups[1].Value
+      $problem = Get-ArticleAssetPathProblem -Value $assetPath -ArticleDirectory $file.DirectoryName
+      if ($problem) {
+        Add-Error "${relativeName}: $problem"
       }
     }
   }

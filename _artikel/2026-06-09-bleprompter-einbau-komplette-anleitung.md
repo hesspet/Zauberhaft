@@ -15,7 +15,7 @@ status: "fertig"
 difficulty:
 ---
 
-[PDF-Version dieses Textes](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/bleprompter-einbau-komplette-anleitung.pdf)
+[PDF-Version dieses Textes](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/bleprompter-einbau-komplette-anleitung.pdf)
 
 Version 1
 
@@ -34,7 +34,7 @@ Der gezeigte Aufbau ist die einfachste Variante des BlePrompters. Es wird bewuss
 
 Hinweis: Im Folgenden spreche ich immer von dem "Board". Gemeint ist damit die kleine Platine mit dem Minidisplay. Dieses Teil:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/001_DasBoard.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/001_DasBoard.png)
 
 > Dieser Aufbau benötigt definitiv nur zwei Lötstellen, die auch von einem ungeübten Bastler zu bewerkstelligen sind. Naja, sofern man weiß, an welcher Seite der Lötkolben heiß wird.
 
@@ -55,7 +55,7 @@ Suche im Internet nach:
 
 Meist kommt das Board dann so verpackt an:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/002_DasBoard.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/002_DasBoard.jpg)
 
 Die beiliegenden Stiftleisten brauchen wir für diesen Bau nicht.
 
@@ -70,7 +70,7 @@ Für diesen Build nutzen wir einen handelsüblichen LiPo-Akku, wie er in Million
 
 In der Regel kommen die dann so:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/003_DerLipo.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/003_DerLipo.jpg)
 
 Normalerweise sind sie komplett verkabelt, mit einem kleinen Stecker, wie er z. B. auch im Modellbau für kleine Objekte üblich ist. Diese Stecker nennen sich "Micro-JST-1,25-Stecker".
 
@@ -82,7 +82,7 @@ Normalerweise sind sie komplett verkabelt, mit einem kleinen Stecker, wie er z. 
 
 So muss das aussehen:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/004_Links_ist_Rot.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/004_Links_ist_Rot.jpg)
 
 Habt Ihr einen LiPo, bei dem das umgekehrt ist: kein Problem. Nehmt eine Stecknadel und hebt die Plastiknibbel etwas hoch. Dann kann man die Buchsen vorsichtig nach hinten herausziehen. Bitte ohne Kraft! Danach drückt man die *Nibbel* wieder etwas in das Plastikgehäuse und schiebt die Buchsen, rot links!!!, wieder hinein. Das ist etwas fummelig, aber keine Raketentechnik.
 
@@ -98,7 +98,7 @@ Mal sehen, ob wir einen Weg finden, ein paar davon in kleinen Stückzahlen weite
 
 Sieht so aus:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/005_maenlicher_verbinder.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/005_maenlicher_verbinder.jpg)
 
 > Das ist das Teil, das dann an das Board gelötet werden muss ...
 
@@ -108,7 +108,7 @@ Naja, die brauchen wir auch für unseren Bau.
 
 > Bezugsquelle: Üblicherweise in dieser magischen Küchenschublade ganz unten, wo nach ein paar Jahren eh keiner mehr weiß, was da alles an Schätzen drin ist.
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/006_TheBox.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/006_TheBox.jpg)
 
 ## Dinge, die man normalerweise schon hat
 
@@ -129,7 +129,7 @@ Also: auspacken und anstecken. Für einen reinen Funktionstest tut es auch ein U
 
 Wenn alles geklappt hat, sieht das dann so aus:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/007_feuer_frei.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/007_feuer_frei.jpg)
 
 Die Anzeige im Display kann je nach Quelle etwas anders aussehen. Das ist egal. Hauptsache, das Display zeigt etwas an.
 
@@ -149,13 +149,13 @@ Also zurück zu Windows:
 
 Es gibt in Windows ein Systemprogramm namens Gerätemanager. Das startet Ihr:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/008_Geraetemanager.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/008_Geraetemanager.png)
 
 Dann seht Ihr diese Ansicht.
 
 In der Sektion "Anschlüsse (COM & LPT)" solltet Ihr ...
 
-![009\_Ansicht\_GM](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/009_Ansicht_GM.png)
+![009\_Ansicht\_GM](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/009_Ansicht_GM.png)
 
 ... in etwa so einen Eintrag sehen. Je nach Anwendung stehen dort aber auch mehrere Einträge. Welches ist nun unser wunderbares Board?
 
@@ -163,7 +163,7 @@ Zieht einfach den USB-Stecker ab. Der Eintrag, der dann verschwindet, das ist da
 
 Merkt Euch den Namen, der hinten steht. Also in diesem Fall *COM9*. Windows vergibt diese Nummern selbst.
 
-![010\_GM\_Detail](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/010_GM_Detail.png)
+![010\_GM\_Detail](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/010_GM_Detail.png)
 
 Ihr findet keinen Eintrag "Anschlüsse (COM & LPT)" oder es tut sich überhaupt nichts? Dann habt Ihr keine Verbindung mit dem Board. Das bedeutet: Wir können später keine Firmware aufspielen.
 
@@ -181,7 +181,7 @@ Fehlersuche:
 
 Nun interessiert uns an unserem Board die Stelle, an der der Strom hineinkommt.
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/011_Loetaugen.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/011_Loetaugen.jpg)
 
 Wir finden:
 
@@ -205,21 +205,21 @@ So, das Erste ist geschafft. Ist Euer Akku geladen? Na dann los, das Board sprin
 
 So, Kabel angelötet und gleich mal an den Akku gesteckt. Das Board springt wieder an. Das solltet Ihr auch machen, wenn Ihr das Board und das Kabel verheiratet habt.
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/012_Geloetet.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/012_Geloetet.jpg)
 
 Hier noch mal ein Blick auf die Rückseite. Man sieht es nicht besonders gut: Ich leite die Kabel in so einem Fall meist an den Lötaugen entlang, nutze einen Hartkleber und klebe die Kabel an die Platine. Es geht hier nicht um Schönheit. Wir bauen etwas, das auf der Bühne auch mal eine etwas rauere Behandlung ertragen kann. Manche Bastler fixieren das mit Heißkleber. Geht auch. Hauptsache, die Lötstelle wird mechanisch entlastet. Die Lötaugen können mit dem Lötzinn zusammen abreißen. Das brauchen wir nicht. Bitte aber keinen Klebstoff auf die Bauteile. Die werden warm und wollen ihre Wärme an die Luft abgeben. Das sollten wir ihnen nicht mit einer Schicht aus Klebstoff verwehren, auch wenn wir das Board später noch mit etwas Klebeband vor Kurzschlüssen sichern.
 
-![013_Geloetet](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/013_Geloetet.jpg)
+![013_Geloetet](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/013_Geloetet.jpg)
 
 ## Stellprobe
 
 Nun denn, passt noch alles in die Streichholzbox? Ja. Die LiPo-Kabel, die ich jetzt nicht kürzen wollte, habe ich unter dem Board aufgewickelt. Das hat einen netten Nebeneffekt: Sie wirken wie eine Feder und drücken somit das Board nach oben, dort, wo jetzt der Ausschnitt für das Sichtfenster schon grob angezeichnet ist.
 
-![014_rin_de_mit](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/014_rin_de_mit.jpg)
+![014_rin_de_mit](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/014_rin_de_mit.jpg)
 
 Schnell mal ein Fenster reingeschnitten und ...
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/015_nun_isses_drin.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/015_nun_isses_drin.jpg)
 
 Fertig ist die Laube.
 
@@ -253,7 +253,7 @@ Dazu wenden wir uns an diese Webseite:
 
 https://hesspet.github.io/Zauberhaft/
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/020_Web1.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/020_Web1.png)
 
 Wenn Ihr diesen Text nicht gerade irgendwoher bekommen habt, dann seid Ihr genau auf unserer kleinen Webpräsenz.
 
@@ -261,13 +261,13 @@ Wir gehen auf die Seite "**DOWNLOADS**".
 
 Dort finden wir das Kapitel "**ESP32 Firmware**".
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/021_Web2.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/021_Web2.png)
 
 Wir gehen zur Übersicht ...
 
 Und dort finden wir die aktuelle Version des BlePrompter, also der Software, die Kommandos via "Bluetooth Low Energy" empfangen kann.
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/022_Web3.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/022_Web3.png)
 
 > Was jetzt kommt, geht nur auf dem Desktoprechner, an dem Ihr das Board angeschlossen habt.
 
@@ -277,7 +277,7 @@ Wenn Ihr auf "**Installieren**" klickt, öffnet sich ein Modul, das ich nicht ge
 
 Es erscheint:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/030_ESPFlasher1.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/030_ESPFlasher1.png)
 
 Aua, yo, vielleicht sollten wir unser Board auch wieder per USB an unseren Desktoprechner hängen.
 
@@ -289,11 +289,11 @@ Also: "**LiPo abmachen und dann erst USB anstecken!**"
 
 Nach kurzer Zeit erscheint dann dieser Text:
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/031_ESP Fehler1.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/031_ESP Fehler1.png)
 
 Also los, steckt das Board wieder an Euren Rechner und klickt "**Try Again**".
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/032_ESP.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/032_ESP.png)
 
 Na, das sieht schon besser aus. Ihr erinnert Euch, die COM? Genau, die taucht hier wieder auf. Die Meldung sollte so in der Art aussehen. Ihr wählt jetzt einfach Euer Board aus und klickt dann "**Verbinden**".
 
@@ -301,7 +301,7 @@ Es kommt kurz eine Anzeige "**Connecting**" ...
 
 Und dann werdet Ihr das letzte Mal gefragt, ob Ihr die Firmware auf das Board schreiben wollt.
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/033_ESP.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/033_ESP.png)
 
 > Wollt Ihr? Bestimmt, wenn Ihr bis hier durchgehalten habt ...
 >
@@ -311,25 +311,25 @@ Klickt auf "**Install BlePrompter** ..." und die Magie des Flashens beginnt ...
 
 > Nee, nochmal fragen ... was denken sich manche Programmierer? Anwender sind doof?
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/034_ESP.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/034_ESP.png)
 
 Also ... jetzt noch mal "**Klicke Install**" ...
 
 ... und los geht es. Bitte anschnallen, Ihr Pilot übernimmt alles ...
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/035_ESP.png)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/035_ESP.png)
 
-![036_ESO](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/036_ESO.png)
+![036_ESO](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/036_ESO.png)
 
-![037_ESP](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/037_ESP.png)
+![037_ESP](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/037_ESP.png)
 
 Wir setzen zur Landung an.
 
-![038_ESP](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/038_ESP.png)
+![038_ESP](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/038_ESP.png)
 
 Und so in der Art sollte Euch jetzt direkt **kurz** nach dem Flashen das Display begrüßen ...
 
-![](../../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/040_hurra.jpg)
+![](../assets/blog/images/articles/bleprompter-einbau-komplette-anleitung/040_hurra.jpg)
 
 Holt Euch eine Lupe - da steht sowas wie:
 

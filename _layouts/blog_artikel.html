@@ -47,7 +47,12 @@ layout: blog_default
   {% endif %}
 
   <div class="prose">
-    {{ content }}
+    {% assign article_content = content %}
+    {% assign article_content = article_content | replace: 'src="../assets/blog/images/articles/', 'src="../../assets/blog/images/articles/' %}
+    {% assign article_content = article_content | replace: "src='../assets/blog/images/articles/", "src='../../assets/blog/images/articles/" %}
+    {% assign article_content = article_content | replace: 'href="../assets/blog/images/articles/', 'href="../../assets/blog/images/articles/' %}
+    {% assign article_content = article_content | replace: "href='../assets/blog/images/articles/", "href='../../assets/blog/images/articles/" %}
+    {{ article_content }}
   </div>
 
   {% if page.related %}

@@ -204,7 +204,7 @@ Ohne Jekyll: `start index.html` (ohne Layouts/Includes).
 ## Artikel-Workflow
 
 1. `.\tools\New-Article.ps1 -Title "…" -Type "…" -Topics "…" -Summary "…"`
-2. Artikel in `_artikel/` schreiben, Bilder nach `assets/blog/images/articles/<slug>/`
+2. Artikel in `_artikel/` schreiben, Bilder nach `assets/blog/images/articles/<slug>/` legen und im Artikel mit `../assets/blog/images/articles/<slug>/...` referenzieren
 3. `.\tools\Validate-Articles.ps1` vor dem Commit
 4. Push → automatischer Build + Deploy
 

@@ -42,13 +42,13 @@ Der hier gezeigte Teil "Peeker (Videofake)" ist die Implementation einer Showsit
 
 Hintergrund ist, dass ich die App vor allem für meinen eigenen Zweck als Bauchredner in der Form eines Streetacts verwende. Zaubern und Bauchreden ist schwierig. Man hat nur eine Hand... also lasse ich mir helfen und habe einen Companion unter den Zuschauern...
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/001-Vor_de_Verbindungsaufbau.jpg" style="zoom: 33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/001-Vor_de_Verbindungsaufbau.jpg" style="zoom: 33%;" />
 
 Wir klicken auf Verbinden und sehen "Gefundene Geräte". Beim BLE Scan sucht die Anwendung gezielt nach Geräten mit unserem speziellen Profil. Normalerweise findet die Anwendung nur ein Gerät das ausgewählt werden kann.
 
 War das Gerät bereits beim letzten Anwendungsaufruf schon einmal verbunden, so wird beim App Start, die Verbindung automatisch aufgebaut. Das erspart in einer Livesituation Bedienungsfehler. Hier aber der Grundablauf. "Suche Gerät"
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/002_Scan_nach BlePrompter.jpg" alt="002_Scan_nach BlePrompter" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/002_Scan_nach BlePrompter.jpg" alt="002_Scan_nach BlePrompter" style="zoom:33%;" />
 
 Wir sehen nun "Verbunden" und bekommen das "Hauptmenü"
 
@@ -67,7 +67,7 @@ Wir sehen nun "Verbunden" und bekommen das "Hauptmenü"
   * ESP
     Übertragung eines der fünf ESP Symbole (aktuell mein Anwendungsfall)
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/003_Verbindung_hergestellt.jpg" alt="003_Verbindung_hergestellt" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/003_Verbindung_hergestellt.jpg" alt="003_Verbindung_hergestellt" style="zoom:33%;" />
 
 Über das Drawer Menü (Hamburger) oben rechts erreicht man die Einstellungen. Diese werden gespeichert müssen also nur einmal durchgeführt werden.
 
@@ -91,36 +91,36 @@ Wir sehen nun "Verbunden" und bekommen das "Hauptmenü"
   * **Unauffällig / Anpassbar**
     Experimentelle Optionen, bisher nur rudimentär implementiert. Kann auch sein, dass die wieder ausgebaut werden. Der Nutzen ist zweifelhaft.
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/004_Programmeinstellungen.jpg" alt="004_Programmeinstellungen" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/004_Programmeinstellungen.jpg" alt="004_Programmeinstellungen" style="zoom:33%;" />
 
 Umschaltung auf Dunkelmodus erfolgt sofort
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/005_Dunkelmodus aktiviert.jpg" alt="005_Dunkelmodus aktiviert" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/005_Dunkelmodus aktiviert.jpg" alt="005_Dunkelmodus aktiviert" style="zoom:33%;" />
 
 Hier jetzt die Einstellung der Kamera auf "Android und Normalansicht"
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/006_Setup_durchgefuehrt.jpg" alt="006_Setup_durchgefuehrt" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/006_Setup_durchgefuehrt.jpg" alt="006_Setup_durchgefuehrt" style="zoom:33%;" />
 
 Zurück zur Hauptansicht. Jetzt geht es los. ESP Modus wird angeklickt
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/007_Es_geht_los_ESP.jpg" alt="007_Es_geht_los_ESP" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/007_Es_geht_los_ESP.jpg" alt="007_Es_geht_los_ESP" style="zoom:33%;" />
 
 Uns so würde nun ein Betrachter neben des Companion, der auf das Smartphone schaut die das Livevideobild sehen. Vollkommen unverfänglich. Sieht einfach so aus wie jemand der die Vorführung filmt.
 
-![008_LivePseudFilen](../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/008_LivePseudFilen.jpg)
+![008_LivePseudFilen](../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/008_LivePseudFilen.jpg)
 
 Kurzer Klick auf die Kopfzeile, das Geheimmenü erscheint und der Companion kann dem Vorführenden auf den BlePrompter das "gepeekte" ESP Symbol übermitteln.
 
-![009_Das_geheimmenue_in_normalansicht](../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/009_Das_geheimmenue_in_normalansicht.jpg)
+![009_Das_geheimmenue_in_normalansicht](../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/009_Das_geheimmenue_in_normalansicht.jpg)
 
 Wir schalten auf die noch geheimere Ansicht im Setup um
 
-<img src="../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/010_Kamera_Bedienung_Showmodus.jpg" alt="010_Kamera_Bedienung_Showmodus" style="zoom:33%;" />
+<img src="../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/010_Kamera_Bedienung_Showmodus.jpg" alt="010_Kamera_Bedienung_Showmodus" style="zoom:33%;" />
 
 Der gleiche Ablauf wie vorher
 
-![011_Nochmal_Filmen](../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/011_Nochmal_Filmen.jpg)
+![011_Nochmal_Filmen](../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/011_Nochmal_Filmen.jpg)
 
 Jetzt blendet sich das Menü aber fast unsichtbar ein. Selbst ein misstrauischer Zuschauer dürfte jetzt nicht mehr erkennen, dass hier "geschummelt" wird. 
 
-![012_Unsichtbares_Menu](../../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/012_Unsichtbares_Menu.jpg)
+![012_Unsichtbares_Menu](../assets/blog/images/articles/debug-bleprompter-smartphone-client-ein-paar-screenshots/012_Unsichtbares_Menu.jpg)
