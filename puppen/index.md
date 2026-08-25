@@ -8,13 +8,20 @@ permalink: /puppen/
     <h1 class="puppen-titel">{{ page.title }}</h1>
 
 	<p>
-	Und pötzlich waren sie da. Die "Truppe". Eine Kiste voller Stofftiere gespielt von einem alten Esel, der seine Freude an diesen Stofftieren hat.
+	Und pötzlich waren sie da. 
 	</p>
-	<p>
-	Darf ein älterer Mann noch mit Stofftieren hantieren? Also ich denke schon. Selbst auf das Risiko hin, dass man manchmal etwas schräg angesehen wird - Baureden, Zaubern und vor allem viel Unsinn anrichten...
+	<p>Die "Truppe". </p>
+	<p>Eine Kiste voller Klappmaulpuppen, Stofftiere und ein paar Handschuhe - gespielt von einem alten Esel, der seine Freude an diesen Figuren hat.
 	</p>
+	<br/>
 	<p>
-	... solange die Zuschauer Spaß daran haben. Los geht's. Hier also erst einmal die Vorstellung der Truppe. (Seit sicher, es sind nicht alle... )
+	Darf ein älterer Mann noch mit Stofftieren hantieren? 
+	<br>
+	Ich denke schon - selbst auf das Risiko hin, dass man manchmal etwas schräg angesehen wird - Bauchreden, Zaubern und vor allem viel Unsinn anrichten...
+	</p>
+	<br/>
+	<p>
+	... solange die Zuschauer Spaß daran haben. Los geht's. Hier also die Vorstellung der "Truppe". (Seit sicher, es sind nicht alle... )
 	</p>
 	
 	{% assign puppen_sortiert = site.puppen | sort: "reihenfolge" %}
