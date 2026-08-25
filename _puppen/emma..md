@@ -10,12 +10,9 @@ reihenfolge: 33
 
 Es gibt, so denken wir, keine Handpuppe auf die Kinder, aber auch Erwachsene mehr abfahren als auf Emma. Emma ist ein Zauberhund, der nur Unsinn im Kopf hat. Emma darf gestreichelt werden. 
 
-### Unterüberschrift
+### Emma - ein "Old English Sheepdog"
 
-- Aufzählung
-- mit
-- Punkten
+- Emma ist schon seit mehr als 30 Jahren in Diensten von Zauberern auf der ganzen Welt unterwegs und hat nun auch in unserer Truppe ihren Platz gefunden.
+- Emma ist ein Zauberhundemädchen, die mit ihrem Unsinn viel Freude produziert.
 
 > "Woof?" - Emma hat keine Stimme, sie ist ein lautloser Star in der Truppe.
-
-<img src="{{ '/assets/puppen/steckbriefe/neue-figur/bild.jpg' | relative_url }}" alt="Beschreibung">
