@@ -1,7 +1,7 @@
 ---
 name: Emma
 kurztext: Eine freche kleine Hundedame mit viel Charme und Flausen im Kopf.
-passbild: /assets/puppen/passbilder/Emma.jpg
+passbild: /assets/puppen/passbilder/emma.jpg
 reihenfolge: 33
 ---
 ## Emma der kleine, zottelige, junge Hirtenhund
