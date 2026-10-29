@@ -1,0 +1,52 @@
+{%- comment -%}
+    Einheitliche Build-Angabe für alle Fußzeilen.
+
+    Die Uhrzeit stammt aus site.time; die Zeitzone setzt _config.yml
+    (timezone: Europe/Berlin). Das Kürzel CEST/CET wird hier selbst bestimmt,
+    weil Rubys %Z unter Windows je nach Systemumgebung „WTZ“ statt „CEST“
+    liefert und die Angabe dann falsch wäre.
+
+    Sommerzeit gilt in Europa von 03:00 Uhr Ortszeit am letzten Sonntag im
+    März bis 03:00 Uhr Ortszeit am letzten Sonntag im Oktober.
+{%- endcomment -%}
+{%- assign texte = site.data.texte[site.lang] | default: site.data.texte.de -%}
+{%- assign fusszeile = texte.fusszeile -%}
+{%- assign text_copyright = fusszeile.copyright | default: "© %jahr% %autor%" -%}
+{%- assign text_gebaut = fusszeile.gebaut | default: "Gebaut mit ♠ ♥ ♣ ♦ (%datum%)" -%}
+
+{%- assign build_jahr = site.time | date: "%Y" -%}
+{%- assign build_monat = site.time | date: "%m" | plus: 0 -%}
+{%- assign build_tag = site.time | date: "%d" | plus: 0 -%}
+{%- assign build_stunde = site.time | date: "%H" | plus: 0 -%}
+
+{%- assign fruehjahr_stichtag = build_jahr | append: "-03-31" -%}
+{%- assign herbst_stichtag = build_jahr | append: "-10-31" -%}
+{%- assign fruehjahr_wochentag = fruehjahr_stichtag | date: "%w" | plus: 0 -%}
+{%- assign herbst_wochentag = herbst_stichtag | date: "%w" | plus: 0 -%}
+{%- assign letzter_sonntag_maerz = 31 | minus: fruehjahr_wochentag -%}
+{%- assign letzter_sonntag_oktober = 31 | minus: herbst_wochentag -%}
+
+{%- assign ist_sommerzeit = false -%}
+{%- if build_monat > 3 and build_monat < 10 -%}
+    {%- assign ist_sommerzeit = true -%}
+{%- elsif build_monat == 3 -%}
+    {%- if build_tag > letzter_sonntag_maerz -%}
+        {%- assign ist_sommerzeit = true -%}
+    {%- elsif build_tag == letzter_sonntag_maerz and build_stunde >= 3 -%}
+        {%- assign ist_sommerzeit = true -%}
+    {%- endif -%}
+{%- elsif build_monat == 10 -%}
+    {%- if build_tag < letzter_sonntag_oktober -%}
+        {%- assign ist_sommerzeit = true -%}
+    {%- elsif build_tag == letzter_sonntag_oktober and build_stunde < 3 -%}
+        {%- assign ist_sommerzeit = true -%}
+    {%- endif -%}
+{%- endif -%}
+
+{%- if ist_sommerzeit -%}
+    {%- assign zeitzonen_kuerzel = "CEST" -%}
+{%- else -%}
+    {%- assign zeitzonen_kuerzel = "CET" -%}
+{%- endif -%}
+{%- assign build_datum = site.time | date: "%d.%m.%Y %H:%M" | append: " " | append: zeitzonen_kuerzel -%}
+{{ text_copyright | replace: "%jahr%", build_jahr | replace: "%autor%", site.author }} &mdash; {{ text_gebaut | replace: "%datum%", build_datum }}

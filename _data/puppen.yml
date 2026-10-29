@@ -1,0 +1,17 @@
+# ── Texte der Puppen-Übersicht ─────────────────────────────────────────────
+# Diese Texte erscheinen auf /puppen/ und auf jeder Steckbrief-Seite, dort als
+# Hintergrund der geöffneten Ansicht. Der Anzeigetitel steht bewusst hier und
+# nicht im Front-Matter von puppen/index.md, weil ihn auch die Steckbrief-Seiten
+# verwenden (dort ist page.title der Name der Figur).
+
+# Überschrift über dem Passbild-Raster
+titel: "Puppen, Bauchreden und andere Charaktere"
+
+# Einleitung: jeder Eintrag wird ein Absatz. Zeilenumbrüche innerhalb eines
+# Eintrags sind erlaubt — <br> erzeugt einen harten Umbruch.
+absaetze:
+  - "Und pötzlich waren sie da."
+  - "Die „Truppe“."
+  - "Eine Kiste voller Klappmaulpuppen, Stofftiere und ein paar Handschuhe – gespielt von einem alten Esel, der seine Freude an diesen Figuren hat."
+  - "Darf ein älterer Mann noch mit Stofftieren hantieren?<br>Ich denke schon – selbst auf das Risiko hin, dass man manchmal etwas schräg angesehen wird – Bauchreden, Zaubern und vor allem viel Unsinn anrichten …"
+  - "… solange die Zuschauer Spaß daran haben. Los geht’s. Hier also die Vorstellung der „Truppe“. (Seid sicher, es sind nicht alle …)"

@@ -1,0 +1,11 @@
+# ── Buy me a coffee ────────────────────────────────────────────────────────
+# Steuert den Unterstützen-Button in allen Fußzeilen.
+#
+# aktiv: false  → Button auf allen Seiten ausblenden (ohne Codeänderung)
+# url:          → Zieladresse des Ko-fi-Auftritts
+#
+# Nach dem Anlegen oder Umbenennen der Ko-fi-Seite nur hier die Adresse
+# eintragen; Template, Stylesheet und Dokumentation bleiben unverändert.
+
+aktiv: true
+url: "https://ko-fi.com/Z4E020ZX00"

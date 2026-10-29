@@ -13,19 +13,48 @@
     {% seo %}
     {% feed_meta %}
 </head>
-<body style="background-color:#0f0a1a">
+{%- assign texte = site.data.texte[site.lang] | default: site.data.texte.de -%}
+{%- assign puppen_texte = texte.puppen -%}
+{%- assign steckbrief_geoeffnet = false -%}
+{%- if page.collection == 'puppen' -%}
+    {%- assign steckbrief_geoeffnet = true -%}
+{%- endif -%}
+<body style="background-color:#0f0a1a"{% if steckbrief_geoeffnet %} class="puppen-overlay-aktiv"{% endif %}>
 
 {% include nav.html %}
 
+{%- comment -%}
+    Steckbrief-Seiten zeigen bewusst die komplette Puppen-Ansicht: Ein Deep Link
+    wie /puppen/nasreddin/ öffnet dieselbe Seite wie der Klick auf das
+    Passbild-Raster, nur mit bereits offenem Steckbrief. Ohne JavaScript
+    funktioniert alles weiterhin als normale Seite (Schließen = Verweis).
+{%- endcomment -%}
 <main class="puppen-main">
+    {% if steckbrief_geoeffnet %}
+    {% include puppen_uebersicht.html %}
+    {% else %}
     {{ content }}
+    {% endif %}
 </main>
 
-<footer>
-    &copy; {{ site.time | date: '%Y' }} {{ site.author }} &mdash; Gebaut mit ♠ ♥ ♣ ♦ ({{ site.time | date: "%d.%m.%Y %H:%M %Z" }})
-    <br>
-    <a href="{{ '/impressum/' | relative_url }}">Impressum</a>
-</footer>
+<div class="puppen-overlay{% if steckbrief_geoeffnet %} puppen-overlay--offen{% endif %}"
+     role="dialog"
+     aria-modal="true"
+     aria-label="{{ puppen_texte.steckbrief | default: 'Steckbrief' }}"
+     aria-hidden="{% if steckbrief_geoeffnet %}false{% else %}true{% endif %}"
+     data-uebersicht-url="{{ '/puppen/' | relative_url }}"
+     data-text-laden="{{ puppen_texte.laden | default: 'Steckbrief wird geladen …' }}"
+     data-text-fehler="{{ puppen_texte.fehler | default: 'Der Steckbrief konnte leider nicht geladen werden.' }}">
+    <a class="puppen-overlay-schliessen"
+       href="{{ '/puppen/' | relative_url }}"
+       data-kein-seitenwechsel
+       aria-label="{{ puppen_texte.schliessen | default: 'Schließen' }}">&#10005;</a>
+    <div class="puppen-modal" tabindex="-1">
+        <div class="puppen-steckbrief">{% if steckbrief_geoeffnet %}{{ content }}{% endif %}</div>
+    </div>
+</div>
+
+{% include footer.html %}
 
 <script src="{{ '/assets/puppen/js/puppen.js' | relative_url }}?v={{ asset_version | uri_escape }}" defer></script>
 

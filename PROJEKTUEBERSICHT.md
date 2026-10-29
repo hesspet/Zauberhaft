@@ -1,6 +1,6 @@
 # Projektübersicht: Zauberhaft
 
-Stand: 05.06.2026
+Stand: 29.10.2026
 
 ## Zweck
 
@@ -19,7 +19,10 @@ Stand: 05.06.2026
 - **Puppen:** Jekyll Collection `puppen` mit eigenem Layout (`puppen.html`)
 - **Suche:** Clientseitig via `search.json` + `search.js`
 - **Clientseitige Navigation:** `blog-navigation.js` fängt Blog-interne Links und Hauptmenü-Links aus dem Blog heraus ab, lädt Zielseiten per `fetch`, lädt Ziel-CSS vor und ersetzt den Dokumentkörper per History API
-- **Puppen-Overlay:** `puppen.js` öffnet Steckbriefe per `fetch` + DOM-Extraktion in einem Modal (Desktop) bzw. Slide-up-Overlay (Mobile)
+- **Puppen-Overlay:** `puppen.js` öffnet Steckbriefe per `fetch` + DOM-Extraktion in einem Modal (Desktop) bzw. Slide-up-Overlay (Mobile) und schreibt dabei die Deep-Link-Adresse in die Adresszeile
+- **Puppen-Deep-Links:** jede Figur unter `/puppen/<figur>/` — die Seite liefert die komplette Puppen-Ansicht mit bereits geöffnetem Steckbrief
+- **Build-Datum:** gemeinsames Include `build_datum.html` (Europe/Berlin, Kürzel CEST/CET) für alle Fußzeilen
+- **Unterstützen-Button:** „Buy me a coffee“ aus `_data/buymeacoffee.yml`, gerendert von `_includes/buymeacoffee.html`
 - **Cache-Busting:** CSS, JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **CI:** GitHub Actions mit Artikelvalidierung, Jekyll-Build und Email-Benachrichtigung
 - **Abhängigkeiten:** `Gemfile` mit `github-pages`-Gem (nur für lokale Entwicklung)
@@ -39,7 +42,7 @@ Stand: 05.06.2026
 - Blog-Seiten nutzen einen stabilen gemeinsamen Blog-Header mit Hauptnavigation und Blog-Unternavigation
 - Im Blog werden interne Blog-Links und Hauptmenü-Wechsel zur Hauptseite clientseitig geladen; ohne JavaScript bleiben es normale Links
 - Die Puppen-Seiten verwenden die Hauptnavigation ohne Blog-Unternavigation
-- Footer einheitlich auf allen Seiten mit Build-Datum und Zeitzone
+- Footer einheitlich auf allen Seiten mit Build-Datum (Europe/Berlin, Kürzel CEST/CET)
 
 ## Projektstruktur
 
@@ -53,7 +56,7 @@ Zauberhaft/
 │   ├── blog_home.html           # Blog-Startseite
 │   ├── blog_artikel.html        # Einzelartikel
 │   ├── blog_page.html           # Blog-Standardseiten (Archiv, Themen, …)
-│   └── puppen.html              # Puppen-Layout — Hauptnav + Footer (für Übersicht & Steckbriefe)
+│   └── puppen.html              # Puppen-Layout — Hauptnav + Footer für Übersicht, Deep Links und Overlay
 ├── _includes/
 │   ├── head.html                # <head> für Hauptseite (Meta, CSS, View-Transition)
 │   ├── nav.html                 # Hauptnavigation (alle Seiten)
@@ -61,7 +64,10 @@ Zauberhaft/
 │   ├── projects.html            # Projektkarten aus _data/projects.yml
 │   ├── downloads.html           # Download-Kapitel (Accordion) aus _data/downloads.yml
 │   ├── impressum.html           # Impressum
-│   ├── footer.html              # Footer (Copyright + Build-Datum)
+│   ├── footer.html              # Footer (Copyright, Build-Datum, Kaffee-Button)
+│   ├── build_datum.html         # Build-Angabe mit CEST/CET
+│   ├── buymeacoffee.html        # Unterstützen-Button
+│   ├── puppen_uebersicht.html   # Passbild-Raster (Übersicht und Deep Link)
 │   ├── blog_header.html         # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
 │   ├── blog_footer.html         # Blog-Footer (identisch zum Hauptfooter)
 │   ├── blog_navigation.html     # Blog-Nav-Links (aus blog_site_navigation.yml)
@@ -72,7 +78,10 @@ Zauberhaft/
 │   ├── downloads.yml            # Download-Kapitel mit Unterkapiteln
 │   ├── blog_site_navigation.yml # Blog-Navigation (Archiv, Themen, Suche, Über)
 │   ├── blog_article_types.yml   # Erlaubte Artikeltypen
-│   └── blog_topics.yml          # Kontrollierte Themenliste
+│   ├── blog_topics.yml          # Kontrollierte Themenliste
+│   ├── puppen.yml               # Überschrift und Einleitung der Puppen-Übersicht
+│   ├── texte.yml                # Übersetzbare Oberflächentexte
+│   └── buymeacoffee.yml         # Schalter und Adresse des Kaffee-Buttons
 ├── _artikel/                    # Blog-Artikel (Jekyll Collection)
 │   ├── 2026-05-16-esp32-c3-trinket.md
 │   ├── 2026-05-26-ds-prompter.md
@@ -152,15 +161,41 @@ Dokumentation:
 
 ## Puppen-Bereich
 
-Die Puppen-Übersicht (`/puppen/`) zeigt alle Figuren in einem responsiven Grid mit kreisrunden Passbildern (Goldrahmen, Dark-Theme). Jede Figur hat Name, Kurztext und ein quadratisches Portrait-Foto. Ein Klick auf Bild oder Text öffnet den ausführlichen Steckbrief in einem Overlay:
+Die Puppen-Übersicht (`/puppen/`) zeigt alle Figuren in einem responsiven Grid mit kreisrunden Passbildern (Goldrahmen, Dark-Theme). Jede Figur hat Name, Kurztext und ein quadratisches Portrait-Foto. Bild und Text sind ein Verweis auf den Steckbrief; ein Klick öffnet ihn im Overlay:
 
 - **Desktop:** Zentriertes Modal (max. 760px breit, 85vh hoch) mit dunklem, geblurrtem Hintergrund
 - **Mobile:** Slide-up-Overlay vom unteren Bildschirmrand (92vh hoch, abgerundete obere Ecken)
-- **Schließen:** X-Button, Klick außerhalb, ESC-Taste
-- **Inhalt:** Per `fetch` geladen und der `<main>`-Bereich der Steckbrief-Seite extrahiert
+- **Schließen:** X-Button, Klick außerhalb, ESC-Taste, Zurück-Taste des Browsers
+- **Inhalt:** Per `fetch` geladen; übernommen wird der `.puppen-steckbrief`-Block der Steckbrief-Seite
 - **Caching:** Bereits geladene Steckbriefe werden im Speicher gehalten (Map)
 
-Jeder Steckbrief ist eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (name, kurztext, passbild, reihenfolge) und ausführlichem Markdown-Body. Steckbriefe sind auch direkt unter `/puppen/<name>/` aufrufbar (SEO, Teilen).
+Jeder Steckbrief ist eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (name, kurztext, passbild, reihenfolge) und ausführlichem Markdown-Body.
+
+### Deep Links
+
+Steckbriefe sind unter `/puppen/<dateiname>/` direkt aufrufbar — zum Beispiel
+`https://hesspet.github.io/Zauberhaft/puppen/nasreddin/`. Die Seite liefert die komplette
+Puppen-Ansicht (Navigation, Einleitung, Passbild-Raster, Fußzeile) aus und öffnet den
+Steckbrief bereits im Overlay. Ein Deep Link zeigt damit genau das, was Besucher nach einem
+Klick auf der Übersicht sehen — keine einzelne Textseite. Damit sind die Adressen für
+Publikationen, Flyer und Werbung verwendbar.
+
+- Der Dateiname in `_puppen/` bestimmt die Adresse und sollte nach einer Veröffentlichung nicht mehr geändert werden.
+- Auf der Übersicht schreibt ein Klick die Steckbrief-Adresse in die Adresszeile (History API), sodass sie sich kopieren lässt.
+- Ohne JavaScript bleiben alle Verweise normale Links; der Schließen-Knopf führt dann zur Übersicht.
+- Das Raster kommt aus `_includes/puppen_uebersicht.html`, Überschrift und Einleitung aus `_data/puppen.yml`.
+
+## Buy me a coffee
+
+Der Unterstützen-Button steht in allen Fußzeilen (Startseite, Downloads, Blog, Puppen-Übersicht und Deep Links):
+
+- **Konfiguration:** `_data/buymeacoffee.yml` (`aktiv`, `url`)
+- **Texte:** `_data/texte.yml` unter `de.spenden`
+- **Markup:** `_includes/buymeacoffee.html` mit eigenem SVG-Symbol — kein externes Bild, funktioniert damit auch offline
+- **Aussehen:** `.kaffee-button` in `assets/css/main.scss` und `assets/blog/css/site.css` (identische Regeln)
+- **Einbindung:** `_includes/footer.html` (Startseite, Downloads, Puppen) und `_includes/blog_footer.html` (Blog)
+
+Zum Ausschalten genügt `aktiv: false`. Die offenen Schritte für den Betreiber stehen als Checkliste in `README.md`.
 
 ## Veröffentlichung
 
@@ -169,6 +204,7 @@ Jeder Steckbrief ist eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (nam
 3. Seite unter `https://hesspet.github.io/Zauberhaft/`
 4. Blog unter `https://hesspet.github.io/Zauberhaft/blog/`
 5. Puppen unter `https://hesspet.github.io/Zauberhaft/puppen/`
+6. Einzelne Figuren (Deep Links) unter `https://hesspet.github.io/Zauberhaft/puppen/<figur>/`
 
 ## Email-Benachrichtigung
 
@@ -242,7 +278,7 @@ Details: `puppen/HowTo.md`
 
 `search.js` wird im Blog-Basislayout geladen und initialisiert sich nur, wenn die Suchseite im aktuellen Dokument vorhanden ist. Nach einem clientseitigen Wechsel auf die Suche wird `window.zauberhaftInitialisiereSuche()` erneut aufgerufen.
 
-`puppen.js` wird im Puppen-Layout geladen und initialisiert Event-Listener für Klick und Tastatur auf den Puppen-Karten. Das Overlay lädt Steckbriefe per `fetch` und extrahiert den `<main>`-Inhalt.
+`puppen.js` wird im Puppen-Layout geladen und verbessert die Puppen-Ansicht: Ein Klick auf eine Karte öffnet den Steckbrief per `fetch` im Overlay und schreibt die Deep-Link-Adresse in die Adresszeile (History API); Zurück-Taste, ESC und der Schließen-Verweis schließen ihn wieder. Der Inhalt wird aus dem `.puppen-steckbrief`-Block der Steckbrief-Seite übernommen und im Speicher gehalten. Verweise mit dem Attribut `data-kein-seitenwechsel` nimmt die allgemeine Navigations-Überblendung aus, damit der Übergang nicht doppelt anläuft.
 
 Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, z. B. `main.css?v=...`, `site.css?v=...`, `puppen.css?v=...`, `search.js?v=...`, `blog-navigation.js?v=...`, `puppen.js?v=...` und `search.json?v=...`.
 
@@ -257,3 +293,5 @@ Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, 
 - Puppen-Steckbriefe als Markdown-Dateien in der `_puppen`-Collection
 - Artikel-Bildpfade relativ (`../../assets/blog/images/…`)
 - Steckbrief-Bildpfade absolut (`/Zauberhaft/assets/puppen/…`)
+- Puppen-Adressen sind Deep Links (`/puppen/<dateiname>/`) und werden nach Veröffentlichung nicht umbenannt
+- Schalter und Adressen für externe Dienste (Buy me a coffee) stehen in `_data/`

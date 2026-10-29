@@ -40,7 +40,7 @@
     justify-items: center;
 }
 
-/* ── Einzelne Karte ── */
+/* ── Einzelne Karte (Verweis auf den Steckbrief) ── */
 .puppen-karte {
     display: flex;
     flex-direction: column;
@@ -53,12 +53,19 @@
     text-align: center;
     max-width: 240px;
     outline: none;
+    color: var(--text);
+    text-decoration: none;
 }
 
 .puppen-karte:hover,
 .puppen-karte:focus-visible {
     background: var(--bg-card);
     transform: translateY(-4px);
+}
+
+.puppen-karte:hover .puppen-name,
+.puppen-karte:focus-visible .puppen-name {
+    color: var(--accent);
 }
 
 .puppen-karte:focus-visible {
@@ -160,6 +167,8 @@
     border-radius: 50%;
     color: var(--text-muted);
     font-size: 1.4rem;
+    line-height: 1;
+    text-decoration: none;
     cursor: pointer;
     transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
@@ -189,6 +198,22 @@
 
 .puppen-overlay--offen .puppen-modal {
     transform: translateY(0);
+}
+
+.puppen-modal:focus {
+    outline: none;
+}
+
+/* ── Hinweis im Overlay (Laden, Fehler) ── */
+.puppen-hinweis {
+    text-align: center;
+    padding: 3rem 0;
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.puppen-hinweis--fehler {
+    color: #d06a6a;
 }
 
 /* ── Steckbrief-Inhalt (Prose) ── */

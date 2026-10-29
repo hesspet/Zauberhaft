@@ -1,0 +1,24 @@
+# ── Zentrale, übersetzbare Oberflächentexte ────────────────────────────────
+# Der Schlüssel unterhalb von "de:" entspricht site.lang aus _config.yml.
+# Eine weitere Sprache braucht nur einen weiteren Block (zum Beispiel "en:")
+# mit denselben Unterschlüsseln — Templates und JavaScript bleiben unverändert.
+#
+# Platzhalter werden im Template mit dem Liquid-Filter "replace" ersetzt:
+#   %name%  → Name der Figur        %jahr%  → Build-Jahr
+#   %autor% → site.author           %datum% → Build-Datum und Uhrzeit
+
+de:
+  fusszeile:
+    copyright: "© %jahr% %autor%"
+    gebaut: "Gebaut mit ♠ ♥ ♣ ♦ (%datum%)"
+  spenden:
+    beschriftung: "Buy me a coffee"
+    aria_label: "Buy me a coffee — unterstütze die Zauberhaft-Projekte auf Ko-fi"
+  puppen:
+    steckbrief: "Steckbrief"
+    schliessen: "Schließen"
+    laden: "Steckbrief wird geladen …"
+    fehler: "Der Steckbrief konnte leider nicht geladen werden."
+    leer: "Noch keine Charaktere vorhanden."
+    passbild_alt: "Passbild von %name%"
+    passbild_fehlt: "Kein Passbild für %name%"

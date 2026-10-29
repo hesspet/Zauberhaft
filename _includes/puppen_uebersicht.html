@@ -1,0 +1,50 @@
+{%- comment -%}
+    Gemeinsame Ansicht der Puppen-Übersicht.
+
+    Wird von puppen/index.md und vom Puppen-Layout auf jeder Steckbrief-Seite
+    verwendet, damit ein Deep Link (/puppen/<figur>/) genau dieselbe Seite
+    zeigt wie der Aufruf über das Passbild-Raster.
+{%- endcomment -%}
+{%- assign texte = site.data.texte[site.lang] | default: site.data.texte.de -%}
+{%- assign puppen_texte = texte.puppen -%}
+{%- assign puppen_sortiert = site.puppen | sort: "reihenfolge" -%}
+<div class="puppen-uebersicht">
+    <h1 class="puppen-titel">{{ site.data.puppen.titel }}</h1>
+
+    {% for absatz in site.data.puppen.absaetze %}
+    <p>{{ absatz }}</p>
+    {% endfor %}
+
+    {% if puppen_sortiert.size > 0 %}
+    <div class="puppen-grid">
+        {% for puppe in puppen_sortiert %}
+        <a class="puppen-karte"
+           href="{{ puppe.url | relative_url }}"
+           data-steckbrief-url="{{ puppe.url | relative_url }}"
+           data-kein-seitenwechsel
+           {%- if page.url == puppe.url %} aria-current="page"{% endif %}>
+            <div class="puppen-passbild-rahmen">
+                {% if puppe.passbild %}
+                <img
+                    class="puppen-passbild"
+                    src="{{ puppe.passbild | relative_url }}"
+                    alt="{{ puppen_texte.passbild_alt | replace: '%name%', puppe.name }}"
+                    loading="lazy"
+                >
+                {% else %}
+                <div
+                    class="puppen-passbild-platzhalter"
+                    role="img"
+                    aria-label="{{ puppen_texte.passbild_fehlt | replace: '%name%', puppe.name }}"
+                ></div>
+                {% endif %}
+            </div>
+            <h2 class="puppen-name">{{ puppe.name }}</h2>
+            <p class="puppen-kurztext">{{ puppe.kurztext }}</p>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="puppen-leer">{{ puppen_texte.leer }}</p>
+    {% endif %}
+</div>

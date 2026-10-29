@@ -140,6 +140,12 @@
                 return false;
             }
 
+            // Verweise, die die Seite selbst bedient (Puppen-Overlay), lösen
+            // keinen Navigations-Übergang aus.
+            if (verweisElement.hasAttribute("data-kein-seitenwechsel")) {
+                return false;
+            }
+
             const zielFenster = verweisElement.getAttribute("target");
 
             if (zielFenster && zielFenster !== "_self") {
