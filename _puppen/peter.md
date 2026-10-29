@@ -1,13 +1,11 @@
 ---
 name: Peter
 kurztext: Bauchredner, Puppenspieler, Zauberer - und offiziell schuld an allem.
-passbild: /assets/puppen/passbilder/peter.jpg
+passbild: /assets/puppen/passbilder/peter.png
 reihenfolge: 90
 ---
 
-## Peter Heß
-
-### Der Irre
+### Der Verrückte der an Allem schuld ist...
 
 Peter Heß ist der Mann hinter dem ganzen Kram: Bauchredner, Puppenspieler, Zauberer und derjenige, der die Puppen zum Leben erweckt. Wenn auf der Bühne eine Figur plötzlich Widerworte gibt, ein Zaubertrick eigene Pläne entwickelt oder ein Requisit verdächtig selbstgebaut aussieht, ist Peter meistens nicht ganz unschuldig.
 

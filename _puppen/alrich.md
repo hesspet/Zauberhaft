@@ -5,7 +5,7 @@ passbild: /assets/puppen/passbilder/alrich.jpg
 reihenfolge: 20
 ---
 
-## Alrich der Punkhase
+## Der Punkhase
 
 <img src="{{ '/assets/puppen/steckbriefe/alrich/Alrich_01.jpg' | relative_url }}" alt="Alrich im Porträt">
 

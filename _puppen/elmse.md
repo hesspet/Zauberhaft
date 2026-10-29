@@ -5,7 +5,7 @@ passbild: /assets/puppen/passbilder/elmse-wetterwachs.jpg
 reihenfolge: 30
 ---
 
-## Elmse Wetterwachs
+## Die Haushexe der Truppe
 
 *„Mein linkes Knie juckt - ich sag's dir, es gibt Regen. Und nicht zu knapp."*
 

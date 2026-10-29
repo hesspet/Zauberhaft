@@ -5,8 +5,6 @@ passbild: /assets/puppen/passbilder/nasreddin.jpg
 reihenfolge: 1
 ---
 
-## Nasreddin
-
 *Der kleine Handschuh, der sich für den größten Zauberer im Raum hält.*
 
 Nasreddin ist klein, rot, blitzschnell beleidigt und mindestens so überzeugt von sich selbst wie ein ganzer Zauberkongress. Sein voller Bühnenname lautet **Nasr ad-Din al-Quffaz (نصر الدين القفاز)**. Frei übertragen bedeutet das: **Nasreddin der Handschuh**.

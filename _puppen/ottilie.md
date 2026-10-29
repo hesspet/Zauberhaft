@@ -5,8 +5,6 @@ passbild: /assets/puppen/passbilder/ottilie.jpg
 reihenfolge: 35
 ---
 
-## Ottilie
-
 *Das kleine magische Haustier, das nie lange dort bleibt, wo man es gerade vermutet.*
 
 Ottilie ist ein neugieriges Stofftier mit Fell, Schwanz, Knubbelnase, wachen Augen und jeder Menge Eigenwillen. Sie sieht aus wie ein kleines Fantasie-Nagetier zwischen Waschbär, Ratte, Meerschweinchen und Haustier aus einer Zauberkiste. Genau diese Mischung macht sie so charmant: Ottilie wirkt niedlich, flink, lebendig und ein bisschen unberechenbar.
