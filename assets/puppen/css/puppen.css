@@ -216,6 +216,40 @@
     color: #d06a6a;
 }
 
+/* ── Kopfzeile des Steckbriefs: Passbild und Name ── */
+.puppen-steckbrief-kopf {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.puppen-steckbrief-kopf .puppen-passbild-rahmen {
+    width: 110px;
+    height: 110px;
+}
+
+.puppen-steckbrief-kopf .puppen-passbild {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+.puppen-steckbrief .puppen-steckbrief-kopf__name {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    overflow-wrap: anywhere;
+}
+
 /* ── Steckbrief-Inhalt (Prose) ── */
 .puppen-steckbrief h1 {
     font-size: 1.8rem;
@@ -337,6 +371,19 @@ body.puppen-overlay-aktiv {
     .puppen-passbild-rahmen {
         width: 120px;
         height: 120px;
+    }
+
+    .puppen-steckbrief-kopf {
+        gap: 1rem;
+    }
+
+    .puppen-steckbrief-kopf .puppen-passbild-rahmen {
+        width: 88px;
+        height: 88px;
+    }
+
+    .puppen-steckbrief .puppen-steckbrief-kopf__name {
+        font-size: 1.3rem;
     }
 
     .puppen-name {

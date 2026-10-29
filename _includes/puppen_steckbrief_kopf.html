@@ -1,0 +1,33 @@
+{%- comment -%}
+    Kopfzeile des Steckbriefs: rundes Passbild und Name der Figur.
+
+    Wird vom Puppen-Layout automatisch vor den Markdown-Inhalt gesetzt.
+    Dadurch erkennen Leserinnen und Leser auch im geöffneten Steckbrief
+    sofort, welche Figur sie ausgewählt haben — ohne dass Bild und Name in
+    jeder Markdown-Datei gepflegt werden müssen.
+
+    Das Overlay in puppen.js übernimmt den kompletten Block
+    ".puppen-steckbrief", die Kopfzeile erscheint dort also ebenfalls.
+{%- endcomment -%}
+{%- assign texte = site.data.texte[site.lang] | default: site.data.texte.de -%}
+{%- assign puppen_texte = texte.puppen -%}
+<div class="puppen-steckbrief-kopf">
+    <div class="puppen-passbild-rahmen">
+        {%- if page.passbild %}
+        <img
+            class="puppen-passbild"
+            src="{{ page.passbild | relative_url }}"
+            alt="{{ puppen_texte.passbild_alt | replace: '%name%', page.name }}"
+            width="150"
+            height="150"
+        >
+        {%- else %}
+        <div
+            class="puppen-passbild-platzhalter"
+            role="img"
+            aria-label="{{ puppen_texte.passbild_fehlt | replace: '%name%', page.name }}"
+        ></div>
+        {%- endif %}
+    </div>
+    <p class="puppen-steckbrief-kopf__name">{{ page.name }}</p>
+</div>

@@ -14,6 +14,7 @@ Zauberhaft/
 ├── _layouts/puppen.html              ← Rahmen für Übersicht und Steckbrief-Seiten
 ├── _includes/
 │   ├── puppen_uebersicht.html        ← Passbild-Raster (Übersicht und Deep Link)
+│   ├── puppen_steckbrief_kopf.html   ← Kopfzeile (Passbild + Name) jedes Steckbriefs
 │   └── footer.html                   ← Fußzeile mit Build-Datum
 ├── assets/puppen/
 │   ├── passbilder/                   ← Portrait-Fotos (quadratisch, min. 400×400px)
@@ -27,7 +28,7 @@ Zauberhaft/
 │   │   │   └── portrait.jpg
 │   │   └── elmse/
 │   │       └── teetasse.jpg
-│   ├── css/puppen.css                ← Aussehen von Raster und Overlay
+│   ├── css/puppen.css                ← Aussehen von Raster, Overlay und Kopfzeile
 │   └── js/puppen.js                  ← Overlay und Deep-Link-Logik
 └── puppen/
     ├── index.md                      ← Übersichtsseite (nicht manuell ändern)
@@ -83,6 +84,8 @@ Fließtext mit **Formatierung** und *Betonung*.
 ```
 
 **Wichtig bei Bildpfaden:** Im Markdown-Body **keine** Markdown-Syntax (`![...](...)`) für Bilder verwenden, sondern HTML mit dem Liquid-Filter `relative_url` — nur so wird `site.baseurl` korrekt vorangestellt. Der Pfad beginnt **ohne** `/Zauberhaft/`, also z.B. `/assets/puppen/steckbriefe/neue-figur/bild.jpg`. Das `relative_url`-Filter im Template setzt die Baseurl automatisch davor.
+
+**Kopfzeile:** Über dem Markdown zeigt die Ansicht automatisch das runde Passbild und den Namen der Figur — beides kommt aus dem Frontmatter (`name`, `passbild`) über `_includes/puppen_steckbrief_kopf.html`. Bild und Name müssen im Markdown also nicht wiederholt werden.
 
 ## 3. Deep Links: einzelne Figuren verlinken
 
@@ -157,6 +160,7 @@ Nach dem Commit und Push nach `main` baut GitHub Pages automatisch. Die neue Fig
   Sprache ohne Codeänderung möglich ist.
 - **Aussehen** von Raster und Overlay: `assets/puppen/css/puppen.css`. Die wichtigsten Klassen:
   - `.puppen-steckbrief` — Container für den Steckbrief-Inhalt
+  - `.puppen-steckbrief-kopf` — Kopfzeile mit rundem Passbild und Namen
   - `.puppen-overlay` — abgedunkelter Hintergrund
   - Überschriften (`h1`, `h2`, `h3`), Absätze, Listen, Zitate (`blockquote`), Bilder sind gestylt
 

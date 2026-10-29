@@ -66,6 +66,7 @@ Zauberhaft/
 │   ├── footer.html              # Footer (Copyright + Build-Datum)
 │   ├── build_datum.html         # Build-Angabe mit CEST/CET
 │   ├── puppen_uebersicht.html   # Passbild-Raster (Übersicht und Deep Link)
+│   ├── puppen_steckbrief_kopf.html # Kopfzeile mit Passbild und Name im Steckbrief
 │   ├── blog_header.html         # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
 │   ├── blog_footer.html         # Blog-Footer (identisch zum Hauptfooter)
 │   ├── blog_navigation.html     # Blog-Nav-Links (aus blog_site_navigation.yml)
@@ -107,7 +108,7 @@ Zauberhaft/
 │   │   │   └── search.js        # Clientseitige Suche
 │   │   └── images/              # Blog-Bilder
 │   ├── puppen/
-│   │   ├── css/puppen.css       # Puppen-CSS (Kreis-Passbilder, Grid, Overlay)
+│   │   ├── css/puppen.css       # Puppen-CSS (Kreis-Passbilder, Grid, Overlay, Kopfzeile)
 │   │   ├── js/puppen.js         # Overlay-Logik (Fetch + DOM-Extraktion)
 │   │   ├── passbilder/          # Portrait-Fotos der Figuren (quadratisch, min. 400×400px)
 │   │   └── steckbriefe/         # Bilder für Steckbrief-Inhalte
@@ -164,6 +165,7 @@ Die Puppen-Übersicht (`/puppen/`) zeigt alle Figuren in einem responsiven Grid 
 - **Mobile:** Slide-up-Overlay vom unteren Bildschirmrand (92vh hoch, abgerundete obere Ecken)
 - **Schließen:** X-Button, Klick außerhalb, ESC-Taste, Zurück-Taste des Browsers
 - **Inhalt:** Per `fetch` geladen; übernommen wird der `.puppen-steckbrief`-Block der Steckbrief-Seite
+- **Kopfzeile:** Jeder Steckbrief beginnt mit dem runden Passbild und dem Namen der Figur — automatisch aus dem Frontmatter (`_includes/puppen_steckbrief_kopf.html`), auch im Overlay
 - **Caching:** Bereits geladene Steckbriefe werden im Speicher gehalten (Map)
 
 Jeder Steckbrief ist eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (name, kurztext, passbild, reihenfolge) und ausführlichem Markdown-Body.
@@ -265,7 +267,7 @@ Details: `puppen/HowTo.md`
 
 `search.js` wird im Blog-Basislayout geladen und initialisiert sich nur, wenn die Suchseite im aktuellen Dokument vorhanden ist. Nach einem clientseitigen Wechsel auf die Suche wird `window.zauberhaftInitialisiereSuche()` erneut aufgerufen.
 
-`puppen.js` wird im Puppen-Layout geladen und verbessert die Puppen-Ansicht: Ein Klick auf eine Karte öffnet den Steckbrief per `fetch` im Overlay und schreibt die Deep-Link-Adresse in die Adresszeile (History API); Zurück-Taste, ESC und der Schließen-Verweis schließen ihn wieder. Der Inhalt wird aus dem `.puppen-steckbrief`-Block der Steckbrief-Seite übernommen und im Speicher gehalten. Verweise mit dem Attribut `data-kein-seitenwechsel` nimmt die allgemeine Navigations-Überblendung aus, damit der Übergang nicht doppelt anläuft.
+`puppen.js` wird im Puppen-Layout geladen und verbessert die Puppen-Ansicht: Ein Klick auf eine Karte öffnet den Steckbrief per `fetch` im Overlay und schreibt die Deep-Link-Adresse in die Adresszeile (History API); Zurück-Taste, ESC und der Schließen-Verweis schließen ihn wieder. Der Inhalt wird aus dem `.puppen-steckbrief`-Block der Steckbrief-Seite übernommen und im Speicher gehalten. Dazu gehört die automatisch erzeugte Kopfzeile mit Passbild und Name. Verweise mit dem Attribut `data-kein-seitenwechsel` nimmt die allgemeine Navigations-Überblendung aus, damit der Übergang nicht doppelt anläuft.
 
 Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, z. B. `main.css?v=...`, `site.css?v=...`, `puppen.css?v=...`, `search.js?v=...`, `blog-navigation.js?v=...`, `puppen.js?v=...` und `search.json?v=...`.
 
