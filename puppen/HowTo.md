@@ -102,6 +102,9 @@ Damit sind die Adressen für Publikationen, Flyer, Social Media und Werbung geei
   sonst verschwindet die Adresse.
 - Auf der Übersicht schreibt ein Klick auf ein Passbild die Steckbrief-Adresse in die
   Adresszeile. Einfach kopieren und veröffentlichen.
+- Am Ende jedes Steckbriefs steht der **Permalink** als vollständige Adresse
+  (zum Beispiel `https://hesspet.github.io/Zauberhaft/puppen/nasreddin/`). Er ist anklickbar,
+  lässt sich mit einem Klick vollständig markieren und dient als Lesezeichen.
 - Ohne JavaScript bleibt alles nutzbar: Jedes Passbild ist ein normaler Verweis, und der
   Schließen-Knopf führt zur Übersicht `/puppen/`.
 

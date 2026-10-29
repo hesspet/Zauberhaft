@@ -179,6 +179,7 @@ Publikationen, Flyer und Werbung verwendbar.
 
 - Der Dateiname in `_puppen/` bestimmt die Adresse und sollte nach einer Veröffentlichung nicht mehr geändert werden.
 - Auf der Übersicht schreibt ein Klick die Steckbrief-Adresse in die Adresszeile (History API), sodass sie sich kopieren lässt.
+- Am Ende jedes Steckbriefs steht der Permalink als vollständige Adresse (`absolute_url`) — anklickbar und als Lesezeichen nutzbar.
 - Ohne JavaScript bleiben alle Verweise normale Links; der Schließen-Knopf führt dann zur Übersicht.
 - Das Raster kommt aus `_includes/puppen_uebersicht.html`, Überschrift und Einleitung aus `_data/puppen.yml`.
 

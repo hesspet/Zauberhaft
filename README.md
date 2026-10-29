@@ -67,7 +67,8 @@ Jede Figur bekommt eine Markdown-Datei in `_puppen/` mit YAML-Frontmatter (Name,
 `https://hesspet.github.io/Zauberhaft/puppen/nasreddin/`. Diese Adresse zeigt die komplette
 Puppen-Ansicht mit bereits geöffnetem Steckbrief, nicht eine einzelne Textseite. Ein Klick
 auf ein Passbild schreibt die Adresse in die Adresszeile, sodass sie sich direkt kopieren
-lässt. Ohne JavaScript funktionieren alle Verweise als normale Links.
+lässt. Am Ende jedes Steckbriefs steht der Permalink zusätzlich als vollständige Adresse.
+Ohne JavaScript funktionieren alle Verweise als normale Links.
 
 Überschrift und Einleitung der Übersicht stehen in `_data/puppen.yml`.
 

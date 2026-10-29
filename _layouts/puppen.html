@@ -50,7 +50,12 @@
        data-kein-seitenwechsel
        aria-label="{{ puppen_texte.schliessen | default: 'Schließen' }}">&#10005;</a>
     <div class="puppen-modal" tabindex="-1">
-        <div class="puppen-steckbrief">{% if steckbrief_geoeffnet %}{{ content }}{% endif %}</div>
+        <div class="puppen-steckbrief">{% if steckbrief_geoeffnet %}{{ content }}
+            {%- comment %} Permalink der Figur — zum Merken, Weitergeben oder als Lesezeichen. {% endcomment %}
+            <p class="puppen-permalink">
+                <span class="puppen-permalink__titel">{{ puppen_texte.permalink | default: 'Permalink' }}</span>
+                <a class="puppen-permalink__wert" href="{{ page.url | absolute_url }}" rel="bookmark">{{ page.url | absolute_url }}</a>
+            </p>{% endif %}</div>
     </div>
 </div>
 

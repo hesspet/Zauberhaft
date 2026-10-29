@@ -280,6 +280,40 @@
     font-weight: 700;
 }
 
+/* ── Permalink am Ende des Steckbriefs ── */
+.puppen-steckbrief .puppen-permalink {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.6rem;
+    margin: 2.5rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.puppen-permalink__titel {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.puppen-permalink__wert {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+    -webkit-user-select: all;
+    user-select: all;
+}
+
+.puppen-permalink__wert:hover,
+.puppen-permalink__wert:focus-visible {
+    text-decoration: underline;
+}
+
 /* ── Kein Scrollen des Body bei offenem Overlay ── */
 body.puppen-overlay-aktiv {
     overflow: hidden;
