@@ -14,7 +14,7 @@ Zauberhaft/
 ├── _layouts/puppen.html              ← Rahmen für Übersicht und Steckbrief-Seiten
 ├── _includes/
 │   ├── puppen_uebersicht.html        ← Passbild-Raster (Übersicht und Deep Link)
-│   └── footer.html                   ← Fußzeile mit Build-Datum und Kaffee-Button
+│   └── footer.html                   ← Fußzeile mit Build-Datum
 ├── assets/puppen/
 │   ├── passbilder/                   ← Portrait-Fotos (quadratisch, min. 400×400px)
 │   │   ├── nasreddin.jpg

@@ -73,39 +73,19 @@ lässt. Ohne JavaScript funktionieren alle Verweise als normale Links.
 
 Details siehe `puppen/HowTo.md`.
 
-## Buy me a coffee (Unterstützen-Button)
-
-Der Button „Buy me a coffee“ steht in allen Fußzeilen (Startseite, Downloads, Blog,
-Puppen-Übersicht und Puppen-Deep-Links). Er ist vollständig zentral konfiguriert:
-
-- **Schalter und Zieladresse:** `_data/buymeacoffee.yml` (`aktiv: true|false`, `url`)
-- **Beschriftung und Vorlesetext:** `_data/texte.yml` unter `de.spenden`
-- **Markup:** `_includes/buymeacoffee.html` (eigenes SVG-Symbol, kein externes Bild)
-- **Aussehen:** `.kaffee-button` in `assets/css/main.scss` und `assets/blog/css/site.css`
-
-### Was noch zu tun ist
-
-1. `_data/buymeacoffee.yml` prüfen: `aktiv: true` setzen und die eigene Ko-fi-Adresse eintragen.
-2. In Ko-fi Auszahlung (Bank oder PayPal) und Währung einrichten, damit Trinkgelder ankommen.
-3. Danke-Nachricht und optional ein Spendenziel in Ko-fi hinterlegen.
-4. Impressum prüfen: Hinweis auf Trinkgelder („freiwillig, keine Gegenleistung“) ergänzen,
-   wenn gewünscht.
-5. Lokal mit `.\WebStarten.bat` prüfen, dann committen und pushen — GitHub Pages baut
-   automatisch.
-
 ## Projektstruktur
 ```
 Zauberhaft/
 ├── _config.yml              # Jekyll-Konfiguration
 ├── _layouts/                # Layouts (Hauptseite + Blog + Puppen)
 ├── _includes/               # HTML-Komponenten (nav, hero, downloads, …)
-├── _data/                   # YAML-Daten (projects, downloads, blog-nav, topics, puppen, texte, buymeacoffee)
+├── _data/                   # YAML-Daten (projects, downloads, blog-nav, topics, puppen, texte)
 ├── _artikel/                # Blog-Artikel (Jekyll Collection)
 ├── _puppen/                 # Steckbriefe der Puppen und Charaktere (Jekyll Collection)
 ├── blog/                    # Blog-Seiten (Archiv, Themen, Suche, …)
 ├── puppen/                  # Puppen-Übersichtsseite und HowTo
 ├── assets/
-│   ├── css/main.scss        # Hauptseiten-CSS (Dark-Theme, Kaffee-Button)
+│   ├── css/main.scss        # Hauptseiten-CSS (Dark-Theme)
 │   ├── blog/                # Blog-Assets (CSS, Suche, Navigation, Bilder)
 │   └── puppen/              # Puppen-Assets (CSS, JS, Passbilder, Steckbrief-Bilder)
 ├── tools/                   # PowerShell-Skripte (New-Article, Validate, …)

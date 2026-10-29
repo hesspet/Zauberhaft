@@ -478,46 +478,8 @@ footer {
     text-align: center;
     padding: 1.5rem 2rem 3rem;
     font-size: 0.78rem;
-    /* entspricht var(--text-muted) mit 60 % Deckkraft; ohne opacity-Angabe,
-       damit der Buy-me-a-coffee-Button in voller Deckkraft bleibt */
-    color: #615974;
-}
-
-/* ── Buy me a coffee ── */
-/* Identisch in assets/blog/css/site.css — Änderungen bitte in beiden Dateien. */
-.kaffee-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-top: 0.9rem;
-    padding: 0.45rem 1.15rem;
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--accent);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    line-height: 1.2;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-
-.kaffee-button:hover,
-.kaffee-button:focus-visible {
-    background: var(--accent);
-    color: var(--bg);
-    box-shadow: 0 0 24px var(--accent-glow);
-}
-
-.kaffee-button__symbol {
-    width: 1.15em;
-    height: 1.15em;
-    flex-shrink: 0;
-}
-
-.kaffee-button__text {
-    line-height: 1;
+    color: var(--text-muted);
+    opacity: 0.6;
 }
 
 

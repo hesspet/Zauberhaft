@@ -11,9 +11,6 @@ de:
   fusszeile:
     copyright: "© %jahr% %autor%"
     gebaut: "Gebaut mit ♠ ♥ ♣ ♦ (%datum%)"
-  spenden:
-    beschriftung: "Buy me a coffee"
-    aria_label: "Buy me a coffee — unterstütze die Zauberhaft-Projekte auf Ko-fi"
   puppen:
     steckbrief: "Steckbrief"
     schliessen: "Schließen"

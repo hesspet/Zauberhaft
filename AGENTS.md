@@ -24,7 +24,7 @@ GitHub Actions CI: `.github/workflows/pages.yml` — validate → build → depl
 - **Puppen:** Markdown in `_puppen/`, Frontmatter: `name`, `kurztext`, `passbild`, `reihenfolge`. Bilder im Body zwingend als `<img src="{{ '/assets/puppen/steckbriefe/...' | relative_url }}">` (kein Markdown `![]()`).
 - **Puppen-Deep-Links:** Jede Figur ist unter `/puppen/<dateiname>/` erreichbar; die Seite zeigt die komplette Puppen-Ansicht mit offenem Steckbrief (`_layouts/puppen.html` + `_includes/puppen_uebersicht.html`). Dateinamen nach Veröffentlichung nicht mehr ändern.
 - **Projekte/Downloads/Navigation:** YAML-Dateien in `_data/` — kein HTML.
-- **Texte und Schalter:** Oberflächentexte in `_data/texte.yml` (Sprachblock `de`), Puppen-Einleitung in `_data/puppen.yml`, Buy-me-a-coffee in `_data/buymeacoffee.yml`.
+- **Texte und Schalter:** Oberflächentexte in `_data/texte.yml` (Sprachblock `de`), Puppen-Einleitung in `_data/puppen.yml`.
 - **Artikel-Bildpfade:** in Quellen Typora-kompatibel `../assets/blog/images/articles/<slug>/…`; `blog_artikel` schreibt sie beim Rendern auf `../../assets/...` um.
 - **Puppen-Bildpfade:** absolut `/assets/puppen/…` (mit `relative_url` im Template)
 - **Artikel-Umbenennung:** `BlogArtikelBearbeiten.py` (Tk-GUI) passt Dateiname, Bildverzeichnis und Bildreferenzen an.

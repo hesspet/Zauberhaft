@@ -22,7 +22,6 @@ Stand: 29.10.2026
 - **Puppen-Overlay:** `puppen.js` öffnet Steckbriefe per `fetch` + DOM-Extraktion in einem Modal (Desktop) bzw. Slide-up-Overlay (Mobile) und schreibt dabei die Deep-Link-Adresse in die Adresszeile
 - **Puppen-Deep-Links:** jede Figur unter `/puppen/<figur>/` — die Seite liefert die komplette Puppen-Ansicht mit bereits geöffnetem Steckbrief
 - **Build-Datum:** gemeinsames Include `build_datum.html` (Europe/Berlin, Kürzel CEST/CET) für alle Fußzeilen
-- **Unterstützen-Button:** „Buy me a coffee“ aus `_data/buymeacoffee.yml`, gerendert von `_includes/buymeacoffee.html`
 - **Cache-Busting:** CSS, JavaScript und Suchindex erhalten eine Build-Version als Query-Parameter
 - **CI:** GitHub Actions mit Artikelvalidierung, Jekyll-Build und Email-Benachrichtigung
 - **Abhängigkeiten:** `Gemfile` mit `github-pages`-Gem (nur für lokale Entwicklung)
@@ -64,9 +63,8 @@ Zauberhaft/
 │   ├── projects.html            # Projektkarten aus _data/projects.yml
 │   ├── downloads.html           # Download-Kapitel (Accordion) aus _data/downloads.yml
 │   ├── impressum.html           # Impressum
-│   ├── footer.html              # Footer (Copyright, Build-Datum, Kaffee-Button)
+│   ├── footer.html              # Footer (Copyright + Build-Datum)
 │   ├── build_datum.html         # Build-Angabe mit CEST/CET
-│   ├── buymeacoffee.html        # Unterstützen-Button
 │   ├── puppen_uebersicht.html   # Passbild-Raster (Übersicht und Deep Link)
 │   ├── blog_header.html         # Stabiler Blog-Header mit Hauptnav + Blog-Unternav
 │   ├── blog_footer.html         # Blog-Footer (identisch zum Hauptfooter)
@@ -80,8 +78,7 @@ Zauberhaft/
 │   ├── blog_article_types.yml   # Erlaubte Artikeltypen
 │   ├── blog_topics.yml          # Kontrollierte Themenliste
 │   ├── puppen.yml               # Überschrift und Einleitung der Puppen-Übersicht
-│   ├── texte.yml                # Übersetzbare Oberflächentexte
-│   └── buymeacoffee.yml         # Schalter und Adresse des Kaffee-Buttons
+│   └── texte.yml                # Übersetzbare Oberflächentexte
 ├── _artikel/                    # Blog-Artikel (Jekyll Collection)
 │   ├── 2026-05-16-esp32-c3-trinket.md
 │   ├── 2026-05-26-ds-prompter.md
@@ -185,17 +182,6 @@ Publikationen, Flyer und Werbung verwendbar.
 - Ohne JavaScript bleiben alle Verweise normale Links; der Schließen-Knopf führt dann zur Übersicht.
 - Das Raster kommt aus `_includes/puppen_uebersicht.html`, Überschrift und Einleitung aus `_data/puppen.yml`.
 
-## Buy me a coffee
-
-Der Unterstützen-Button steht in allen Fußzeilen (Startseite, Downloads, Blog, Puppen-Übersicht und Deep Links):
-
-- **Konfiguration:** `_data/buymeacoffee.yml` (`aktiv`, `url`)
-- **Texte:** `_data/texte.yml` unter `de.spenden`
-- **Markup:** `_includes/buymeacoffee.html` mit eigenem SVG-Symbol — kein externes Bild, funktioniert damit auch offline
-- **Aussehen:** `.kaffee-button` in `assets/css/main.scss` und `assets/blog/css/site.css` (identische Regeln)
-- **Einbindung:** `_includes/footer.html` (Startseite, Downloads, Puppen) und `_includes/blog_footer.html` (Blog)
-
-Zum Ausschalten genügt `aktiv: false`. Die offenen Schritte für den Betreiber stehen als Checkliste in `README.md`.
 
 ## Veröffentlichung
 
@@ -294,4 +280,3 @@ Asset-URLs verwenden `site.github.build_revision` mit Fallback auf `site.time`, 
 - Artikel-Bildpfade relativ (`../../assets/blog/images/…`)
 - Steckbrief-Bildpfade absolut (`/Zauberhaft/assets/puppen/…`)
 - Puppen-Adressen sind Deep Links (`/puppen/<dateiname>/`) und werden nach Veröffentlichung nicht umbenannt
-- Schalter und Adressen für externe Dienste (Buy me a coffee) stehen in `_data/`
